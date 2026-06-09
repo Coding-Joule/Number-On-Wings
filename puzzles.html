@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NumberOnWings - Puzzles Arena</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+
+<header></header>
+<script src="nav.js"></script>
+
+<div class="container">
+    <h1>Math Puzzles</h1>
+    <p>Conquer each level to unlock the next challenge!</p>
+
+    <div id="player-setup" class="tool-box">
+        <input type="text" id="nickname-input" placeholder="Enter Nickname...">
+        <button id="save-nickname-btn">Join Arena</button>
+    </div>
+
+    <div id="puzzle-box" class="hidden">
+        <div id="level-map" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;"></div>
+        <div id="puzzle-status" style="font-size: 0.9rem; color: #8b949e; margin-top: 15px;"></div>
+        <div class="result" id="puzzle-question" style="min-height: 50px; margin: 10px 0;"></div>
+        <input type="text" id="puzzle-input" placeholder="Type your answer here...">
+        <button id="puzzle-btn">Submit Answer</button>
+        <div class="result hidden" id="puzzle-result" style="margin-top: 10px;"></div>
+    </div>
+
+    <div id="global-leaderboard" class="tool-box hidden" style="margin-top: 20px;">
+        <h3>🌍 Global Leaderboard</h3>
+        <div id="leaderboard-list"></div>
+    </div>
+
+</div>
+
+<div class="container">
+  <p>IrAcoNAl: Good Luck!</p>
+  <img src="IMG_3098.png" class="logo-img2">
+</div>
+
+<script src="puzzles.js" defer></script>
+</body>
+</html>

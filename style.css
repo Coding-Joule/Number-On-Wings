@@ -1,0 +1,309 @@
+/* --- GLOBAL BASE STYLES (Used by both pages) --- */
+body {
+    background-color: #0d1117; /* Deep matte dark blue/gray */
+    color: #c9d1d9;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; /* Allows content layout shifting */
+}
+
+/* --- THE SHARED NAVIGATION BAR --- */
+header {
+    background-color: #161b22; /* Darker header container */
+    border-bottom: 1px solid #30363d;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.4rem;
+}
+
+.logo span {
+    color: #58a6ff; /* Accent blue color */
+}
+
+.logo-img {
+    height: 35px;
+    width: auto;
+}
+
+.logo-img2 {
+    height: 100px;
+    width: auto;
+}
+
+nav a {
+    color: #8b949e;
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+}
+
+nav a:hover {
+    color: #58a6ff; /* Changes to crisp blue on hover */
+}
+
+/* --- DANGER ZONE LINK STYLING --- */
+nav a.danger-zone {
+    color: #f85149; /* Warning red */
+    border: 1px solid rgba(248, 81, 73, 0.3);
+    padding: 5px 10px;
+    border-radius: 6px;
+}
+
+nav a.danger-zone:hover {
+    background-color: rgba(248, 81, 73, 0.1);
+    color: #ff7b72;
+}
+
+/* --- MAIN CONTENT CONTAINER --- */
+.container {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 0 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Keeps text, inputs, and buttons perfectly centered */
+}
+
+h1 {
+    color: #ffffff;
+    font-size: 2.8rem;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #8b949e;
+    margin-bottom: 30px;
+}
+
+/* --- UTILITIES --- */
+.hidden {
+    display: none !important;
+}
+
+/* --- DYNAMIC TOOLS SYSTEM --- */
+
+/* The interactive drop-down engines */
+.tool-box {
+    margin-top: 15px;
+    margin-bottom: 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px; /* Limits size to keep things look sharp */
+}
+
+/* Input fields for math, factorization, and puzzle engines */
+#math-input, #factor-input, #puzzle-input {
+    background-color: #161b22; /* Matches header dark */
+    border: 1px solid #30363d; /* Matches theme border */
+    border-radius: 8px;
+    color: #fff;
+    padding: 12px;
+    font-size: 16px;
+    outline: none;
+    text-align: center;
+}
+
+#math-input:focus, #factor-input:focus, #puzzle-input:focus {
+    border-color: #58a6ff; /* Glows blue when active */
+}
+
+/* Action buttons */
+#calc-btn, #factor-btn, #graph-btn, #puzzle-btn {
+    background: linear-gradient(to right, #1f6feb, #58a6ff); /* Smooth operational blues */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, filter 0.2s;
+}
+
+#calc-btn:hover, #factor-btn:hover, #puzzle-btn:hover {
+    transform: scale(1.02);
+    filter: brightness(1.1);
+}
+
+/* Displays results */
+.result {
+    background-color: #161b22; 
+    border: 1px solid #30363d; 
+    border-radius: 8px;
+    padding: 15px;
+    color: #58a6ff; /* Matches theme crisp blue */
+    font-family: monospace; 
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+/* High-tech main menu toggle buttons */
+#toggle-calc-btn, #toggle-factor-btn, #toggle-fractal-btn, #toggle-grapher-btn, #toggle-puzzle-btn {
+    background-color: #161b22;
+    color: #58a6ff;
+    border: 2px solid #30363d;
+    border-radius: 8px;
+    padding: 14px 28px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%;
+    max-width: 300px; /* Makes selection buttons the exact same size */
+    transition: all 0.2s ease-in-out;
+}
+
+#toggle-calc-btn:hover, #toggle-factor-btn:hover, #toggle-puzzle-btn:hover {
+    border-color: #58a6ff;
+    background-color: rgba(88, 166, 255, 0.1);
+    box-shadow: 0 0 15px rgba(88, 166, 255, 0.25);
+}
+
+/* --- TRAP PAGE CONTENT STYLE (dontclick.html) --- */
+.trap-container {
+    flex-grow: 1; /* Expands to fill the body space below the header */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#trap-btn {
+    padding: 20px 40px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #e74c3c; /* Trap red button */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
+    transition: transform 0.1s ease;
+}
+
+#trap-btn:hover {
+    background-color: #c0392b;
+    transform: scale(1.05); /* Fun tiny pop on hover */
+}
+
+/* --- VIDEOS PAGE STYLE --- */
+/* Video Grid Base */
+.video-grid {
+    display: grid;
+    gap: 25px;
+    margin-top: 40px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+/* Sleek, clickable video card */
+.video-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Cards light up green on hover to feel inviting and active! */
+.video-card:hover {
+    transform: translateY(-5px);
+    border-color: #2ea44f;
+    box-shadow: 0 8px 24px rgba(46, 164, 79, 0.15);
+}
+
+/* Open, high-energy video player thumbnail */
+.video-thumbnail {
+    width: 200px;
+    height: 150px;
+    background: linear-gradient(135deg, #1f2937, #0d1117);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    border-bottom: 1px solid #30363d;
+    transition: transform 0.3s ease;
+}
+
+.video-card:hover .video-thumbnail {
+    transform: scale(1.03); /* Subtle zoom effect on the icon when hovering */
+}
+
+.logo-img3 {
+    display: block;
+    margin: 25px auto 0 auto;
+    width: 30%;
+    max-width: 120px;
+    min-width: 70px;
+    height: auto;
+}
+#global-leaderboard h3 {
+    margin-top: 0;
+    color: #58a6ff;
+}
+.leaderboard-entry {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #30363d;
+}
+.hidden {
+    display: none;
+}
+
+#level-map button {
+    margin: 2px; /* Adds breathing room between locks */
+}
+
+#save-nickname-btn {
+    background-color: #238636;
+    color: white;
+    padding: 24px 48px;        /* Huge touch area */
+    border: none;
+    border-radius: 12px;       /* Larger, softer corners */
+    font-weight: bold;
+    font-size: 1.8rem;         /* Big, bold text */
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    width: 100%;               /* Spans the width of the container */
+    max-width: 500px;          /* Prevents it from being too wide on desktop */
+}
+
+#save-nickname-btn:hover {
+    background-color: #2ea043;
+    transform: scale(1.05);    /* Punchy hover effect */
+}
+
+#save-nickname-btn:active {
+    transform: scale(0.95);
+}
+
+#nickname-input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #30363d;
+    background-color: #0d1117;
+    color: white;
+}
