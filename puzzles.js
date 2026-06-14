@@ -11,153 +11,140 @@ const leaderboardBox = document.getElementById('global-leaderboard');
 const leaderboardList = document.getElementById('leaderboard-list');
 const puzzleBox = document.getElementById('puzzle-box');
 
-// Game State Tracking
+// Local Puzzle Bank
+const PUZZLES = [
+    {
+        topic: "Arithmetic",
+        question: "What is 17 + 25?",
+        answer: "42"
+    },
+    {
+        topic: "Algebra",
+        question: "Solve for x: 3x + 5 = 20",
+        answer: "5"
+    },
+    {
+        topic: "Number Theory",
+        question: "What is the greatest common divisor of 48 and 18?",
+        answer: "6"
+    },
+    {
+        topic: "Geometry",
+        question: "A square has side length 9. What is its area?",
+        answer: "81"
+    },
+    {
+        topic: "Combinatorics",
+        question: "How many ways can you arrange the letters A, B, and C?",
+        answer: "6"
+    }
+];
+
+// Game State
 let playerName = "";
-let maxUnlockedIndex = 0; 
+let maxUnlockedIndex = 0;
 let currentIdx = 0;
-let currentPuzzle = null; // Dynamically tracks the payload received from Gemini
+let currentPuzzle = null;
 
-// ⚙️ SERVER CONFIGURATION
-// Replace these placeholders with your actual live Supabase credentials!
-const SUPABASE_URL = "https://your-real-project-id.supabase.co"; 
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.your-real-key-here";
-
-const HEADERS = {
-    "apikey": SUPABASE_ANON_KEY,
-    "Authorization": `Bearer ${SUPABASE_ANON_KEY}`,
-    "Content-Type": "application/json"
-};
-
-// Async Engine to query your secure Supabase Edge Function running Gemini
-async function loadLevel(index) {
+// Load a puzzle locally
+function loadLevel(index) {
     currentIdx = index;
-    
+
     inputEl.value = "";
     resultEl.classList.add('hidden');
     resultEl.innerText = "";
-    
-    // UI Feedback while the generative server is calculating values
-    questionEl.innerHTML = "<div style='color: #8b949e; font-style: italic;'>🔮 AI is cooking up a custom problem...</div>";
-    statusEl.innerText = `Quest Level ${index + 1} • Fetching from server...`;
 
-    try {
-        const response = await fetch(`${SUPABASE_URL}/functions/v1/generate-puzzle`, {
-            method: 'POST',
-            headers: HEADERS,
-            body: JSON.stringify({ level: index })
-        });
-        
-        if (!response.ok) throw new Error("Server rejected request");
-        
-        // Destructures the standardized JSON packet: { topic, question, answer }
-        currentPuzzle = await response.json();
-        
-        statusEl.innerText = `Quest Level ${index + 1} • [${currentPuzzle.topic}]`;
-        questionEl.innerText = currentPuzzle.question;
-        
-        // Tells MathJax to compile and cleanly render the raw LaTeX string strings
-        if (window.MathJax) {
-            MathJax.typesetPromise([questionEl]);
-        }
-    } catch (e) {
-        console.error("AI Generation Engine Error:", e);
-        questionEl.innerText = "⚠️ Failed to summon the AI. Verify your Supabase Edge Function deployment or check console log.";
+    if (index >= PUZZLES.length) {
+        statusEl.innerText = "🏆 Quest Complete!";
+        questionEl.innerText = "You solved every puzzle!";
+        inputEl.disabled = true;
+        btnEl.disabled = true;
+        return;
+    }
+
+    currentPuzzle = PUZZLES[index];
+
+    statusEl.innerText = `Quest Level ${index + 1} • [${currentPuzzle.topic}]`;
+    questionEl.innerText = currentPuzzle.question;
+
+    if (window.MathJax) {
+        MathJax.typesetPromise([questionEl]);
     }
 }
 
-// Compares answer strings and handles level-progression pipelines
+// Check answer
 function verifyAnswer() {
     if (!currentPuzzle) return;
 
     const userGuess = inputEl.value.trim().toUpperCase();
     const correctAns = currentPuzzle.answer.trim().toUpperCase();
-    
+
     resultEl.classList.remove('hidden');
-    
+
     if (userGuess === correctAns) {
         resultEl.style.color = "#2ea043";
-        resultEl.innerText = "🎉 CORRECT! Syncing database and generating next layer...";
-        
+        resultEl.innerText = "🎉 CORRECT! Loading next level...";
+
         if (currentIdx === maxUnlockedIndex) {
             maxUnlockedIndex++;
-            updateGlobalScore(maxUnlockedIndex);
+            saveProgress();
+            loadLocalLeaderboard();
         }
-        
-        // Short intentional delay to give the player a sense of victory before the next load sequence
+
         setTimeout(() => {
             loadLevel(currentIdx + 1);
-        }, 1500); 
-        
+        }, 1000);
+
     } else {
         resultEl.style.color = "#f85149";
-        resultEl.innerText = "❌ Incorrect calculation! Check your work and try again.";
+        resultEl.innerText = "❌ Incorrect! Check your work and try again.";
     }
 }
 
-// Database communication layer
-async function updateGlobalScore(level) {
+// Save progress locally in browser
+function saveProgress() {
     if (!playerName) return;
-    try {
-        await fetch(`${SUPABASE_URL}/rest/v1/leaderboard`, {
-            method: 'POST',
-            headers: HEADERS,
-            body: JSON.stringify({ name: playerName, score: level })
-        });
-        loadGlobalLeaderboard();
-    } catch (e) {
-        console.error("Database tracking error:", e);
-    }
+
+    localStorage.setItem("puzzlePlayerName", playerName);
+    localStorage.setItem("puzzleMaxLevel", maxUnlockedIndex);
 }
 
-async function loadGlobalLeaderboard() {
-    leaderboardList.innerHTML = "<p style='color: #8b949e;'>Connecting to global matrix...</p>";
-    try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/leaderboard?order=score.desc&limit=10`, {
-            method: 'GET',
-            headers: HEADERS
-        });
-        const data = await response.json();
-        leaderboardList.innerHTML = "";
-        
-        if (data.length === 0) {
-            leaderboardList.innerHTML = "<p style='color: #8b949e;'>No scores posted yet. Be the first!</p>";
-            return;
-        }
-        
-        data.forEach((player, index) => {
-            const row = document.createElement('div');
-            row.className = "leaderboard-entry";
-            row.style.display = "flex";
-            row.style.justifyContent = "space-between";
-            row.style.marginBottom = "5px";
-            
-            let medal = "";
-            if (index === 0) medal = "🥇 ";
-            else if (index === 1) medal = "🥈 ";
-            else if (index === 2) medal = "🥉 ";
-
-            row.innerHTML = `<span>${medal}<strong>${player.name}</strong></span><span>Level ${player.score}</span>`;
-            leaderboardList.appendChild(row);
-        });
-    } catch (e) {
-        leaderboardList.innerHTML = "<p style='color: #f85149;'>⚠️ Couldn't reach live global server.</p>";
-    }
+// Local leaderboard
+function loadLocalLeaderboard() {
+    leaderboardList.innerHTML = `
+        <div class="leaderboard-entry" style="display:flex; justify-content:space-between;">
+            <span>👤 <strong>${playerName}</strong></span>
+            <span>Level ${maxUnlockedIndex}</span>
+        </div>
+    `;
 }
 
-// Authentication submission trigger
-if(saveNickBtn) {
+// Nickname setup
+if (saveNickBtn) {
     saveNickBtn.addEventListener('click', () => {
         if (nickInput.value.trim() !== "") {
             playerName = nickInput.value.trim();
+
+            const savedName = localStorage.getItem("puzzlePlayerName");
+            const savedLevel = localStorage.getItem("puzzleMaxLevel");
+
+            if (savedName === playerName && savedLevel) {
+                maxUnlockedIndex = Number(savedLevel);
+            }
+
             setupBox.classList.add('hidden');
             puzzleBox.classList.remove('hidden');
             leaderboardBox.classList.remove('hidden');
-            loadGlobalLeaderboard();
-            loadLevel(0); // Safely fires off level zero ONLY after a user logs in
+
+            loadLocalLeaderboard();
+            loadLevel(maxUnlockedIndex);
         }
     });
 }
 
 // Submission Event Listeners
 btnEl.addEventListener('click', verifyAnswer);
-inputEl.addEventListener('keypress', (e) => { if (e.key === 'Enter') verifyAnswer(); });
+
+inputEl.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') verifyAnswer();
+});
