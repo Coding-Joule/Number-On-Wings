@@ -52,6 +52,10 @@ window.addEventListener("load", function () {
                             <p>• [Redacted For Safety]</p>
                             <p>• [Redacted For Safety]</p>
                             <p></p>
+                            <p>Site Visited In Web Browser:</p>
+                            <p>numberonwings.com</p>
+                            <p>ERROR: CAN'T VIEW WEBSITES OTHER THAT NUMBERONWIGS.COM DUE TO WEB BROWSER VERSION</p>
+                            <p></p>
                             <p>Password:</p>
                             <p>******</p>
                             <p><strong>Security Level: Too High</strong></p>
