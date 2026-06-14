@@ -5,7 +5,7 @@ window.addEventListener("load", function () {
 
     btn.addEventListener("click", function () {
         document.body.innerHTML = `
-            <div class="hack-screen">
+            <div class="container">
                 <h1>Hacking You...</h1>
                 <p id="hack-message">Starting...</p>
                 <div class="hack-bar">
