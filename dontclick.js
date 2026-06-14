@@ -47,11 +47,14 @@ window.addEventListener("load", function () {
                     document.body.innerHTML = `
                         <div class="container">
                             <h1>Hack Complete.</h1>
-                            <p>Results:</p>
-                            <p>• Likes math.</p>
-                            <p>• Clicks suspicious buttons.</p>
-                            <p>• Reads warnings and ignores them.</p>
-                            <p><strong>Threat Level: Highly Curious.</strong></p>
+                            <p>Files Found:</p>
+                            <p>• [Redacted For Safety]</p>
+                            <p>• [Redacted For Safety]</p>
+                            <p>• [Redacted For Safety]</p>
+                            <p></p>
+                            <p>Password:</p>
+                            <p>******</p>
+                            <p><strong>Security Level: Too High</strong></p>
                         </div>
                     `;
                 }, 800);
