@@ -45,7 +45,7 @@ window.addEventListener("load", function () {
 
                 setTimeout(function () {
                     document.body.innerHTML = `
-                        <div class="hack-screen">
+                        <div class="container">
                             <h1>Hack Complete.</h1>
                             <p>Results:</p>
                             <p>• Likes math.</p>
