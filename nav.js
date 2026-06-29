@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <a href="videos.html">videos</a>
                 <a href="tools.html">tools</a>
                 <a href="puzzles.html">puzzles</a>
+                <a href="world_cup.html">World Cup 2026</a>
                 <a href="dontclick.html" class="danger-zone">don't click here</a>
             </nav>
         `;
