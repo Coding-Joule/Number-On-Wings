@@ -332,3 +332,90 @@ p {
     background: #00ff66;
     transition: width 0.4s;
 }
+
+.hidden {
+    display: none;
+}
+
+.world-cup-btn {
+    background: #238636;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.world-cup-btn:hover {
+    background: #2ea043;
+}
+
+.bracket {
+    display: flex;
+    gap: 60px;
+    padding: 40px;
+    overflow-x: auto;
+    align-items: flex-start;
+}
+
+.round {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    min-width: 210px;
+}
+
+.round h2 {
+    text-align: center;
+    color: white;
+}
+
+.match {
+    position: relative;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.team {
+    background: #0d1117;
+    color: white;
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 8px;
+}
+
+.winner {
+    border: 1px solid #2ea043;
+    color: #7ee787;
+}
+
+.eliminated {
+    color: #f85149;
+    text-decoration: line-through;
+}
+
+.connector::before {
+    content: "";
+    position: absolute;
+    left: -60px;
+    top: 50%;
+    width: 60px;
+    border-top: 2px solid #8b949e;
+}
+
+.final {
+    border-color: gold;
+}
+
+.champion {
+    background: #161b22;
+    border: 2px solid gold;
+    color: gold;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+}
