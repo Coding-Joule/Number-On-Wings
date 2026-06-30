@@ -9,6 +9,17 @@ function toggleArticle() {
     }
 }
 
+function toggleArticle2() {
+    const article = document.getElementById("article2");
+
+    if (article.style.display === "none") {
+        article.style.display = "block";
+        article.scrollIntoView({ behavior: "smooth" });
+    } else {
+        article.style.display = "none";
+    }
+}
+
 function toggleBracket() {
     const bracket = document.getElementById("bracket");
 
