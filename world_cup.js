@@ -36,7 +36,7 @@ const matches = [
     ["Canada", "South Africa", "Canada"],
     ["Netherlands", "Morocco", "Morocco"],
     ["Brazil", "Japan", "Brazil"],
-    ["Ivory Coast", "Norway", null],
+    ["Ivory Coast", "Norway", "Norway"],
     ["Paraguay", "Germany", "Paraguay"],
     ["France", "Sweden", null],
     ["Mexico", "Ecuador", null],
