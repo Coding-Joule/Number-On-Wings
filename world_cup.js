@@ -34,7 +34,7 @@ function toggleBracket() {
 
 const matches = [
     ["Canada", "South Africa", "Canada"],
-    ["Netherlands", "Morocco", null],
+    ["Netherlands", "Morocco", "Morocco"],
     ["Brazil", "Japan", "Brazil"],
     ["Ivory Coast", "Norway", null],
     ["Paraguay", "Germany", "Paraguay"],
