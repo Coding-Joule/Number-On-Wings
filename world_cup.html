@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NumberOnWings - France, Help Germany Get Revenge!</title>
+    <title>NumberOnWings - World Cup 2026</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,7 +13,7 @@
 
 <div class="container" style="margin-bottom: 0;">
     <h1>World Cup 2026</h1>
-    <p>Football articles, match reports, and fan reactions.</p>
+    <p>Football articles, match reports, fan reactions, and brackets.</p>
 </div>
 
 <div style="display: flex; justify-content: center; width: 100%; padding: 0 20px; box-sizing: border-box;">
@@ -22,18 +22,23 @@
         <div class="video-card">
             <div class="video-thumbnail">🇫🇷</div>
             <div style="padding:20px; text-align:left;">
-                <h3 style="margin:0 0 10px 0; color:#ffffff;">
-                    France, Help Germany Get Revenge!
-                </h3>
-
+                <h3 style="margin:0 0 10px 0; color:#ffffff;">France, Help Germany Get Revenge!</h3>
                 <p style="font-size:0.9rem; color:#8b949e; margin-bottom:20px;">
                     Germany's World Cup journey ended in a dramatic penalty shootout.
                     Can France continue the mission?
                 </p>
+                <button id="calc-btn" style="width:100%;" onclick="toggleArticle()">Read Article</button>
+            </div>
+        </div>
 
-                <button id="calc-btn" style="width:100%;" onclick="toggleArticle()">
-                    Read Article
-                </button>
+        <div class="video-card">
+            <div class="video-thumbnail">🏆</div>
+            <div style="padding:20px; text-align:left;">
+                <h3 style="margin:0 0 10px 0; color:#ffffff;">World Cup Bracket</h3>
+                <p style="font-size:0.9rem; color:#8b949e; margin-bottom:20px;">
+                    View the full knockout bracket with completed matches and TBD future rounds.
+                </p>
+                <button id="calc-btn" style="width:100%;" onclick="toggleBracket()">Open Bracket</button>
             </div>
         </div>
 
@@ -128,18 +133,183 @@ expressed here are those of one very disappointed Germany supporter.
 
 </div>
 
+<div id="bracket" class="container" style="display:none; overflow-x:auto;">
+    <h2>🏆 World Cup 2026 Knockout Bracket</h2>
+
+    <div class="world-cup-bracket">
+        <div class="bracket-round">
+            <h3>Round of 32</h3>
+
+            <div class="bracket-match"><div class="bracket-team bracket-winner">🇨🇦 Canada</div><div class="bracket-team bracket-eliminated">🇿🇦 South Africa</div></div>
+            <div class="bracket-match"><div class="bracket-team">🇳🇱 Netherlands</div><div class="bracket-team">🇲🇦 Morocco</div></div>
+            <div class="bracket-match"><div class="bracket-team bracket-winner">🇧🇷 Brazil</div><div class="bracket-team bracket-eliminated">🇯🇵 Japan</div></div>
+            <div class="bracket-match"><div class="bracket-team">🇨🇮 Ivory Coast</div><div class="bracket-team">🇳🇴 Norway</div></div>
+            <div class="bracket-match"><div class="bracket-team bracket-winner">🇵🇾 Paraguay</div><div class="bracket-team bracket-eliminated">🇩🇪 Germany</div></div>
+            <div class="bracket-match"><div class="bracket-team">🇫🇷 France</div><div class="bracket-team">🇸🇪 Sweden</div></div>
+            <div class="bracket-match"><div class="bracket-team">🇲🇽 Mexico</div><div class="bracket-team">🇪🇨 Ecuador</div></div>
+            <div class="bracket-match"><div class="bracket-team">🏴 England</div><div class="bracket-team">🇨🇩 DR Congo</div></div>
+            <div class="bracket-match"><div class="bracket-team">🇪🇸 Spain</div><div class="bracket-team">🇦🇹 Austria</div></div>
+            <div class="bracket-match"><div class="bracket-team">🇵🇹 Portugal</div><div class="bracket-team">🇭🇷 Croatia</div></div>
+            <div class="bracket-match"><div class="bracket-team">🇧🇪 Belgium</div><div class="bracket-team">🇸🇳 Senegal</div></div>
+            <div class="bracket-match"><div class="bracket-team">🇺🇸 United States</div><div class="bracket-team">🇧🇦 Bosnia</div></div>
+            <div class="bracket-match"><div class="bracket-team">🇦🇷 Argentina</div><div class="bracket-team">🇨🇻 Cape Verde</div></div>
+            <div class="bracket-match"><div class="bracket-team">🇦🇺 Australia</div><div class="bracket-team">🇪🇬 Egypt</div></div>
+            <div class="bracket-match"><div class="bracket-team">🇨🇭 Switzerland</div><div class="bracket-team">🇩🇿 Algeria</div></div>
+            <div class="bracket-match"><div class="bracket-team">🇨🇴 Colombia</div><div class="bracket-team">🇬🇭 Ghana</div></div>
+        </div>
+
+        <div class="bracket-round bracket-round-16">
+            <h3>Round of 16</h3>
+            <div class="bracket-match"><div class="bracket-team">🇨🇦 Canada</div><div class="bracket-team">TBD</div></div>
+            <div class="bracket-match"><div class="bracket-team">🇧🇷 Brazil</div><div class="bracket-team">TBD</div></div>
+            <div class="bracket-match"><div class="bracket-team">🇵🇾 Paraguay</div><div class="bracket-team">TBD</div></div>
+            <div class="bracket-match"><div class="bracket-team">TBD</div><div class="bracket-team">TBD</div></div>
+            <div class="bracket-match"><div class="bracket-team">TBD</div><div class="bracket-team">TBD</div></div>
+            <div class="bracket-match"><div class="bracket-team">TBD</div><div class="bracket-team">TBD</div></div>
+            <div class="bracket-match"><div class="bracket-team">TBD</div><div class="bracket-team">TBD</div></div>
+            <div class="bracket-match"><div class="bracket-team">TBD</div><div class="bracket-team">TBD</div></div>
+        </div>
+
+        <div class="bracket-round bracket-quarterfinals">
+            <h3>Quarterfinals</h3>
+            <div class="bracket-match"><div class="bracket-team">TBD</div><div class="bracket-team">TBD</div></div>
+            <div class="bracket-match"><div class="bracket-team">TBD</div><div class="bracket-team">TBD</div></div>
+            <div class="bracket-match"><div class="bracket-team">TBD</div><div class="bracket-team">TBD</div></div>
+            <div class="bracket-match"><div class="bracket-team">TBD</div><div class="bracket-team">TBD</div></div>
+        </div>
+
+        <div class="bracket-round bracket-semifinals">
+            <h3>Semifinals</h3>
+            <div class="bracket-match"><div class="bracket-team">TBD</div><div class="bracket-team">TBD</div></div>
+            <div class="bracket-match"><div class="bracket-team">TBD</div><div class="bracket-team">TBD</div></div>
+        </div>
+
+        <div class="bracket-round bracket-final-round">
+            <h3>Final</h3>
+            <div class="bracket-match bracket-final"><div class="bracket-team">TBD</div><div class="bracket-team">TBD</div></div>
+            <div class="bracket-champion">🏆 Champion: TBD</div>
+        </div>
+    </div>
+</div>
+
+<style>
+.world-cup-bracket {
+    display: flex;
+    gap: 45px;
+    padding: 30px 10px;
+    overflow-x: auto;
+    align-items: flex-start;
+    min-width: 1250px;
+}
+
+.bracket-round {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 210px;
+}
+
+.bracket-round h3 {
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.bracket-round-16 {
+    padding-top: 36px;
+    gap: 54px;
+}
+
+.bracket-quarterfinals {
+    padding-top: 112px;
+    gap: 130px;
+}
+
+.bracket-semifinals {
+    padding-top: 260px;
+    gap: 286px;
+}
+
+.bracket-final-round {
+    padding-top: 570px;
+}
+
+.bracket-match {
+    position: relative;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+}
+
+.bracket-round:not(:first-child) .bracket-match::before {
+    content: "";
+    position: absolute;
+    left: -45px;
+    top: 50%;
+    width: 45px;
+    border-top: 2px solid #8b949e;
+}
+
+.bracket-team {
+    background: #0d1117;
+    color: #ffffff;
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 8px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.bracket-winner {
+    border: 1px solid #2ea043;
+    color: #7ee787;
+    font-weight: bold;
+}
+
+.bracket-eliminated {
+    color: #f85149;
+    text-decoration: line-through;
+    opacity: 0.75;
+}
+
+.bracket-final {
+    border-color: gold;
+}
+
+.bracket-champion {
+    background: #161b22;
+    border: 2px solid gold;
+    color: gold;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 18px;
+}
+</style>
+
 <script>
 function toggleArticle() {
     const article = document.getElementById("article");
 
     if (article.style.display === "none") {
         article.style.display = "block";
-        article.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
+        article.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
         article.style.display = "none";
+    }
+}
+
+function toggleBracket() {
+    const bracket = document.getElementById("bracket");
+
+    if (bracket.style.display === "none") {
+        bracket.style.display = "block";
+        bracket.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+        bracket.style.display = "none";
     }
 }
 </script>
