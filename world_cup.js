@@ -11,3 +11,8 @@ function openArticle() {
         article.style.display = "none";
     }
 }
+
+function toggleBracket() {
+    const bracket = document.getElementById("world-cup-bracket");
+    bracket.classList.toggle("hidden");
+}
