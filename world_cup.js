@@ -33,26 +33,26 @@ function toggleBracket() {
 }
 
 const matches = [
-    ["Canada", "South Africa", "Canada"],
-    ["Netherlands", "Morocco", "Morocco"],
-    ["Brazil", "Japan", "Brazil"],
-    ["Ivory Coast", "Norway", "Norway"],
-    ["Paraguay", "Germany", "Paraguay"],
-    ["France", "Sweden", null],
-    ["Mexico", "Ecuador", null],
-    ["England", "DR Congo", null],
-    ["Spain", "Austria", null],
-    ["Portugal", "Croatia", null],
-    ["Belgium", "Senegal", null],
-    ["United States", "Bosnia", null],
-    ["Argentina", "Cape Verde", null],
-    ["Australia", "Egypt", null],
-    ["Switzerland", "Algeria", null],
-    ["Colombia", "Ghana", null]
+    ["Canada", "South Africa", "Canada", 2, 1],
+    ["Netherlands", "Morocco", "Morocco", 0, 1],
+    ["Brazil", "Japan", "Brazil", 3, 0],
+    ["Ivory Coast", "Norway", "Norway", 1, 2],
+    ["Paraguay", "Germany", "Paraguay", 2, 1],
+    ["France", "Sweden", null, null, null],
+    ["Mexico", "Ecuador", null, null, null],
+    ["England", "DR Congo", null, null, null],
+    ["Spain", "Austria", null, null, null],
+    ["Portugal", "Croatia", null, null, null],
+    ["Belgium", "Senegal", null, null, null],
+    ["United States", "Bosnia", null, null, null],
+    ["Argentina", "Cape Verde", null, null, null],
+    ["Australia", "Egypt", null, null, null],
+    ["Switzerland", "Algeria", null, null, null],
+    ["Colombia", "Ghana", null, null, null]
 ];
 
 const roundWinners = [
-    [], // Round of 32 winners come from `matches`
+    [], // Round of 32 winners come from matches
 
     // Round of 16 winners
     [
@@ -81,6 +81,41 @@ const roundWinners = [
     ],
 
     // Final winner
+    [
+        null
+    ]
+];
+
+const roundScores = [
+    [], // Round of 32 scores come from matches
+
+    // Round of 16 scores
+    [
+        [2, 1],
+        [3, 0],
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+    ],
+
+    // Quarterfinal scores
+    [
+        [1, 0],
+        null,
+        null,
+        null
+    ],
+
+    // Semifinal scores
+    [
+        null,
+        null
+    ],
+
+    // Final score
     [
         null
     ]
@@ -144,6 +179,8 @@ function drawWorldCupBracket() {
         top: m[0],
         bottom: m[1],
         winner: m[2],
+        topScore: m[3],
+        bottomScore: m[4],
         x: x[0],
         y: y0 + i * gap
     }));
@@ -162,6 +199,8 @@ function drawWorldCupBracket() {
                 top: getWinner(a),
                 bottom: getWinner(b),
                 winner: roundWinners[r][i],
+                topScore: roundScores[r][i]?.[0],
+                bottomScore: roundScores[r][i]?.[1],
                 x: x[r],
                 y: cy - boxH / 2
             });
@@ -182,7 +221,7 @@ function drawWorldCupBracket() {
         }
     }
 
-    drawChampion(svg, x[4], rounds[4][0].y + 130);
+    drawChampion(svg, x[4], rounds[4][0].y + 130, rounds[4][0].winner);
 }
 
 function getWinner(match) {
@@ -223,13 +262,13 @@ function drawMatch(svg, match, boxW, boxH, isFinal) {
 
     group.appendChild(outer);
 
-    drawTeam(svg, group, match.top, match.winner, match.x + 12, match.y + 12, boxW - 24);
-    drawTeam(svg, group, match.bottom, match.winner, match.x + 12, match.y + 48, boxW - 24);
+    drawTeam(svg, group, match.top, match.winner, match.x + 12, match.y + 12, boxW - 24, match.topScore);
+    drawTeam(svg, group, match.bottom, match.winner, match.x + 12, match.y + 48, boxW - 24, match.bottomScore);
 
     svg.appendChild(group);
 }
 
-function drawTeam(svg, group, team, winner, x, y, width) {
+function drawTeam(svg, group, team, winner, x, y, width, score) {
     const isWinner = winner === team;
     const isEliminated = winner && winner !== team && team !== "TBD";
 
@@ -254,7 +293,7 @@ function drawTeam(svg, group, team, winner, x, y, width) {
         "font-weight": isWinner ? "700" : "400"
     });
 
-    text.textContent = `${flags[team] || ""} ${team}`.trim();
+    text.textContent = `${flags[team] || ""} ${team}${score != null ? " " + score : ""}`.trim();
     group.appendChild(text);
 
     if (isEliminated) {
@@ -290,7 +329,7 @@ function drawConnector(svg, topMatch, bottomMatch, nextMatch, boxW, boxH) {
     svg.appendChild(path);
 }
 
-function drawChampion(svg, x, y) {
+function drawChampion(svg, x, y, champion) {
     const rect = createSVG("rect", {
         x,
         y,
@@ -313,7 +352,7 @@ function drawChampion(svg, x, y) {
         "font-weight": "700"
     });
 
-    text.textContent = "ð Champion: TBD";
+    text.textContent = `ð Champion: ${champion || "TBD"}`;
     svg.appendChild(text);
 }
 
