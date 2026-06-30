@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NumberOnWings - World Cup 2026</title>
     <link rel="stylesheet" href="style.css">
-</head>
+
+    </head>
+
 <body>
 
 <header></header>
@@ -27,7 +29,7 @@
                     Germany's World Cup journey ended in a dramatic penalty shootout.
                     Can France continue the mission?
                 </p>
-                <button id="calc-btn" style="width:100%;" onclick="toggleArticle()">Read Article</button>
+                <button id="calc-btn" class="world-cup-page-btn" onclick="toggleArticle()">Read Article</button>
             </div>
         </div>
 
@@ -38,7 +40,7 @@
                 <p style="font-size:0.9rem; color:#8b949e; margin-bottom:20px;">
                     View the full knockout bracket with completed matches and TBD future rounds.
                 </p>
-                <button id="calc-btn" style="width:100%;" onclick="toggleBracket()">Open Bracket</button>
+                <button id="calc-btn" class="world-cup-page-btn" onclick="toggleBracket()">Open Bracket</button>
             </div>
         </div>
 
@@ -136,7 +138,10 @@ expressed here are those of one very disappointed Germany supporter.
 <div id="bracket" class="container" style="display:none; overflow-x:auto;">
     <h2>🏆 World Cup 2026 Knockout Bracket</h2>
 
+    <p>Green teams have already advanced. TBD slots will update as the tournament continues.</p>
+
     <div class="world-cup-bracket">
+
         <div class="bracket-round">
             <h3>Round of 32</h3>
 
@@ -160,10 +165,11 @@ expressed here are those of one very disappointed Germany supporter.
 
         <div class="bracket-round bracket-round-16">
             <h3>Round of 16</h3>
+
             <div class="bracket-match"><div class="bracket-team">🇨🇦 Canada</div><div class="bracket-team">TBD</div></div>
             <div class="bracket-match"><div class="bracket-team">🇧🇷 Brazil</div><div class="bracket-team">TBD</div></div>
+            <div class="bracket-match"><div class="bracket-team">TBD</div><div class="bracket-team">🇵🇾 Paraguay</div></div>
             <div class="bracket-match"><div class="bracket-team">TBD</div><div class="bracket-team">TBD</div></div>
-            <div class="bracket-match"><div class="bracket-team">🇵🇾 Paraguay</div><div class="bracket-team">TBD</div></div>
             <div class="bracket-match"><div class="bracket-team">TBD</div><div class="bracket-team">TBD</div></div>
             <div class="bracket-match"><div class="bracket-team">TBD</div><div class="bracket-team">TBD</div></div>
             <div class="bracket-match"><div class="bracket-team">TBD</div><div class="bracket-team">TBD</div></div>
@@ -189,12 +195,9 @@ expressed here are those of one very disappointed Germany supporter.
             <div class="bracket-match bracket-final"><div class="bracket-team">TBD</div><div class="bracket-team">TBD</div></div>
             <div class="bracket-champion">🏆 Champion: TBD</div>
         </div>
+
     </div>
 </div>
-
-
-
-<script src="world_cup.js"></script>
 
 </body>
 </html>
