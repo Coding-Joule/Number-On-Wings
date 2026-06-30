@@ -1,4 +1,4 @@
-function openArticle() {
+function toggleArticle() {
     const article = document.getElementById("article");
 
     if (article.style.display === "none") {
@@ -13,6 +13,15 @@ function openArticle() {
 }
 
 function toggleBracket() {
-    const bracket = document.getElementById("world-cup-bracket");
-    bracket.classList.toggle("hidden");
+    const bracket = document.getElementById("bracket");
+
+    if (bracket.style.display === "none") {
+        bracket.style.display = "block";
+        bracket.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    } else {
+        bracket.style.display = "none";
+    }
 }
