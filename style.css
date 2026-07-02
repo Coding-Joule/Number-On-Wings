@@ -338,17 +338,22 @@ p {
 }
 
 .world-cup-btn {
-    background: #238636;
+    background: linear-gradient(135deg, #2ea043, #238636);
     color: white;
     border: none;
     padding: 12px 24px;
-    border-radius: 10px;
+    border-radius: 999px;
     font-size: 1rem;
+    font-weight: 700;
     cursor: pointer;
+    box-shadow: 0 6px 16px rgba(35, 134, 54, 0.28);
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
 .world-cup-btn:hover {
-    background: #2ea043;
+    background: linear-gradient(135deg, #3fb950, #2ea043);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(46, 160, 67, 0.4);
 }
 
 .world-cup-bracket {
