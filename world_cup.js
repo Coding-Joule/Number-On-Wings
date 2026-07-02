@@ -14,7 +14,7 @@ function toggleArticle2() {
 
     if (article.style.display === "none") {
         article.style.display = "block";
-        article.scrollIntoView({ behavior: "smooth" });
+        article.scrollIntoView({ behavior: "smooth", block: "start" });
     } else {
         article.style.display = "none";
     }
@@ -33,18 +33,18 @@ function toggleBracket() {
 }
 
 const matches = [
-    ["Canada", "South Africa", "Canada", 2, 1],
-    ["Netherlands", "Morocco", "Morocco", 0, 1],
-    ["Brazil", "Japan", "Brazil", 3, 0],
+    ["Canada", "South Africa", "Canada", 1, 0],
+    ["Netherlands", "Morocco", "Morocco", 1, 1, "Morocco wins 3â2 on penalties"],
+    ["Brazil", "Japan", "Brazil", 2, 1],
     ["Ivory Coast", "Norway", "Norway", 1, 2],
-    ["Paraguay", "Germany", "Paraguay", 2, 1],
-    ["France", "Sweden", null, null, null],
-    ["Mexico", "Ecuador", null, null, null],
+    ["Paraguay", "Germany", "Paraguay", 1, 1, "Paraguay wins 4â3 on penalties"],
+    ["France", "Sweden", "France", 3, 0],
+    ["Mexico", "Ecuador", "Mexico", 2, 0],
     ["England", "DR Congo", null, null, null],
     ["Spain", "Austria", null, null, null],
     ["Portugal", "Croatia", null, null, null],
     ["Belgium", "Senegal", null, null, null],
-    ["United States", "Bosnia", null, null, null],
+    ["United States", "Bosnia and Herzegovina", null, null, null],
     ["Argentina", "Cape Verde", null, null, null],
     ["Australia", "Egypt", null, null, null],
     ["Switzerland", "Algeria", null, null, null],
@@ -56,10 +56,10 @@ const roundWinners = [
 
     // Round of 16 winners
     [
-        "Canada",
-        "Brazil",
-        null,
-        null,
+        null, // Canada vs Morocco
+        null, // Brazil vs Norway
+        null, // Paraguay vs France
+        null, // Mexico vs England / DR Congo
         null,
         null,
         null,
@@ -68,7 +68,7 @@ const roundWinners = [
 
     // Quarterfinal winners
     [
-        "Brazil",
+        null,
         null,
         null,
         null
@@ -91,8 +91,8 @@ const roundScores = [
 
     // Round of 16 scores
     [
-        [2, 1],
-        [3, 0],
+        null,
+        null,
         null,
         null,
         null,
@@ -103,7 +103,7 @@ const roundScores = [
 
     // Quarterfinal scores
     [
-        [1, 0],
+        null,
         null,
         null,
         null
@@ -181,6 +181,7 @@ function drawWorldCupBracket() {
         winner: m[2],
         topScore: m[3],
         bottomScore: m[4],
+        note: m[5],
         x: x[0],
         y: y0 + i * gap
     }));
@@ -265,6 +266,19 @@ function drawMatch(svg, match, boxW, boxH, isFinal) {
     drawTeam(svg, group, match.top, match.winner, match.x + 12, match.y + 12, boxW - 24, match.topScore);
     drawTeam(svg, group, match.bottom, match.winner, match.x + 12, match.y + 48, boxW - 24, match.bottomScore);
 
+    if (match.note) {
+        const note = createSVG("text", {
+            x: match.x + boxW / 2,
+            y: match.y + boxH + 17,
+            "text-anchor": "middle",
+            fill: "#8b949e",
+            "font-size": "12"
+        });
+
+        note.textContent = match.note;
+        group.appendChild(note);
+    }
+
     svg.appendChild(group);
 }
 
@@ -289,7 +303,7 @@ function drawTeam(svg, group, team, winner, x, y, width, score) {
         x: x + 10,
         y: y + 21,
         fill: isWinner ? "#7ee787" : isEliminated ? "#f85149" : "#ffffff",
-        "font-size": "17",
+        "font-size": "15",
         "font-weight": isWinner ? "700" : "400"
     });
 
