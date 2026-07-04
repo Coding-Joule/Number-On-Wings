@@ -48,7 +48,7 @@ const matches = [
     ["Argentina", "Cape Verde", "Argentina", 3, 2],
     ["Australia", "Egypt", "Egypt", 1, 1, "Egypt wins 4 - 2 on penalties"],
     ["Switzerland", "Algeria", "Switzerland", 2, 0],
-    ["Colombia", "Ghana", null, null, null]
+    ["Colombia", "Ghana", "Colombia", 1, 0]
 ];
 
 const roundWinners = [
@@ -59,11 +59,11 @@ const roundWinners = [
         null, // Canada vs Morocco
         null, // Brazil vs Norway
         null, // Paraguay vs France
-        null, // Mexico vs England / DR Congo
-        null,
-        null,
-        null,
-        null
+        null, // Mexico vs England
+        null, // Spain vs Portugal
+        null, // Belgium vs United States
+        null, // Argentina vs Egypt
+        null  // Switzerland vs Colombia
     ],
 
     // Quarterfinal winners
