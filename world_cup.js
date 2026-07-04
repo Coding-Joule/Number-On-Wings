@@ -41,13 +41,13 @@ const matches = [
     ["France", "Sweden", "France", 3, 0],
     ["Mexico", "Ecuador", "Mexico", 2, 0],
     ["England", "DR Congo", "England", 2, 1],
-    ["Spain", "Austria", null, null, null],
-    ["Portugal", "Croatia", null, null, null],
+    ["Spain", "Austria", "Spain", 3,0],
+    ["Portugal", "Croatia", "Portugal", 2, 1],
     ["Belgium", "Senegal", "Belgium", 3, 2],
     ["United States", "Bosnia and Herzegovina", "United States", 2, 0],
-    ["Argentina", "Cape Verde", null, null, null],
-    ["Australia", "Egypt", null, null, null],
-    ["Switzerland", "Algeria", null, null, null],
+    ["Argentina", "Cape Verde", "Argentina", 3, 2],
+    ["Australia", "Egypt", "Egypt", 1, 1, "Egypt wins 4 - 2 on penalties"],
+    ["Switzerland", "Algeria", "Switzerland", 2, 0],
     ["Colombia", "Ghana", null, null, null]
 ];
 
@@ -366,7 +366,7 @@ function drawChampion(svg, x, y, champion) {
         "font-weight": "700"
     });
 
-    text.textContent = `ð Champion: ${champion || "TBD"}`;
+    text.textContent = `🏆 Champion: ${champion || "TBD"}`;
     svg.appendChild(text);
 }
 
