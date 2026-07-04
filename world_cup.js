@@ -56,7 +56,7 @@ const roundWinners = [
 
     // Round of 16 winners
     [
-        null, // Canada vs Morocco
+        "Morocco", // Canada vs Morocco
         null, // Brazil vs Norway
         null, // Paraguay vs France
         null, // Mexico vs England
@@ -91,7 +91,7 @@ const roundScores = [
 
     // Round of 16 scores
     [
-        null,
+        0, 3,
         null,
         null,
         null,
