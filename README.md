@@ -1,4 +1,4 @@
-# Number On Wings
+# [Number On Wings](https://numberonwings.com)
 
 <table>
 <tr>
@@ -36,8 +36,6 @@ I started with block-coding on  [MakeCode Arcade](https://arcade.makecode.com). 
 - HTML5
 - CSS3
 - JavaScript
-- Trinket
-- [NameCheap](https://namecheap.com)
 - Git
 - GitHub Pages
 
