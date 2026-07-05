@@ -41,7 +41,7 @@ const matches = [
     ["France", "Sweden", "France", 3, 0],
     ["Mexico", "Ecuador", "Mexico", 2, 0],
     ["England", "DR Congo", "England", 2, 1],
-    ["Spain", "Austria", "Spain", 3,0],
+    ["Spain", "Austria", "Spain", 3, 0],
     ["Portugal", "Croatia", "Portugal", 2, 1],
     ["Belgium", "Senegal", "Belgium", 3, 2],
     ["United States", "Bosnia and Herzegovina", "United States", 2, 0],
@@ -57,32 +57,32 @@ const roundWinners = [
     // Round of 16 winners
     [
         "Morocco", // Canada vs Morocco
-        null, // Brazil vs Norway
-        null, // Paraguay vs France
-        null, // Mexico vs England
-        null, // Spain vs Portugal
-        null, // Belgium vs United States
-        null, // Argentina vs Egypt
-        null  // Switzerland vs Colombia
+        null,      // Brazil vs Norway
+        "France",  // Paraguay vs France
+        null,      // Mexico vs England
+        null,      // Spain vs Portugal
+        null,      // Belgium vs United States
+        null,      // Argentina vs Egypt
+        null       // Switzerland vs Colombia
     ],
 
     // Quarterfinal winners
     [
-        null,
-        null,
-        null,
-        null
+        null, // Morocco/Brazil-Norway winner
+        null, // France/Mexico-England winner
+        null, // Spain-Portugal/Belgium-USA winner
+        null  // Argentina-Egypt/Switzerland-Colombia winner
     ],
 
     // Semifinal winners
     [
-        null,
-        null
+        null, // Quarterfinal 1 vs Quarterfinal 2
+        null  // Quarterfinal 3 vs Quarterfinal 4
     ],
 
     // Final winner
     [
-        null
+        null // Semifinal 1 vs Semifinal 2
     ]
 ];
 
@@ -91,33 +91,33 @@ const roundScores = [
 
     // Round of 16 scores
     [
-        0, 3,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
+        0, 3,       // Canada vs Morocco
+        null, null, // Brazil vs Norway
+        0, 1,       // Paraguay vs France
+        null, null, // Mexico vs England
+        null, null, // Spain vs Portugal
+        null, null, // Belgium vs United States
+        null, null, // Argentina vs Egypt
+        null, null  // Switzerland vs Colombia
     ],
 
     // Quarterfinal scores
     [
-        null,
-        null,
-        null,
-        null
+        null, null, // Morocco/Brazil-Norway winner
+        null, null, // France/Mexico-England winner
+        null, null, // Spain-Portugal/Belgium-USA winner
+        null, null  // Argentina-Egypt/Switzerland-Colombia winner
     ],
 
     // Semifinal scores
     [
-        null,
-        null
+        null, null, // Quarterfinal 1 vs Quarterfinal 2
+        null, null  // Quarterfinal 3 vs Quarterfinal 4
     ],
 
     // Final score
     [
-        null
+        null, null // Semifinal 1 vs Semifinal 2
     ]
 ];
 
