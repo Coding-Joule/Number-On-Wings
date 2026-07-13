@@ -12,33 +12,7 @@ const leaderboardList = document.getElementById('leaderboard-list');
 const puzzleBox = document.getElementById('puzzle-box');
 
 // Local Puzzle Bank
-const PUZZLES = [
-    {
-        topic: "Arithmetic",
-        question: "What is 17 + 25?",
-        answer: "42"
-    },
-    {
-        topic: "Algebra",
-        question: "Solve for x: 3x + 5 = 20",
-        answer: "5"
-    },
-    {
-        topic: "Number Theory",
-        question: "What is the greatest common divisor of 48 and 18?",
-        answer: "6"
-    },
-    {
-        topic: "Geometry",
-        question: "A square has side length 9. What is its area?",
-        answer: "81"
-    },
-    {
-        topic: "Combinatorics",
-        question: "How many ways can you arrange the letters A, B, and C?",
-        answer: "6"
-    }
-];
+const PUZZLES = generatePuzzles(100);
 
 // Game State
 let playerName = "";
