@@ -1,7 +1,8 @@
-// Wait for the webpage layout to load, then inject the shared navbar
+// Initialize and inject the shared navigation bar into all pages
 document.addEventListener("DOMContentLoaded", function() {
     let header = document.querySelector("header");
     
+    // Only proceed if a header element exists in the page
     if (header) {
         header.innerHTML = `
             <div class="logo">

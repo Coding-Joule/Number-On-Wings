@@ -1,3 +1,4 @@
+// Supabase configuration for storing leaderboard scores
 const supabaseUrl = "https://thebbyhdswhldqaycieu.supabase.co";
 const supabaseKey = "sb_publishable_RRrYnpGT8TSAG4WpO7vTEw_nomNPra6";
 
@@ -6,7 +7,7 @@ const supabaseClient = window.supabase.createClient(
     supabaseKey
 );
 
-// DOM Element Selectors
+// ===== DOM Element References =====
 const statusEl = document.getElementById("puzzle-status");
 const questionEl = document.getElementById("puzzle-question");
 const inputEl = document.getElementById("puzzle-input");
@@ -19,24 +20,26 @@ const leaderboardBox = document.getElementById("global-leaderboard");
 const leaderboardList = document.getElementById("leaderboard-list");
 const puzzleBox = document.getElementById("puzzle-box");
 
-// Local Puzzle Bank
-const PUZZLES = generatePuzzles(100);
+// ===== Game State Variables =====
+const PUZZLES = generatePuzzles(100); // Pre-generate 100 random puzzles
+let playerName = "";           // Current player's nickname
+let maxUnlockedIndex = 0;      // Highest level player has reached
+let currentIdx = 0;            // Currently displayed puzzle index
+let currentPuzzle = null;      // Current puzzle object
 
-// Game State
-let playerName = "";
-let maxUnlockedIndex = 0;
-let currentIdx = 0;
-let currentPuzzle = null;
-
-
-// Load a puzzle
+/**
+ * Load and display a puzzle at the given index
+ * @param {number} index - The puzzle index to load
+ */
 function loadLevel(index) {
     currentIdx = index;
 
+    // Reset input field and result display
     inputEl.value = "";
     resultEl.classList.add("hidden");
     resultEl.innerText = "";
 
+    // Check if all puzzles are solved
     if (index >= PUZZLES.length) {
         statusEl.innerText = "🏆 Quest Complete!";
         questionEl.innerText = "You solved every puzzle!";
@@ -47,11 +50,13 @@ function loadLevel(index) {
 
     currentPuzzle = PUZZLES[index];
 
+    // Display current level and topic
     statusEl.innerText =
         `Quest Level ${index + 1} • [${currentPuzzle.topic}]`;
 
     questionEl.innerText = currentPuzzle.question;
 
+    // Render mathematical expressions if MathJax is available
     if (window.MathJax) {
         MathJax.typesetPromise([questionEl]).catch((error) => {
             console.error("MathJax error:", error);
@@ -59,8 +64,10 @@ function loadLevel(index) {
     }
 }
 
-
-// Check the player's answer
+/**
+ * Verify the player's answer against the correct answer
+ * Updates progress and moves to next level on correct answer
+ */
 function verifyAnswer() {
     if (!currentPuzzle) return;
 
@@ -73,15 +80,15 @@ function verifyAnswer() {
         resultEl.style.color = "#2ea043";
         resultEl.innerText = "🎉 CORRECT! Loading next level...";
 
+        // If this is a new level reached, save progress
         if (currentIdx === maxUnlockedIndex) {
             maxUnlockedIndex++;
 
             saveProgress();
-
-            // Save the new score online.
             saveGlobalScore();
         }
 
+        // Move to next puzzle after brief delay
         setTimeout(() => {
             loadLevel(currentIdx + 1);
         }, 1000);
@@ -92,8 +99,10 @@ function verifyAnswer() {
     }
 }
 
-
-// Save this player's personal progress on this device
+/**
+ * Save player's progress to browser localStorage
+ * Allows progress to persist across sessions
+ */
 function saveProgress() {
     if (!playerName) return;
 
@@ -104,8 +113,10 @@ function saveProgress() {
     );
 }
 
-
-// Save a score to Supabase
+/**
+ * Save player's score to Supabase leaderboard
+ * Updates global leaderboard after new level reached
+ */
 async function saveGlobalScore() {
     if (!playerName) return;
 
@@ -125,8 +136,10 @@ async function saveGlobalScore() {
     await loadGlobalLeaderboard();
 }
 
-
-// Load the global leaderboard from Supabase
+/**
+ * Fetch and display the top 20 players from Supabase leaderboard
+ * Handles duplicate entries by keeping each player's best score
+ */
 async function loadGlobalLeaderboard() {
     leaderboardList.innerHTML = "Loading leaderboard...";
 
@@ -149,11 +162,7 @@ async function loadGlobalLeaderboard() {
         return;
     }
 
-    /*
-      A new database row is currently created whenever someone
-      reaches a new level. This keeps only each username's best
-      score when displaying the leaderboard.
-    */
+    // Extract best score for each unique player
     const bestScores = new Map();
 
     for (const entry of data) {
@@ -171,6 +180,7 @@ async function loadGlobalLeaderboard() {
         }
     }
 
+    // Display top 20 players
     const rankedEntries = Array.from(bestScores.values())
         .sort((a, b) => Number(b.score) - Number(a.score))
         .slice(0, 20);
@@ -205,16 +215,20 @@ async function loadGlobalLeaderboard() {
         .join("");
 }
 
-
-// Prevent a nickname from being interpreted as HTML
+/**
+ * Escape HTML special characters to prevent XSS attacks
+ * @param {string} value - String to escape
+ * @returns {string} Escaped HTML string
+ */
 function escapeHtml(value) {
     const element = document.createElement("div");
     element.textContent = String(value ?? "");
     return element.innerHTML;
 }
 
+// ===== Event Listeners =====
 
-// Nickname setup
+// Handle nickname setup and game start
 if (saveNickBtn) {
     saveNickBtn.addEventListener("click", async () => {
         const enteredName = nickInput.value.trim();
@@ -225,6 +239,7 @@ if (saveNickBtn) {
 
         playerName = enteredName;
 
+        // Check if player has saved progress
         const savedName =
             localStorage.getItem("puzzlePlayerName");
 
@@ -241,6 +256,7 @@ if (saveNickBtn) {
             maxUnlockedIndex = 0;
         }
 
+        // Show puzzle interface, hide setup screen
         setupBox.classList.add("hidden");
         puzzleBox.classList.remove("hidden");
         leaderboardBox.classList.remove("hidden");
@@ -250,14 +266,12 @@ if (saveNickBtn) {
     });
 }
 
-
-// Submit button
+// Submit button click handler
 if (btnEl) {
     btnEl.addEventListener("click", verifyAnswer);
 }
 
-
-// Enter key
+// Allow Enter key to submit answer
 if (inputEl) {
     inputEl.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {

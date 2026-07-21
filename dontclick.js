@@ -1,9 +1,11 @@
+// Easter egg: Displays a fake "hacking" interface when user clicks the trap button
 window.addEventListener("load", function () {
     const btn = document.getElementById("trap-btn");
 
     if (!btn) return;
 
     btn.addEventListener("click", function () {
+        // Replace page content with fake hacking interface
         document.body.innerHTML = `
             <div class="container">
                 <h1>Hacking You...</h1>
@@ -14,6 +16,7 @@ window.addEventListener("load", function () {
             </div>
         `;
 
+        // Sequence of fake hacking messages to display
         const messages = [
             "Establishing secure connection...",
             "Accessing files...",
@@ -33,6 +36,7 @@ window.addEventListener("load", function () {
         const messageEl = document.getElementById("hack-message");
         const progressEl = document.getElementById("hack-progress");
 
+        // Update message and progress bar every 700ms
         const interval = setInterval(function () {
             messageEl.innerText = messages[index];
             progress += 10;
@@ -43,6 +47,7 @@ window.addEventListener("load", function () {
             if (index >= messages.length) {
                 clearInterval(interval);
 
+                // Show fake results after delay
                 setTimeout(function () {
                     document.body.innerHTML = `
                         <div class="container">
