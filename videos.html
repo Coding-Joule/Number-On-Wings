@@ -1,72 +1,213 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NumberOnWings - Video Academy</title>
-    <link rel="stylesheet" href="style.css">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NumberOnWings | Video Academy</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
+
+
 <body>
 
 <header></header>
+
 <script src="nav.js"></script>
 
-<div class="container" style="margin-bottom: 0;">
-    <h1>Videos</h1>
-    <p>Master competition-style math and lightning mental shortcuts. Click any lesson to start learning!</p>
+
+<main>
+
+    <section class="container">
+
+        <div class="eyebrow">
+            Video Academy
+        </div>
+
+        <h1>
+            Learn visually.
+        </h1>
+
+        <p class="lead">
+
+            Explore mathematical ideas through short lessons, examples,
+            and visual explanations.
+
+        </p>
+
+
+        <div class="video-grid">
+
+
+            <article class="video-card">
+
+                <div class="video-thumbnail">
+                    🔢
+                </div>
+
+                <div class="video-content">
+
+                    <h2>
+                        Number Theory
+                    </h2>
+
+                    <p>
+                        Prime numbers, divisibility, modular ideas, and
+                        the strange behavior of integers.
+                    </p>
+
+                    <button
+                        class="lesson-btn"
+                        onclick="playVideo('Number Theory')"
+                    >
+                        Watch Lesson
+                    </button>
+
+                </div>
+
+            </article>
+
+
+
+            <article class="video-card">
+
+                <div class="video-thumbnail">
+                    📐
+                </div>
+
+                <div class="video-content">
+
+                    <h2>
+                        Geometry
+                    </h2>
+
+                    <p>
+                        Shapes, angles, constructions, proofs, and the
+                        logic hidden inside diagrams.
+                    </p>
+
+                    <button
+                        class="lesson-btn"
+                        onclick="playVideo('Geometry')"
+                    >
+                        Watch Lesson
+                    </button>
+
+                </div>
+
+            </article>
+
+
+
+            <article class="video-card">
+
+                <div class="video-thumbnail">
+                    📊
+                </div>
+
+                <div class="video-content">
+
+                    <h2>
+                        Analytic Geometry
+                    </h2>
+
+                    <p>
+                        Coordinates connect algebra and geometry into one
+                        mathematical language.
+                    </p>
+
+                    <button
+                        class="lesson-btn"
+                        onclick="playVideo('Analytic Geometry')"
+                    >
+                        Watch Lesson
+                    </button>
+
+                </div>
+
+            </article>
+
+
+
+            <article class="video-card">
+
+                <div class="video-thumbnail">
+                    🔐
+                </div>
+
+                <div class="video-content">
+
+                    <h2>
+                        Cryptography
+                    </h2>
+
+                    <p>
+                        Codes, ciphers, patterns, modular arithmetic, and
+                        the mathematics behind secret information.
+                    </p>
+
+                    <button
+                        class="lesson-btn"
+                        onclick="playVideo('cryptarithms')"
+                    >
+                        Watch Lesson
+                    </button>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<div class="mascot-note">
+
+    <img
+        src="IMG_3098.png"
+        alt="IrAcoNAl"
+    >
+
+    <p>
+        <strong>IrAcoNAl:</strong>
+        Watching mathematics is useful. Doing mathematics is where the
+        wings actually grow.
+    </p>
+
 </div>
 
-<div style="display: flex; justify-content: center; width: 100%; padding: 0 20px; box-sizing: border-box;">
-    <div class="video-grid">
-        
-        <div class="video-card">
-            <div class="video-thumbnail">🔢</div>
-            <div style="padding: 20px; text-align: left;">
-                <h3 style="margin: 0 0 10px 0; color: #ffffff;">Number Theory</h3>
-                <p style="font-size: 0.9rem; color: #8b949e; margin-bottom: 20px;"><i>"Mathematics is the queen of the sciences and number theory is the queen of mathematics."</i></p>
-                <p style="font-size: 0.9rem; color: #8b949e; margin-bottom: 20px;">— Carl Friedrich Gauss</p>
-                <button id="calc-btn" style="width: 100%;" onclick="playVideo('Number Theory')">Watch Lesson</button>
-            </div>
-        </div>
-
-        <div class="video-card">
-            <div class="video-thumbnail">📐</div>
-            <div style="padding: 20px; text-align: left;">
-                <h3 style="margin: 0 0 10px 0; color: #ffffff;">Geometry</h3>
-                <p style="font-size: 0.9rem; color: #8b949e; margin-bottom: 20px;"><i>"There is geometry in the humming of the strings, there is music in the spacing of the spheres."</i></p>
-                <p style="font-size: 0.9rem; color: #8b949e; margin-bottom: 20px;">— Pythagoras</p>
-                <button id="calc-btn" style="width: 100%;" onclick="playVideo('Geometry')">Watch Lesson</button>
-            </div>
-        </div>
-
-        <div class="video-card">
-            <div class="video-thumbnail">📊</div>
-            <div style="padding: 20px; text-align: left;">
-                <h3 style="margin: 0 0 10px 0; color: #ffffff;">Analytic Geometry</h3>
-                <p style="font-size: 0.9rem; color: #8b949e; margin-bottom: 20px;"><i>"Each problem that I solved became a rule, which served afterwards to solve other problems."</i></p>
-                <p style="font-size: 0.9rem; color: #8b949e; margin-bottom: 20px;">— René Descartes</p>
-                <button id="calc-btn" style="width: 100%;" onclick="playVideo('Analytic Geometry')">Watch Lesson</button>
-            </div>
-        </div>
-
-        <div class="video-card">
-            <div class="video-thumbnail">🧩</div>
-            <div style="padding: 20px; text-align: left;">
-                <h3 style="margin: 0 0 10px 0; color: #ffffff;">Cryptography</h3>
-                <p style="font-size: 0.9rem; color: #8b949e; margin-bottom: 20px;"><i>"Those who can imagine anything, can create the impossible."</i></p>
-                <p style="font-size: 0.9rem; color: #8b949e; margin-bottom: 20px;">— Alan Turing</p>
-                <button id="calc-btn" style="width: 100%;" onclick="playVideo('cryptarithms')">Watch Lesson</button>
-            </div>
-        </div>
-
-    </div>
-</div>
 
 <script>
+
     function playVideo(lessonId) {
-        alert("Launching " + lessonId + " video lesson...");
+
+        alert(
+            "Launching " +
+            lessonId +
+            " video lesson..."
+        );
+
     }
+
 </script>
 
+
 </body>
+
 </html>
