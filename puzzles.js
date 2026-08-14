@@ -33,13 +33,10 @@ let currentPuzzle = null;      // Current puzzle object
  */
 function loadLevel(index) {
     currentIdx = index;
-
-    // Reset input field and result display
     inputEl.value = "";
     resultEl.classList.add("hidden");
     resultEl.innerText = "";
 
-    // Check if all puzzles are solved
     if (index >= PUZZLES.length) {
         statusEl.innerText = "🏆 Quest Complete!";
         questionEl.innerText = "You solved every puzzle!";
@@ -49,11 +46,7 @@ function loadLevel(index) {
     }
 
     currentPuzzle = PUZZLES[index];
-
-    // Display current level and topic
-    statusEl.innerText =
-        `Quest Level ${index + 1} • [${currentPuzzle.topic}]`;
-
+    statusEl.innerText = `Quest Level ${index + 1} • [${currentPuzzle.topic}]`;
     questionEl.innerText = currentPuzzle.question;
 
     // Render mathematical expressions if MathJax is available
@@ -80,22 +73,18 @@ function verifyAnswer() {
         resultEl.style.color = "#2ea043";
         resultEl.innerText = "🎉 CORRECT! Loading next level...";
 
-        // If this is a new level reached, save progress
         if (currentIdx === maxUnlockedIndex) {
             maxUnlockedIndex++;
-
             saveProgress();
             saveGlobalScore();
         }
 
-        // Move to next puzzle after brief delay
         setTimeout(() => {
             loadLevel(currentIdx + 1);
         }, 1000);
     } else {
         resultEl.style.color = "#f85149";
-        resultEl.innerText =
-            "❌ Incorrect! Check your work and try again.";
+        resultEl.innerText = "❌ Incorrect! Check your work and try again.";
     }
 }
 
@@ -105,12 +94,8 @@ function verifyAnswer() {
  */
 function saveProgress() {
     if (!playerName) return;
-
     localStorage.setItem("puzzlePlayerName", playerName);
-    localStorage.setItem(
-        "puzzleMaxLevel",
-        String(maxUnlockedIndex)
-    );
+    localStorage.setItem("puzzleMaxLevel", String(maxUnlockedIndex));
 }
 
 /**
@@ -152,8 +137,7 @@ async function loadGlobalLeaderboard() {
 
     if (error) {
         console.error("Could not load leaderboard:", error);
-        leaderboardList.innerHTML =
-            "Could not load the global leaderboard.";
+        leaderboardList.innerHTML = "Could not load the global leaderboard.";
         return;
     }
 
@@ -164,18 +148,13 @@ async function loadGlobalLeaderboard() {
 
     // Extract best score for each unique player
     const bestScores = new Map();
-
     for (const entry of data) {
         const username = String(entry.username ?? "").trim();
 
         if (!username) continue;
 
         const existingEntry = bestScores.get(username);
-
-        if (
-            !existingEntry ||
-            Number(entry.score) > Number(existingEntry.score)
-        ) {
+        if (!existingEntry || Number(entry.score) > Number(existingEntry.score)) {
             bestScores.set(username, entry);
         }
     }
@@ -196,18 +175,8 @@ async function loadGlobalLeaderboard() {
             const safeScore = Number(entry.score) || 0;
 
             return `
-                <div
-                    class="leaderboard-entry"
-                    style="
-                        display: flex;
-                        justify-content: space-between;
-                    "
-                >
-                    <span>
-                        ${index + 1}. 👤
-                        <strong>${safeUsername}</strong>
-                    </span>
-
+                <div class="leaderboard-entry" style="display: flex; justify-content: space-between;">
+                    <span>${index + 1}. 👤 <strong>${safeUsername}</strong></span>
                     <span>Level ${safeScore}</span>
                 </div>
             `;
@@ -240,11 +209,8 @@ if (saveNickBtn) {
         playerName = enteredName;
 
         // Check if player has saved progress
-        const savedName =
-            localStorage.getItem("puzzlePlayerName");
-
-        const savedLevel =
-            localStorage.getItem("puzzleMaxLevel");
+        const savedName = localStorage.getItem("puzzlePlayerName");
+        const savedLevel = localStorage.getItem("puzzleMaxLevel");
 
         if (savedName === playerName && savedLevel !== null) {
             maxUnlockedIndex = Number(savedLevel);
