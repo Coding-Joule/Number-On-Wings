@@ -1,213 +1,89 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NumberOnWings | Video Academy</title>
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
+    <link rel="stylesheet" href="style.css">
 </head>
-
-
 <body>
+    <header></header>
+    <script src="nav.js"></script>
 
-<header></header>
+    <main>
+        <section class="container">
+            <div class="eyebrow">Video Academy</div>
+            <h1>Learn visually.</h1>
+            <p class="lead">
+                Explore mathematical ideas through short lessons, examples,
+                and visual explanations.
+            </p>
 
-<script src="nav.js"></script>
+            <div class="video-grid">
+                <article class="video-card">
+                    <div class="video-thumbnail">🔢</div>
+                    <div class="video-content">
+                        <h2>Number Theory</h2>
+                        <p>
+                            Prime numbers, divisibility, modular ideas, and
+                            the strange behavior of integers.
+                        </p>
+                        <button class="lesson-btn" onclick="playVideo('Number Theory')">Watch Lesson</button>
+                    </div>
+                </article>
 
+                <article class="video-card">
+                    <div class="video-thumbnail">📐</div>
+                    <div class="video-content">
+                        <h2>Geometry</h2>
+                        <p>
+                            Shapes, angles, constructions, proofs, and the
+                            logic hidden inside diagrams.
+                        </p>
+                        <button class="lesson-btn" onclick="playVideo('Geometry')">Watch Lesson</button>
+                    </div>
+                </article>
 
-<main>
+                <article class="video-card">
+                    <div class="video-thumbnail">📊</div>
+                    <div class="video-content">
+                        <h2>Analytic Geometry</h2>
+                        <p>
+                            Coordinates connect algebra and geometry into one
+                            mathematical language.
+                        </p>
+                        <button class="lesson-btn" onclick="playVideo('Analytic Geometry')">Watch Lesson</button>
+                    </div>
+                </article>
 
-    <section class="container">
+                <article class="video-card">
+                    <div class="video-thumbnail">🔐</div>
+                    <div class="video-content">
+                        <h2>Cryptography</h2>
+                        <p>
+                            Codes, ciphers, patterns, modular arithmetic, and
+                            the mathematics behind secret information.
+                        </p>
+                        <button class="lesson-btn" onclick="playVideo('cryptarithms')">Watch Lesson</button>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
 
-        <div class="eyebrow">
-            Video Academy
-        </div>
-
-        <h1>
-            Learn visually.
-        </h1>
-
-        <p class="lead">
-
-            Explore mathematical ideas through short lessons, examples,
-            and visual explanations.
-
+    <div class="mascot-note">
+        <img src="IMG_3098.png" alt="IrAcoNAl">
+        <p>
+            <strong>IrAcoNAl:</strong>
+            Watching mathematics is useful. Doing mathematics is where the
+            wings actually grow.
         </p>
+    </div>
 
-
-        <div class="video-grid">
-
-
-            <article class="video-card">
-
-                <div class="video-thumbnail">
-                    🔢
-                </div>
-
-                <div class="video-content">
-
-                    <h2>
-                        Number Theory
-                    </h2>
-
-                    <p>
-                        Prime numbers, divisibility, modular ideas, and
-                        the strange behavior of integers.
-                    </p>
-
-                    <button
-                        class="lesson-btn"
-                        onclick="playVideo('Number Theory')"
-                    >
-                        Watch Lesson
-                    </button>
-
-                </div>
-
-            </article>
-
-
-
-            <article class="video-card">
-
-                <div class="video-thumbnail">
-                    📐
-                </div>
-
-                <div class="video-content">
-
-                    <h2>
-                        Geometry
-                    </h2>
-
-                    <p>
-                        Shapes, angles, constructions, proofs, and the
-                        logic hidden inside diagrams.
-                    </p>
-
-                    <button
-                        class="lesson-btn"
-                        onclick="playVideo('Geometry')"
-                    >
-                        Watch Lesson
-                    </button>
-
-                </div>
-
-            </article>
-
-
-
-            <article class="video-card">
-
-                <div class="video-thumbnail">
-                    📊
-                </div>
-
-                <div class="video-content">
-
-                    <h2>
-                        Analytic Geometry
-                    </h2>
-
-                    <p>
-                        Coordinates connect algebra and geometry into one
-                        mathematical language.
-                    </p>
-
-                    <button
-                        class="lesson-btn"
-                        onclick="playVideo('Analytic Geometry')"
-                    >
-                        Watch Lesson
-                    </button>
-
-                </div>
-
-            </article>
-
-
-
-            <article class="video-card">
-
-                <div class="video-thumbnail">
-                    🔐
-                </div>
-
-                <div class="video-content">
-
-                    <h2>
-                        Cryptography
-                    </h2>
-
-                    <p>
-                        Codes, ciphers, patterns, modular arithmetic, and
-                        the mathematics behind secret information.
-                    </p>
-
-                    <button
-                        class="lesson-btn"
-                        onclick="playVideo('cryptarithms')"
-                    >
-                        Watch Lesson
-                    </button>
-
-                </div>
-
-            </article>
-
-
-        </div>
-
-    </section>
-
-</main>
-
-
-<div class="mascot-note">
-
-    <img
-        src="IMG_3098.png"
-        alt="IrAcoNAl"
-    >
-
-    <p>
-        <strong>IrAcoNAl:</strong>
-        Watching mathematics is useful. Doing mathematics is where the
-        wings actually grow.
-    </p>
-
-</div>
-
-
-<script>
-
-    function playVideo(lessonId) {
-
-        alert(
-            "Launching " +
-            lessonId +
-            " video lesson..."
-        );
-
-    }
-
-</script>
-
-
+    <script>
+        function playVideo(lessonId) {
+            alert("Launching " + lessonId + " video lesson...");
+        }
+    </script>
 </body>
-
 </html>

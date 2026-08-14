@@ -1,182 +1,72 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NumberOnWings | Puzzle Arena</title>
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
-    <script
-        id="MathJax-script"
-        async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
-    ></script>
-
+    <link rel="stylesheet" href="style.css">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
-
-
 <body>
+    <header></header>
+    <script src="save.js"></script>
+    <script src="nav.js"></script>
 
-<header></header>
-
-<script src="save.js"></script>
-<script src="nav.js"></script>
-
-
-<main>
-
-    <section class="container center">
-
-        <div class="eyebrow">
-            Challenge Mode
-        </div>
-
-        <h1>
-            Puzzle Arena
-        </h1>
-
-        <p
-            class="lead"
-            style="margin-left: auto; margin-right: auto;"
-        >
-            Solve a new level to earn
-            <strong>5 coins</strong>.
-            Every tenth level adds a
-            <strong>20-coin milestone bonus</strong>.
-        </p>
-
-
-        <div
-            id="player-setup"
-            class="tool-box narrow"
-        >
-
-            <h2>
-                Pick your local profile name
-            </h2>
-
-            <p>
-                No account and no password.
-                This name is saved only in this browser.
+    <main>
+        <section class="container center">
+            <div class="eyebrow">Challenge Mode</div>
+            <h1>Puzzle Arena</h1>
+            <p class="lead" style="margin-left: auto; margin-right: auto;">
+                Solve a new level to earn
+                <strong>5 coins</strong>.
+                Every tenth level adds a
+                <strong>20-coin milestone bonus</strong>.
             </p>
 
-            <input
-                type="text"
-                id="nickname-input"
-                placeholder="Enter nickname..."
-                maxlength="30"
-                autocomplete="nickname"
-            >
+            <div id="player-setup" class="tool-box narrow">
+                <h2>Pick your local profile name</h2>
+                <p>
+                    No account and no password.
+                    This name is saved only in this browser.
+                </p>
+                <input type="text" id="nickname-input" placeholder="Enter nickname..." maxlength="30" autocomplete="nickname">
+                <button id="save-nickname-btn">Enter Arena</button>
+            </div>
 
-            <button id="save-nickname-btn">
-                Enter Arena
-            </button>
-
-        </div>
-
-
-        <div
-            id="puzzle-box"
-            class="hidden"
-        >
-
-            <div
-                class="inline-actions"
-                style="justify-content: space-between; align-items: center;"
-            >
-
-                <span id="puzzle-player-label">
-                    Explorer
-                </span>
-
-                <span class="coin-reward">
-                    🪙
-                    <span id="arena-coin-count">
-                        0
+            <div id="puzzle-box" class="hidden">
+                <div class="inline-actions" style="justify-content: space-between; align-items: center;">
+                    <span id="puzzle-player-label">Explorer</span>
+                    <span class="coin-reward">
+                        🪙
+                        <span id="arena-coin-count">0</span>
                     </span>
-                </span>
+                </div>
 
+                <div id="level-map" class="level-map-grid"></div>
+
+                <div id="puzzle-status">Preparing challenge...</div>
+
+                <div class="result" id="puzzle-question"></div>
+
+                <input type="text" id="puzzle-input" placeholder="Type your answer..." autocomplete="off">
+
+                <button id="puzzle-btn">Submit Answer</button>
+
+                <div class="result hidden" id="puzzle-result"></div>
             </div>
+        </section>
+    </main>
 
+    <div class="mascot-note">
+        <img src="IMG_3098.png" alt="IrAcoNAl">
+        <p>
+            <strong>IrAcoNAl:</strong>
+            The leaderboard has departed.
+            Your progress now lives peacefully in your browser.
+        </p>
+    </div>
 
-            <div
-                id="level-map"
-                class="level-map-grid"
-            ></div>
-
-
-            <div id="puzzle-status">
-                Preparing challenge...
-            </div>
-
-
-            <div
-                class="result"
-                id="puzzle-question"
-            ></div>
-
-
-            <input
-                type="text"
-                id="puzzle-input"
-                placeholder="Type your answer..."
-                autocomplete="off"
-            >
-
-
-            <button id="puzzle-btn">
-                Submit Answer
-            </button>
-
-
-            <div
-                class="result hidden"
-                id="puzzle-result"
-            ></div>
-
-        </div>
-
-    </section>
-
-</main>
-
-
-<div class="mascot-note">
-
-    <img
-        src="IMG_3098.png"
-        alt="IrAcoNAl"
-    >
-
-    <p>
-        <strong>IrAcoNAl:</strong>
-        The leaderboard has departed.
-        Your progress now lives peacefully in your browser.
-    </p>
-
-</div>
-
-
-<script src="problemsGenerator.js"></script>
-
-<script
-    src="puzzles.js"
-    defer
-></script>
-
-
+    <script src="problemsGenerator.js"></script>
+    <script src="puzzles.js" defer></script>
 </body>
-
 </html>
