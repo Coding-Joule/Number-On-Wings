@@ -41,7 +41,6 @@ window.addEventListener("load", function () {
             messageEl.innerText = messages[index];
             progress += 10;
             progressEl.style.width = progress + "%";
-
             index++;
 
             if (index >= messages.length) {
