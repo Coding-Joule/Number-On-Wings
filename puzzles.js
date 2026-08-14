@@ -1,247 +1,345 @@
-// Supabase configuration for storing leaderboard scores
-const supabaseUrl = "https://thebbyhdswhldqaycieu.supabase.co";
-const supabaseKey = "sb_publishable_RRrYnpGT8TSAG4WpO7vTEw_nomNPra6";
+// =========================================================
+// NumberOnWings Puzzle Arena
+// Round 2 — local progress + coins, no Supabase
+// =========================================================
 
-const supabaseClient = window.supabase.createClient(
-    supabaseUrl,
-    supabaseKey
-);
+const statusEl =
+    document.getElementById("puzzle-status");
 
-// ===== DOM Element References =====
-const statusEl = document.getElementById("puzzle-status");
-const questionEl = document.getElementById("puzzle-question");
-const inputEl = document.getElementById("puzzle-input");
-const btnEl = document.getElementById("puzzle-btn");
-const resultEl = document.getElementById("puzzle-result");
-const setupBox = document.getElementById("player-setup");
-const nickInput = document.getElementById("nickname-input");
-const saveNickBtn = document.getElementById("save-nickname-btn");
-const leaderboardBox = document.getElementById("global-leaderboard");
-const leaderboardList = document.getElementById("leaderboard-list");
-const puzzleBox = document.getElementById("puzzle-box");
+const questionEl =
+    document.getElementById("puzzle-question");
 
-// ===== Game State Variables =====
-const PUZZLES = generatePuzzles(100); // Pre-generate 100 random puzzles
-let playerName = "";           // Current player's nickname
-let maxUnlockedIndex = 0;      // Highest level player has reached
-let currentIdx = 0;            // Currently displayed puzzle index
-let currentPuzzle = null;      // Current puzzle object
+const inputEl =
+    document.getElementById("puzzle-input");
 
-/**
- * Load and display a puzzle at the given index
- * @param {number} index - The puzzle index to load
- */
+const btnEl =
+    document.getElementById("puzzle-btn");
+
+const resultEl =
+    document.getElementById("puzzle-result");
+
+const setupBox =
+    document.getElementById("player-setup");
+
+const nickInput =
+    document.getElementById("nickname-input");
+
+const saveNickBtn =
+    document.getElementById("save-nickname-btn");
+
+const puzzleBox =
+    document.getElementById("puzzle-box");
+
+const levelMap =
+    document.getElementById("level-map");
+
+const playerLabel =
+    document.getElementById("puzzle-player-label");
+
+const arenaCoinCount =
+    document.getElementById("arena-coin-count");
+
+
+const PUZZLES = generatePuzzles(100);
+
+let currentIdx = 0;
+let currentPuzzle = null;
+let maxUnlockedIndex = 0;
+
+
+function getSave() {
+    return window.NumberOnWingsSave.load();
+}
+
+
+function syncStateFromSave() {
+    const save = getSave();
+
+    maxUnlockedIndex =
+        Math.min(
+            PUZZLES.length,
+            save.puzzle.maxUnlockedIndex
+        );
+
+    if (playerLabel) {
+        playerLabel.textContent =
+            save.profile.nickname ||
+            "Explorer";
+    }
+
+    if (arenaCoinCount) {
+        arenaCoinCount.textContent =
+            save.coins;
+    }
+
+    return save;
+}
+
+
+function enterArena() {
+    const save = syncStateFromSave();
+
+    setupBox.classList.add("hidden");
+    puzzleBox.classList.remove("hidden");
+
+    currentIdx = Math.min(
+        maxUnlockedIndex,
+        PUZZLES.length - 1
+    );
+
+    if (maxUnlockedIndex >= PUZZLES.length) {
+        currentIdx = PUZZLES.length;
+    }
+
+    renderLevelMap();
+    loadLevel(currentIdx);
+
+    if (
+        save.profile.nickname &&
+        nickInput
+    ) {
+        nickInput.value =
+            save.profile.nickname;
+    }
+}
+
+
 function loadLevel(index) {
     currentIdx = index;
+
     inputEl.value = "";
+    inputEl.disabled = false;
+    btnEl.disabled = false;
+
     resultEl.classList.add("hidden");
-    resultEl.innerText = "";
+    resultEl.textContent = "";
 
     if (index >= PUZZLES.length) {
-        statusEl.innerText = "🏆 Quest Complete!";
-        questionEl.innerText = "You solved every puzzle!";
+        currentPuzzle = null;
+
+        statusEl.textContent =
+            "🏆 Quest Complete";
+
+        questionEl.textContent =
+            "You solved all 100 Puzzle Arena levels.";
+
         inputEl.disabled = true;
         btnEl.disabled = true;
+
+        renderLevelMap();
+
         return;
     }
 
     currentPuzzle = PUZZLES[index];
-    statusEl.innerText = `Quest Level ${index + 1} • [${currentPuzzle.topic}]`;
-    questionEl.innerText = currentPuzzle.question;
 
-    // Render mathematical expressions if MathJax is available
-    if (window.MathJax) {
-        MathJax.typesetPromise([questionEl]).catch((error) => {
-            console.error("MathJax error:", error);
-        });
+    statusEl.textContent =
+        `Level ${index + 1} of ${PUZZLES.length} • ${currentPuzzle.topic}`;
+
+    questionEl.textContent =
+        currentPuzzle.question;
+
+    renderLevelMap();
+
+    if (
+        window.MathJax &&
+        typeof MathJax.typesetPromise === "function"
+    ) {
+        MathJax
+            .typesetPromise([questionEl])
+            .catch(error => {
+                console.error(
+                    "MathJax error:",
+                    error
+                );
+            });
+    }
+
+    setTimeout(() => {
+        inputEl.focus();
+    }, 50);
+}
+
+
+function renderLevelMap() {
+    if (!levelMap) {
+        return;
+    }
+
+    levelMap.innerHTML = "";
+
+    const visibleCount =
+        Math.min(PUZZLES.length, 30);
+
+    for (
+        let index = 0;
+        index < visibleCount;
+        index++
+    ) {
+        const button =
+            document.createElement("button");
+
+        button.type = "button";
+        button.className = "level-node";
+        button.textContent = index + 1;
+
+        if (index < maxUnlockedIndex) {
+            button.classList.add(
+                "unlocked",
+                "completed"
+            );
+        } else if (
+            index === maxUnlockedIndex &&
+            index < PUZZLES.length
+        ) {
+            button.classList.add(
+                "unlocked"
+            );
+        }
+
+        if (index === currentIdx) {
+            button.classList.add("current");
+        }
+
+        const canOpen =
+            index <= maxUnlockedIndex;
+
+        button.disabled = !canOpen;
+
+        if (canOpen) {
+            button.addEventListener(
+                "click",
+                () => loadLevel(index)
+            );
+        }
+
+        levelMap.appendChild(button);
     }
 }
 
-/**
- * Verify the player's answer against the correct answer
- * Updates progress and moves to next level on correct answer
- */
-function verifyAnswer() {
-    if (!currentPuzzle) return;
 
-    const userGuess = inputEl.value.trim().toUpperCase();
-    const correctAns = currentPuzzle.answer.trim().toUpperCase();
+function verifyAnswer() {
+    if (!currentPuzzle) {
+        return;
+    }
+
+    const userGuess =
+        inputEl.value
+            .trim()
+            .toUpperCase();
+
+    const correctAnswer =
+        String(currentPuzzle.answer)
+            .trim()
+            .toUpperCase();
 
     resultEl.classList.remove("hidden");
 
-    if (userGuess === correctAns) {
-        resultEl.style.color = "#2ea043";
-        resultEl.innerText = "🎉 CORRECT! Loading next level...";
+    if (userGuess !== correctAnswer) {
+        resultEl.style.color =
+            "#fda4af";
 
-        if (currentIdx === maxUnlockedIndex) {
-            maxUnlockedIndex++;
-            saveProgress();
-            saveGlobalScore();
-        }
+        resultEl.textContent =
+            "❌ Not quite. Check your work and try again.";
 
-        setTimeout(() => {
-            loadLevel(currentIdx + 1);
-        }, 1000);
+        return;
+    }
+
+    const completion =
+        window.NumberOnWingsSave
+            .completePuzzle(currentIdx);
+
+    syncStateFromSave();
+
+    if (completion.newlyCompleted) {
+        maxUnlockedIndex =
+            completion.save
+                .puzzle
+                .maxUnlockedIndex;
+
+        resultEl.style.color =
+            "#86efac";
+
+        resultEl.innerHTML =
+            `🎉 Correct! <span class="coin-reward">+${completion.earnedCoins} 🪙</span>`;
     } else {
-        resultEl.style.color = "#f85149";
-        resultEl.innerText = "❌ Incorrect! Check your work and try again.";
+        resultEl.style.color =
+            "#86efac";
+
+        resultEl.textContent =
+            "🎉 Correct! You already earned the coins for this level.";
     }
+
+    renderLevelMap();
+
+    setTimeout(() => {
+        const nextIndex =
+            Math.min(
+                currentIdx + 1,
+                PUZZLES.length
+            );
+
+        loadLevel(nextIndex);
+    }, 800);
 }
 
-/**
- * Save player's progress to browser localStorage
- * Allows progress to persist across sessions
- */
-function saveProgress() {
-    if (!playerName) return;
-    localStorage.setItem("puzzlePlayerName", playerName);
-    localStorage.setItem("puzzleMaxLevel", String(maxUnlockedIndex));
-}
 
-/**
- * Save player's score to Supabase leaderboard
- * Updates global leaderboard after new level reached
- */
-async function saveGlobalScore() {
-    if (!playerName) return;
-
-    const { error } = await supabaseClient
-        .from("global_leaderboard")
-        .insert({
-            username: playerName,
-            score: maxUnlockedIndex,
-            country: null
-        });
-
-    if (error) {
-        console.error("Could not save score:", error);
-        return;
-    }
-
-    await loadGlobalLeaderboard();
-}
-
-/**
- * Fetch and display the top 20 players from Supabase leaderboard
- * Handles duplicate entries by keeping each player's best score
- */
-async function loadGlobalLeaderboard() {
-    leaderboardList.innerHTML = "Loading leaderboard...";
-
-    const { data, error } = await supabaseClient
-        .from("global_leaderboard")
-        .select("username, score, country, created_at")
-        .order("score", { ascending: false })
-        .order("created_at", { ascending: true })
-        .limit(100);
-
-    if (error) {
-        console.error("Could not load leaderboard:", error);
-        leaderboardList.innerHTML = "Could not load the global leaderboard.";
-        return;
-    }
-
-    if (!data || data.length === 0) {
-        leaderboardList.innerHTML = "No scores yet.";
-        return;
-    }
-
-    // Extract best score for each unique player
-    const bestScores = new Map();
-    for (const entry of data) {
-        const username = String(entry.username ?? "").trim();
-
-        if (!username) continue;
-
-        const existingEntry = bestScores.get(username);
-        if (!existingEntry || Number(entry.score) > Number(existingEntry.score)) {
-            bestScores.set(username, entry);
-        }
-    }
-
-    // Display top 20 players
-    const rankedEntries = Array.from(bestScores.values())
-        .sort((a, b) => Number(b.score) - Number(a.score))
-        .slice(0, 20);
-
-    if (rankedEntries.length === 0) {
-        leaderboardList.innerHTML = "No scores yet.";
-        return;
-    }
-
-    leaderboardList.innerHTML = rankedEntries
-        .map((entry, index) => {
-            const safeUsername = escapeHtml(entry.username);
-            const safeScore = Number(entry.score) || 0;
-
-            return `
-                <div class="leaderboard-entry" style="display: flex; justify-content: space-between;">
-                    <span>${index + 1}. 👤 <strong>${safeUsername}</strong></span>
-                    <span>Level ${safeScore}</span>
-                </div>
-            `;
-        })
-        .join("");
-}
-
-/**
- * Escape HTML special characters to prevent XSS attacks
- * @param {string} value - String to escape
- * @returns {string} Escaped HTML string
- */
-function escapeHtml(value) {
-    const element = document.createElement("div");
-    element.textContent = String(value ?? "");
-    return element.innerHTML;
-}
-
-// ===== Event Listeners =====
-
-// Handle nickname setup and game start
 if (saveNickBtn) {
-    saveNickBtn.addEventListener("click", async () => {
-        const enteredName = nickInput.value.trim();
+    saveNickBtn.addEventListener(
+        "click",
+        () => {
+            const name =
+                nickInput.value.trim();
 
-        if (enteredName === "") {
-            return;
-        }
-
-        playerName = enteredName;
-
-        // Check if player has saved progress
-        const savedName = localStorage.getItem("puzzlePlayerName");
-        const savedLevel = localStorage.getItem("puzzleMaxLevel");
-
-        if (savedName === playerName && savedLevel !== null) {
-            maxUnlockedIndex = Number(savedLevel);
-
-            if (!Number.isFinite(maxUnlockedIndex)) {
-                maxUnlockedIndex = 0;
+            if (!name) {
+                nickInput.focus();
+                return;
             }
-        } else {
-            maxUnlockedIndex = 0;
+
+            window.NumberOnWingsSave
+                .setNickname(name);
+
+            enterArena();
         }
-
-        // Show puzzle interface, hide setup screen
-        setupBox.classList.add("hidden");
-        puzzleBox.classList.remove("hidden");
-        leaderboardBox.classList.remove("hidden");
-
-        await loadGlobalLeaderboard();
-        loadLevel(maxUnlockedIndex);
-    });
+    );
 }
 
-// Submit button click handler
+
 if (btnEl) {
-    btnEl.addEventListener("click", verifyAnswer);
+    btnEl.addEventListener(
+        "click",
+        verifyAnswer
+    );
 }
 
-// Allow Enter key to submit answer
+
 if (inputEl) {
-    inputEl.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
-            verifyAnswer();
+    inputEl.addEventListener(
+        "keydown",
+        event => {
+            if (event.key === "Enter") {
+                verifyAnswer();
+            }
         }
-    });
+    );
 }
+
+
+window.addEventListener(
+    "now:save-changed",
+    () => {
+        syncStateFromSave();
+    }
+);
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+        const save = syncStateFromSave();
+
+        if (save.profile.nickname) {
+            enterArena();
+        }
+    }
+);
