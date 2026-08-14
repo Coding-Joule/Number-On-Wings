@@ -19,10 +19,6 @@
     >
 
     <script
-        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-    ></script>
-
-    <script
         id="MathJax-script"
         async
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
@@ -35,6 +31,7 @@
 
 <header></header>
 
+<script src="save.js"></script>
 <script src="nav.js"></script>
 
 
@@ -50,13 +47,15 @@
             Puzzle Arena
         </h1>
 
-        <p class="lead" style="margin-left: auto; margin-right: auto;">
-
-            Solve the current challenge, unlock the next level, and see
-            how far your mathematical wings can carry you.
-
+        <p
+            class="lead"
+            style="margin-left: auto; margin-right: auto;"
+        >
+            Solve a new level to earn
+            <strong>5 coins</strong>.
+            Every tenth level adds a
+            <strong>20-coin milestone bonus</strong>.
         </p>
-
 
 
         <div
@@ -65,11 +64,12 @@
         >
 
             <h2>
-                Ready for takeoff?
+                Pick your local profile name
             </h2>
 
             <p>
-                Choose a nickname to enter the arena.
+                No account and no password.
+                This name is saved only in this browser.
             </p>
 
             <input
@@ -80,14 +80,11 @@
                 autocomplete="nickname"
             >
 
-            <button
-                id="save-nickname-btn"
-            >
+            <button id="save-nickname-btn">
                 Enter Arena
             </button>
 
         </div>
-
 
 
         <div
@@ -96,13 +93,31 @@
         >
 
             <div
-                id="level-map"
-            ></div>
+                class="inline-actions"
+                style="justify-content: space-between; align-items: center;"
+            >
+
+                <span id="puzzle-player-label">
+                    Explorer
+                </span>
+
+                <span class="coin-reward">
+                    🪙
+                    <span id="arena-coin-count">
+                        0
+                    </span>
+                </span>
+
+            </div>
 
 
             <div
-                id="puzzle-status"
-            >
+                id="level-map"
+                class="level-map-grid"
+            ></div>
+
+
+            <div id="puzzle-status">
                 Preparing challenge...
             </div>
 
@@ -121,9 +136,7 @@
             >
 
 
-            <button
-                id="puzzle-btn"
-            >
+            <button id="puzzle-btn">
                 Submit Answer
             </button>
 
@@ -132,31 +145,6 @@
                 class="result hidden"
                 id="puzzle-result"
             ></div>
-
-        </div>
-
-
-
-        <div
-            id="global-leaderboard"
-            class="tool-box hidden"
-        >
-
-            <div>
-
-                <div class="eyebrow">
-                    Global
-                </div>
-
-                <h2>
-                    Leaderboard
-                </h2>
-
-            </div>
-
-            <div id="leaderboard-list">
-                Loading leaderboard...
-            </div>
 
         </div>
 
@@ -174,8 +162,8 @@
 
     <p>
         <strong>IrAcoNAl:</strong>
-        Good luck. If the answer is π, I had absolutely nothing to do
-        with it.
+        The leaderboard has departed.
+        Your progress now lives peacefully in your browser.
     </p>
 
 </div>

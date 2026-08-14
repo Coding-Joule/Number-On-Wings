@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NumberOnWings | Settings</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+
+<header></header>
+
+<script src="save.js"></script>
+<script src="nav.js"></script>
+
+<main>
+
+    <section class="container">
+
+        <div class="eyebrow">
+            Local Controls
+        </div>
+
+        <h1>
+            Settings
+        </h1>
+
+        <p class="lead">
+            NumberOnWings now saves locally.
+            Exporting a backup is the safest way to move progress
+            between browsers or devices.
+        </p>
+
+
+        <div class="settings-stack">
+
+            <div class="setting-row">
+
+                <div class="setting-copy">
+                    <h3>
+                        Profile name
+                    </h3>
+
+                    <p>
+                        This is not a sign-in.
+                    </p>
+                </div>
+
+                <div
+                    class="inline-actions"
+                    style="max-width: 420px; width: 100%;"
+                >
+                    <input
+                        type="text"
+                        id="settings-nickname"
+                        maxlength="30"
+                        placeholder="Explorer"
+                    >
+
+                    <button
+                        class="action-btn"
+                        id="save-name-btn"
+                    >
+                        Save
+                    </button>
+                </div>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-copy">
+                    <h3>
+                        Sound
+                    </h3>
+
+                    <p>
+                        Reserved for future sound effects.
+                    </p>
+                </div>
+
+                <input
+                    class="switch-input"
+                    type="checkbox"
+                    id="sound-setting"
+                >
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-copy">
+                    <h3>
+                        Reduced motion
+                    </h3>
+
+                    <p>
+                        Minimizes interface animations.
+                    </p>
+                </div>
+
+                <input
+                    class="switch-input"
+                    type="checkbox"
+                    id="motion-setting"
+                >
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-copy">
+                    <h3>
+                        Export progress
+                    </h3>
+
+                    <p>
+                        Download one small JSON backup file.
+                    </p>
+                </div>
+
+                <button
+                    class="btn btn-secondary"
+                    id="export-save-btn"
+                >
+                    Export backup
+                </button>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-copy">
+                    <h3>
+                        Import progress
+                    </h3>
+
+                    <p>
+                        Restore a NumberOnWings JSON backup.
+                    </p>
+                </div>
+
+                <label class="btn btn-secondary">
+                    Import backup
+
+                    <input
+                        type="file"
+                        id="import-save-input"
+                        accept=".json,application/json"
+                        hidden
+                    >
+                </label>
+
+            </div>
+
+
+            <div class="setting-row danger-card">
+
+                <div class="setting-copy">
+                    <h3>
+                        Reset local progress
+                    </h3>
+
+                    <p>
+                        Deletes coins, progress, achievements,
+                        shop items, and profile data from this browser.
+                    </p>
+                </div>
+
+                <button
+                    class="danger-btn"
+                    id="reset-save-btn"
+                >
+                    Reset everything
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<div class="mascot-note">
+    <img
+        src="IMG_3098.png"
+        alt="IrAcoNAl"
+    >
+
+    <p>
+        <strong>IrAcoNAl:</strong>
+        Export before clearing browser data. I cannot rescue deleted localStorage.
+    </p>
+</div>
+
+<script src="settings.js"></script>
+
+</body>
+</html>

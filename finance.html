@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NumberOnWings | Finance Center</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+
+<header></header>
+
+<script src="save.js"></script>
+<script src="nav.js"></script>
+
+<main>
+
+    <section class="container">
+
+        <div class="eyebrow">
+            Money Mathematics
+        </div>
+
+        <h1>
+            Finance Center
+        </h1>
+
+        <p class="lead">
+            Explore percentages, growth, budgeting, and financial
+            decision-making through math — not real-money trading.
+        </p>
+
+
+        <div class="finance-grid">
+
+
+            <article class="finance-card">
+
+                <div class="card-icon">
+                    📈
+                </div>
+
+                <h2>
+                    Growth Lab
+                </h2>
+
+                <p>
+                    Model monthly compounding with an optional
+                    monthly contribution.
+                </p>
+
+
+                <div class="form-grid">
+
+                    <div class="form-field">
+                        <label for="compound-principal">
+                            Starting amount
+                        </label>
+
+                        <input
+                            id="compound-principal"
+                            type="number"
+                            min="0"
+                            value="1000"
+                        >
+                    </div>
+
+
+                    <div class="form-field">
+                        <label for="compound-rate">
+                            Annual rate (%)
+                        </label>
+
+                        <input
+                            id="compound-rate"
+                            type="number"
+                            step="0.1"
+                            value="5"
+                        >
+                    </div>
+
+
+                    <div class="form-field">
+                        <label for="compound-years">
+                            Years
+                        </label>
+
+                        <input
+                            id="compound-years"
+                            type="number"
+                            min="0"
+                            value="10"
+                        >
+                    </div>
+
+
+                    <div class="form-field">
+                        <label for="compound-monthly">
+                            Monthly contribution
+                        </label>
+
+                        <input
+                            id="compound-monthly"
+                            type="number"
+                            min="0"
+                            value="50"
+                        >
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="action-btn"
+                    id="compound-calc-btn"
+                    style="margin-top: 12px;"
+                >
+                    Calculate growth
+                </button>
+
+
+                <div
+                    class="finance-result"
+                    id="compound-result"
+                >
+                    Enter values and calculate.
+                </div>
+
+            </article>
+
+
+
+            <article class="finance-card">
+
+                <div class="card-icon">
+                    💳
+                </div>
+
+                <h2>
+                    Budget Builder
+                </h2>
+
+                <p>
+                    Try allocating monthly income without spending
+                    more than you have.
+                </p>
+
+
+                <div class="form-grid">
+
+                    <div class="form-field">
+                        <label for="budget-income">
+                            Income
+                        </label>
+
+                        <input
+                            id="budget-income"
+                            type="number"
+                            min="0"
+                            value="1000"
+                        >
+                    </div>
+
+                    <div class="form-field">
+                        <label for="budget-needs">
+                            Needs
+                        </label>
+
+                        <input
+                            id="budget-needs"
+                            type="number"
+                            min="0"
+                            value="500"
+                        >
+                    </div>
+
+                    <div class="form-field">
+                        <label for="budget-wants">
+                            Wants
+                        </label>
+
+                        <input
+                            id="budget-wants"
+                            type="number"
+                            min="0"
+                            value="250"
+                        >
+                    </div>
+
+                    <div class="form-field">
+                        <label for="budget-saving">
+                            Saving
+                        </label>
+
+                        <input
+                            id="budget-saving"
+                            type="number"
+                            min="0"
+                            value="250"
+                        >
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="action-btn"
+                    id="budget-calc-btn"
+                    style="margin-top: 12px;"
+                >
+                    Check budget
+                </button>
+
+
+                <div
+                    class="finance-result"
+                    id="budget-result"
+                >
+                    Build a budget and check the balance.
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <div
+            class="tool-box"
+            style="margin-top: 28px;"
+        >
+
+            <div class="eyebrow">
+                Coin Challenges
+            </div>
+
+            <h2>
+                Finance Flight Checks
+            </h2>
+
+            <p>
+                Each challenge pays coins only the first time you solve it.
+            </p>
+
+
+            <div
+                id="finance-challenges"
+            ></div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<div class="mascot-note">
+
+    <img
+        src="IMG_3098.png"
+        alt="IrAcoNAl"
+    >
+
+    <p>
+        <strong>IrAcoNAl:</strong>
+        This page teaches financial math. It does not tell you what to buy with real money.
+    </p>
+
+</div>
+
+<script src="finance.js"></script>
+
+</body>
+</html>
