@@ -1,18 +1,56 @@
-document.addEventListener("DOMContentLoaded",()=>{
- const header=document.querySelector("header"); if(!header)return;
- const current=location.pathname.split("/").pop()||"index.html";
- const groups=[
-  {label:"Dashboard",href:"index.html",pages:["index.html"]},
-  {label:"Puzzles",href:"puzzles.html",pages:["puzzles.html"],items:[["Daily Challenge","puzzles.html#daily"],["Weekly Challenges","puzzles.html#weekly"],["Alcumus","puzzles.html#alcumus"]]},
-  {label:"Finance",href:"finance.html",pages:["finance.html","shop.html"],items:[["Coins","finance.html#coins"],["Recent Trades","finance.html#trades"],["Stock Market","finance.html#market"],["Shop","shop.html"],["Leaderboard · Later","finance.html#leaderboard"]]},
-  {label:"Learn",href:"videos.html",pages:["videos.html"],items:[["Videos","videos.html"]]}
- ];
- const html=groups.map(g=>{
-   const active=g.pages.includes(current)?" active":"";
-   if(!g.items)return `<a class="hub-link${active}" href="${g.href}">${g.label}</a>`;
-   return `<div class="hub-menu"><a class="hub-link${active}" href="${g.href}">${g.label}<span class="hub-chevron">⌄</span></a><div class="hub-dropdown">${g.items.map(([a,b])=>`<a href="${b}">${a}</a>`).join("")}</div></div>`
- }).join("");
- header.innerHTML=`<div class="nav-shell"><a class="logo" href="index.html"><span class="logo-mark">π</span><span>Number<span>OnWings</span></span></a><div class="app-nav-scroll"><nav>${html}</nav></div><div class="nav-actions"><a class="coin-pill" href="finance.html#coins">🪙 <span id="nav-coins">0</span></a><a class="profile-pill" href="profile.html">👤</a></div></div>`;
- function refresh(){document.getElementById("nav-coins").textContent=NumberOnWingsSave.load().coins}
- refresh();window.addEventListener("now:save-changed",refresh);window.addEventListener("storage",refresh);
-});
+
+(()=>{
+  const path = location.pathname.replace(/\\/g,"/");
+  const inFolder = /\/(puzzles|finance|learn)\//.test(path);
+  const root = inFolder ? "../" : "";
+  const page = path.split("/").pop() || "index.html";
+  const section = path.includes("/puzzles/") ? "puzzles" :
+                  path.includes("/finance/") ? "finance" :
+                  path.includes("/learn/") ? "learn" : "home";
+
+  const groups = [
+    {label:"Home", href:root+"index.html", key:"home"},
+    {
+      label:"Puzzles", href:root+"puzzles/index.html", key:"puzzles",
+      items:[
+        ["Daily Challenge", root+"puzzles/daily.html"],
+        ["Weekly Challenges", root+"puzzles/weekly.html"],
+        ["Adaptive", root+"puzzles/adaptive.html"]
+      ]
+    },
+    {
+      label:"Finance", href:root+"finance/index.html", key:"finance",
+      items:[
+        ["Coins", root+"finance/coins.html"],
+        ["Recent Trades", root+"finance/trades.html"],
+        ["Stock Market", root+"finance/stock.html"],
+        ["Shop", root+"finance/shop.html"],
+        ["Leaderboard · later", root+"finance/leaderboard.html"]
+      ]
+    },
+    {
+      label:"Learn", href:root+"learn/index.html", key:"learn",
+      items:[["Videos",root+"learn/videos.html"]]
+    }
+  ];
+
+  const nav = groups.map(g=>{
+    const active = section===g.key ? " active" : "";
+    if(!g.items) return `<a class="navlink${active}" href="${g.href}">${g.label}</a>`;
+    return `<div class="navgroup">
+      <a class="navlink${active}" href="${g.href}">${g.label} <span class="chev">⌄</span></a>
+      <div class="dropdown">${g.items.map(([n,h])=>`<a href="${h}">${n}</a>`).join("")}</div>
+    </div>`;
+  }).join("");
+
+  document.querySelector("header").innerHTML =
+    `<nav>
+      <a class="brand scribble" href="${root}index.html">Number<b>OnWings</b></a>
+      ${nav}
+      <span class="coin">🪙 <b id="navcoins">${NOW.load().coins}</b></span>
+    </nav>`;
+
+  const refresh=()=>{const n=document.querySelector("#navcoins");if(n)n.textContent=NOW.load().coins};
+  addEventListener("now-save",refresh);
+  addEventListener("storage",refresh);
+})();

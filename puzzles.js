@@ -1,29 +1,38 @@
-document.addEventListener("DOMContentLoaded",()=>{
- let s=NumberOnWingsSave.load();
- const day=Math.floor(Date.now()/86400000), week=Math.floor(Date.now()/(7*86400000));
- const daily=NOWProblems.daily[day%NOWProblems.daily.length];
- const weekly=NOWProblems.weekly[week%NOWProblems.weekly.length];
- function render(id,p,key,reward){
-  const box=document.getElementById(id); if(!box)return;
-  const done=!!(key==="daily"?s.solved.daily[day]:s.solved.weekly[week]);
-  box.innerHTML=`<div class="challenge"><div><div class="challenge-meta"><span class="pill">${key==="daily"?"Today":"This week"}</span><span class="pill">🪙 ${reward}</span></div><p class="problem">${p.q}</p><div class="answer-row"><input id="${id}-input" placeholder="Your answer" ${done?"disabled":""}><button class="btn btn-primary" id="${id}-btn" ${done?"disabled":""}>${done?"Solved ✓":"Submit"}</button></div><div class="result ${done?"good":""}" id="${id}-result">${done?"Already solved. Reward collected.":""}</div></div></div>`;
-  if(done)return;
-  document.getElementById(`${id}-btn`).onclick=()=>{
-   const val=document.getElementById(`${id}-input`).value.trim();
-   const res=document.getElementById(`${id}-result`);
-   if(val.toLowerCase()===String(p.a).toLowerCase()){
-     if(key==="daily")s.solved.daily[day]=true;else s.solved.weekly[week]=true;
-     NumberOnWingsSave.earnCoins(s,reward,`${key==="daily"?"Daily":"Weekly"} challenge solved.`);
-     s.achievements.firstPuzzle=true;NumberOnWingsSave.save(s);res.textContent=`Correct! +${reward} coins`;res.className="result good";
-     document.getElementById(`${id}-btn`).disabled=true;document.getElementById(`${id}-input`).disabled=true;
-   }else{res.textContent="Not quite. Try again.";res.className="result bad"}
-  }
+
+const BANK=[
+ {q:"What is the remainder when 2¹⁰ is divided by 7?",a:"2",topic:"Number theory"},
+ {q:"How many positive divisors does 360 have?",a:"24",topic:"Number theory"},
+ {q:"A 12-gon has how many diagonals?",a:"54",topic:"Combinatorics"},
+ {q:"If x + 1/x = 3, find x² + 1/x².",a:"7",topic:"Algebra"},
+ {q:"Angles of a triangle are in ratio 2:3:4. Find the largest angle.",a:"80",topic:"Geometry"},
+ {q:"How many 4-digit numbers have strictly increasing digits?",a:"126",topic:"Combinatorics"}
+];
+(()=>{
+ let s=NOW.load(),day=Math.floor(Date.now()/86400000),week=Math.floor(Date.now()/604800000);
+ function mount(id,p,key,reward,done){
+   const el=document.querySelector("#"+id); if(!el)return;
+   el.innerHTML=`<span class="tag">${p.topic}</span><span class="tag">${done?"SOLVED":"UNSOLVED"}</span>
+   <p class="problem">${p.q}</p>
+   <div class="answer"><input placeholder="answer" ${done?"disabled":""}><button class="button primary" ${done?"disabled":""}>${done?"DONE ✓":"CHECK"}</button></div>
+   <div class="result">${done?"Reward already collected.":""}</div>`;
+   if(done)return;
+   const inp=el.querySelector("input"),btn=el.querySelector("button"),res=el.querySelector(".result");
+   btn.addEventListener("click",()=>{
+     if(inp.value.trim().toLowerCase()===p.a.toLowerCase()){
+       res.textContent=`CORRECT. +${reward} coins.`;res.className="result good";
+       if(key==="daily")s.solved.daily[day]=1;
+       else if(key==="weekly")s.solved.weekly[week]=1;
+       else s.solved.adaptive++;
+       NOW.coins(s,reward);btn.disabled=inp.disabled=true;
+       let win=document.createElement("img");win.src="../mascot-win.png";win.alt="Mascot celebrating";win.className="mascot-win-scene win-pop";el.appendChild(win);
+     }else{
+       res.textContent="NOPE. Rematch.";res.className="result bad";
+       let old=el.querySelector(".wrong-art");if(old)old.remove();
+       let wrong=document.createElement("img");wrong.src="../mascot-lose.png";wrong.alt="Mascot reacting to a wrong answer";wrong.className="wrong-art";el.appendChild(wrong);
+     }
+   });
  }
- render("daily-box",daily,"daily",daily.coins);render("weekly-box",weekly,"weekly",weekly.coins);
- const idx=(s.solved.alcumus||0)%NOWProblems.alcumus.length,p=NOWProblems.alcumus[idx];
- document.getElementById("alcumus-box").innerHTML=`<span class="pill">Adaptive problem ${s.solved.alcumus+1}</span><p class="problem">${p.q}</p><div class="answer-row"><input id="alc-input" placeholder="Your answer"><button id="alc-btn" class="btn btn-primary">Check</button></div><div id="alc-result" class="result"></div>`;
- document.getElementById("alc-btn").onclick=()=>{
-   const val=document.getElementById("alc-input").value.trim(),r=document.getElementById("alc-result");
-   if(val.toLowerCase()===String(p.a).toLowerCase()){s.solved.alcumus++;NumberOnWingsSave.earnCoins(s,12,"Alcumus problem solved.");s.achievements.firstPuzzle=true;NumberOnWingsSave.save(s);r.textContent="Correct! +12 coins. Reload for the next problem.";r.className="result good"}else{r.textContent="Try again.";r.className="result bad"}
- };
-});
+ mount("daily",BANK[day%BANK.length],"daily",25,!!s.solved.daily[day]);
+ mount("weekly",BANK[(week+2)%BANK.length],"weekly",100,!!s.solved.weekly[week]);
+ mount("adaptive",BANK[(s.solved.adaptive+4)%BANK.length],"adaptive",12,false);
+})();

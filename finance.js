@@ -1,38 +1,19 @@
-const STOCKS=[
- {symbol:"PI",name:"Pi Labs",base:42.00},
- {symbol:"WNG",name:"Wings Aerospace",base:76.50},
- {symbol:"PRM",name:"Prime Systems",base:31.25},
- {symbol:"FIB",name:"Fibonacci Works",base:58.80}
-];
-function marketPrice(st){
- const hour=Math.floor(Date.now()/3600000),seed=st.symbol.charCodeAt(0)*17+hour;
- const wave=Math.sin(seed*.91)*.07+Math.sin(seed*.17)*.035;
- return Math.max(5,st.base*(1+wave));
-}
-document.addEventListener("DOMContentLoaded",()=>{
- let s=NumberOnWingsSave.load(),selected=STOCKS[0].symbol;
- const fmt=n=>Number(n).toFixed(2);
+
+const COS=[["PRIME","Prime Industries",41],["PI","π Labs",31.4],["FIB","Fibonacci Farms",55],["WING","Wings Aerospace",73]];
+(()=>{
+ let s=NOW.load(),sel=0,range=160;
+ const series=(base,n,seed)=>{let a=[],v=base;for(let i=0;i<n;i++){v=Math.max(4,v*(1+Math.sin((i+seed)*1.77)*.011+Math.sin((i+seed)*.21)*.006));a.push(v)}return a};
+ function current(i){let a=series(COS[i][2],320,i*13+Math.floor(Date.now()/3600000));return a[a.length-1]}
+ function draw(){
+  let [sym,name,base]=COS[sel],arr=series(base,320,sel*13+Math.floor(Date.now()/3600000)).slice(-range),c=document.querySelector("#chart"),x=c.getContext("2d"),W=c.width,H=c.height,p=25,min=Math.min(...arr),max=Math.max(...arr);x.clearRect(0,0,W,H);x.strokeStyle="#ded7c9";x.lineWidth=1;for(let i=0;i<6;i++){let y=p+i*(H-2*p)/5;x.beginPath();x.moveTo(p,y);x.lineTo(W-p,y);x.stroke()}x.strokeStyle="#2357ff";x.lineWidth=5;x.beginPath();arr.forEach((v,i)=>{let xx=p+i*(W-2*p)/(arr.length-1),yy=H-p-(v-min)/(max-min||1)*(H-2*p);i?x.lineTo(xx,yy):x.moveTo(xx,yy)});x.stroke();let price=arr[arr.length-1];document.querySelector("#sym").textContent=sym;document.querySelector("#company").textContent=name;document.querySelector("#price").textContent=price.toFixed(2);let ch=(price/base-1)*100,ce=document.querySelector("#change");ce.textContent=(ch>=0?"▲ ":"▼ ")+Math.abs(ch).toFixed(2)+"%";ce.className=ch>=0?"good":"bad";
+ let mood=document.querySelector("#marketMood");
+ if(!mood){mood=document.createElement("img");mood.id="marketMood";mood.className="market-mood-art";document.querySelector(".chart-paper").appendChild(mood)}
+ mood.src=ch>=0?"../market-up.png":"../market-down.png";
+ mood.alt=ch>=0?"Hand-drawn rising market line":"Hand-drawn falling market line";
+ }
  function render(){
-  document.getElementById("finance-coins").textContent=s.coins;
-  const mv=Object.entries(s.holdings||{}).reduce((sum,[sym,q])=>sum+(marketPrice(STOCKS.find(x=>x.symbol===sym)||STOCKS[0])*q),0);
-  document.getElementById("portfolio-value").textContent=`${fmt(mv)} coins`;
-  document.getElementById("stock-grid").innerHTML=STOCKS.map(x=>{const p=marketPrice(x);return `<div class="stock-card ${selected===x.symbol?"selected":""}" data-symbol="${x.symbol}"><div class="stock-symbol">${x.symbol}</div><div class="stock-name">${x.name}</div><div class="stock-price">${fmt(p)}</div><div class="${p>=x.base?"good":"bad"}">${p>=x.base?"▲":"▼"} ${fmt(Math.abs((p/x.base-1)*100))}%</div></div>`}).join("");
-  document.querySelectorAll(".stock-card").forEach(el=>el.onclick=()=>{selected=el.dataset.symbol;render()});
-  document.getElementById("selected-stock").textContent=selected;
-  document.getElementById("trade-list").innerHTML=(s.trades||[]).slice(0,8).map(t=>`<div class="trade-item"><span>${t.type.toUpperCase()} ${t.qty} ${t.symbol}</span><span>${fmt(t.total)} coins</span></div>`).join("")||`<p class="muted">No trades yet.</p>`;
+  document.querySelector("#cash").textContent=s.coins;document.querySelector("#ticker").innerHTML=COS.map((c,i)=>`<button data-i="${i}" class="${i===sel?"selected":""}">${c[0]} · ${current(i).toFixed(2)}</button>`).join("");document.querySelectorAll("#ticker button").forEach(b=>b.addEventListener("click",()=>{sel=+b.dataset.i;render();draw()}));document.querySelector("#holdings").innerHTML=COS.map(c=>s.stocks[c[0]]?`<div class="ledger-row"><span>${c[0]}</span><b>${s.stocks[c[0]]} shares</b></div>`:"").join("")||"<p>Nothing. Tragic.</p>";draw()
  }
- function trade(type){
-  const qty=Math.max(1,Math.floor(Number(document.getElementById("trade-qty").value)||1));
-  const st=STOCKS.find(x=>x.symbol===selected),price=marketPrice(st),total=price*qty;
-  if(type==="buy"){
-   if(s.coins<total)return alert("Not enough coins.");
-   s.coins-=Math.ceil(total);s.holdings[selected]=(s.holdings[selected]||0)+qty;
-  }else{
-   if((s.holdings[selected]||0)<qty)return alert("You do not own that many shares.");
-   s.holdings[selected]-=qty;s.coins+=Math.floor(total);
-  }
-  s.trades.unshift({type,qty,symbol:selected,price,total,time:Date.now()});s.trades=s.trades.slice(0,50);
-  s.achievements.firstTrade=true;NumberOnWingsSave.addActivity(s,`${type==="buy"?"Bought":"Sold"} ${qty} ${selected}.`);NumberOnWingsSave.save(s);render();
- }
- document.getElementById("buy-btn").onclick=()=>trade("buy");document.getElementById("sell-btn").onclick=()=>trade("sell");render();
-});
+ function trade(type){let q=Math.max(1,Math.floor(+document.querySelector("#qty").value||1)),sym=COS[sel][0],p=current(sel),cost=Math.round(p*q);if(type==="buy"){if(s.coins<cost)return alert("Not enough coins. Solve something.");s.coins-=cost;s.stocks[sym]=(s.stocks[sym]||0)+q}else{if((s.stocks[sym]||0)<q)return alert("You do not own that.");s.stocks[sym]-=q;s.coins+=cost}s.trades.unshift({type,sym,q,cost,t:Date.now()});NOW.save(s);render()}
+ document.querySelector("#buy").addEventListener("click",()=>trade("buy"));document.querySelector("#sell").addEventListener("click",()=>trade("sell"));document.querySelectorAll("#ranges button").forEach(b=>b.addEventListener("click",()=>{range=+b.dataset.n;draw()}));render();
+})();
