@@ -1,0 +1,7 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NumberOnWings — Recent Trades</title><link rel="stylesheet" href="../main.css"></head><body><header></header><script src="../save.js"></script><script src="../nav.js"></script><main>
+<div class="kicker">Finance · Recent Trades</div><h1 style="font-size:clamp(3.2rem,8vw,6rem)">What did you do?!</h1>
+<div class="subnav"><a class="" href="index.html">Overview</a><a class="" href="coins.html">Coins</a><a class="current" href="trades.html">Trades</a><a class="" href="stock.html">Stocks</a><a class="" href="shop.html">Shop</a><a class="" href="leaderboard.html">Leaderboard</a></div>
+<section class="challenge-sheet"><div id="tradesPage" class="ledger"></div></section>
+<script>
+(()=>{const s=NOW.load(),el=document.querySelector("#tradesPage");el.innerHTML=(s.trades||[]).map(t=>`<div class="ledger-row"><span>${t.type.toUpperCase()} ${t.q} ${t.sym}</span><b>${t.cost} coins</b></div>`).join("")||"<p>No trades yet. Suspiciously responsible.</p>"})();
+</script><div class="footer-note">NumberOnWings — built for mathematical messing around. <a href="../dontclick.html">do not click this</a>.</div></main></body></html>
