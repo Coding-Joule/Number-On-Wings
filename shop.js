@@ -1,192 +1,27 @@
-function renderShop() {
-    const api =
-        window.NumberOnWingsSave;
-
-    const save =
-        api.load();
-
-    document.getElementById(
-        "shop-coins"
-    ).textContent =
-        save.coins;
-
-    const grid =
-        document.getElementById(
-            "shop-grid"
-        );
-
-    grid.innerHTML =
-        Object.entries(api.THEMES)
-            .map(([id, theme]) => {
-                const owned =
-                    save.shop.ownedThemes
-                        .includes(id);
-
-                const equipped =
-                    save.shop.equippedTheme === id;
-
-                let buttonText =
-                    `${theme.price} 🪙`;
-
-                if (equipped) {
-                    buttonText = "Equipped";
-                } else if (owned) {
-                    buttonText = "Equip";
-                } else if (theme.price === 0) {
-                    buttonText = "Free";
-                }
-
-                return `
-                    <article class="shop-card">
-
-                        <div
-                            class="theme-preview ${id}"
-                        >
-                            ${theme.icon}
-                        </div>
-
-                        <h2>
-                            ${escapeHtml(theme.name)}
-                        </h2>
-
-                        <p>
-                            A complete NumberOnWings
-                            color theme.
-                        </p>
-
-                        <div
-                            class="shop-price"
-                            style="margin-bottom: 14px;"
-                        >
-                            ${
-                                owned
-                                    ? "Owned"
-                                    : `${theme.price} 🪙`
-                            }
-                        </div>
-
-                        <button
-                            class="action-btn"
-                            data-theme-id="${id}"
-                            ${
-                                equipped
-                                    ? "disabled"
-                                    : ""
-                            }
-                        >
-                            ${buttonText}
-                        </button>
-
-                    </article>
-                `;
-            })
-            .join("");
-
-    grid.querySelectorAll(
-        "[data-theme-id]"
-    ).forEach(button => {
-        button.addEventListener(
-            "click",
-            () => {
-                handleThemeAction(
-                    button.dataset.themeId
-                );
-            }
-        );
-    });
-}
-
-
-function handleThemeAction(themeId) {
-    const api =
-        window.NumberOnWingsSave;
-
-    const save =
-        api.load();
-
-    if (
-        save.shop.ownedThemes
-            .includes(themeId)
-    ) {
-        const result =
-            api.equipTheme(themeId);
-
-        if (result.ok) {
-            toast("Theme equipped.");
-        }
-
-        renderShop();
-        return;
-    }
-
-    const result =
-        api.buyTheme(themeId);
-
-    if (!result.ok) {
-        if (
-            result.reason ===
-            "not-enough-coins"
-        ) {
-            toast(
-                "Not enough coins yet."
-            );
-        }
-
-        renderShop();
-        return;
-    }
-
-    api.equipTheme(themeId);
-
-    toast(
-        "Theme purchased and equipped! 🎨"
-    );
-
-    renderShop();
-}
-
-
-function toast(message) {
-    const old =
-        document.querySelector(
-            ".now-toast"
-        );
-
-    if (old) {
-        old.remove();
-    }
-
-    const element =
-        document.createElement("div");
-
-    element.className = "now-toast";
-    element.textContent = message;
-
-    document.body.appendChild(element);
-
-    setTimeout(() => {
-        element.remove();
-    }, 2300);
-}
-
-
-function escapeHtml(value) {
-    const element =
-        document.createElement("div");
-
-    element.textContent =
-        String(value ?? "");
-
-    return element.innerHTML;
-}
-
-
-document.addEventListener(
-    "DOMContentLoaded",
-    renderShop
-);
-
-window.addEventListener(
-    "now:save-changed",
-    renderShop
-);
+const SHOP=[
+ {id:"aurora",name:"Aurora Theme",base:180,emoji:"🌌"},
+ {id:"golden",name:"Golden Wings",base:240,emoji:"🪽"},
+ {id:"prime",name:"Prime Badge",base:130,emoji:"🔢"},
+ {id:"graph",name:"Graph Paper Skin",base:160,emoji:"📈"},
+ {id:"pi",name:"IrAcoNAl Pi Pin",base:314,emoji:"🥧"},
+ {id:"nebula",name:"Nebula Card Pack",base:210,emoji:"✨"}
+];
+function shopMultiplier(){return .9+((Math.sin(Math.floor(Date.now()/3600000)*.73)+1)/2)*.3}
+document.addEventListener("DOMContentLoaded",()=>{
+ let s=NumberOnWingsSave.load();
+ const m=shopMultiplier();document.getElementById("shop-index").textContent=(m*100).toFixed(1);
+ function render(){
+  document.getElementById("shop-coins").textContent=s.coins;
+  document.getElementById("shop-grid").innerHTML=SHOP.map(item=>{
+   const price=Math.round(item.base*m),owned=s.purchases.includes(item.id);
+   return `<div class="shop-item"><div class="shop-preview" style="display:grid;place-items:center;font-size:2.3rem">${item.emoji}</div><h3>${item.name}</h3><p class="muted">Price moves with the NumberOnWings market index.</p><div class="shop-price">🪙 ${price}</div><div class="button-row"><button class="btn ${owned?"":"btn-primary"}" data-id="${item.id}" ${owned?"disabled":""}>${owned?"Owned ✓":"Buy"}</button></div></div>`
+  }).join("");
+  document.querySelectorAll("[data-id]").forEach(btn=>btn.onclick=()=>{
+   const item=SHOP.find(x=>x.id===btn.dataset.id),price=Math.round(item.base*m);
+   if(s.coins<price)return alert("Not enough coins.");
+   s.coins-=price;s.purchases.push(item.id);s.achievements.collector=s.purchases.length>=3;
+   NumberOnWingsSave.addActivity(s,`Bought ${item.name} for ${price} coins.`);NumberOnWingsSave.save(s);render();
+  });
+ }
+ render();
+});
