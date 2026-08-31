@@ -1,1 +1,20 @@
-(()=>{let depth=location.pathname.split('/').filter(Boolean).length-1;let root=depth>0?'../':'';document.querySelector('header').innerHTML=`<nav class="topnav"><a class="brand" href="${root}index.html">NUMBER ON WINGS</a><div class="navlinks"><a href="${root}puzzles/index.html">PUZZLES</a><a href="${root}play/index.html">PLAY</a><a href="${root}finance/index.html">FINANCE</a><a href="${root}achievements.html">ACHIEVEMENTS</a></div></nav>`})();
+// Wait for the webpage layout to load, then inject the shared navbar
+document.addEventListener("DOMContentLoaded", function() {
+    let header = document.querySelector("header");
+    
+    if (header) {
+        header.innerHTML = `
+            <div class="logo">
+                <img src="IMG_3098.png" alt="Mascot" class="logo-img">
+                Number<span>OnWings</span>
+            </div>
+            <nav>
+                <a href="index.html">home</a>
+                <a href="videos.html">videos</a>
+                <a href="tools.html">tools</a>
+                <a href="puzzles.html">puzzles</a>
+                <a href="dontclick.html" class="danger-zone">don't click here</a>
+            </nav>
+        `;
+    }
+});

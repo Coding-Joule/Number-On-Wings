@@ -1,345 +1,69 @@
 <!DOCTYPE html>
-
-<html lang="en">
-
+<html>
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>NumberOnWings | Math Tools</title>
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Number On Wings</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
-
-
 <body>
+    <header></header>
+    <script src="nav.js"></script>
+    
+    <div class="container">
+        <h1>Tools</h1>
+        <p>Here are some tools that will help you with stuffs related to math!</p>
 
-<header></header>
+        <button id="toggle-calc-btn" onclick="toggleCalculator()">Squaring/Cubing</button>
+        <button id="toggle-factor-btn" onclick="toggleFactoriser()">Prime Factoriser</button>
+        <button id="toggle-fractal-btn" onclick="toggleFractal()">Fractal Tree</button>
+        <button id="toggle-grapher-btn" onclick="toggleGrapher()">Equation Grapher</button>
 
-<script src="nav.js"></script>
+        <hr>
 
-
-<main>
-
-    <section class="container">
-
-        <div class="eyebrow">
-            Math Laboratory
+        <div id="calculator-engine" class="tool-box hidden">
+            <h3>Squaring/Cubing</h3>
+            <input type="number" id="math-input" placeholder="Enter numbers...">
+            <button id="calc-btn">Calculate!</button>
+            <div class="result">Your answer will show here...</div>
         </div>
 
-        <h1>
-            Tools
-        </h1>
-
-        <p class="lead">
-
-            Calculate, factor, graph, and experiment with mathematical
-            objects.
-
-        </p>
-
-
-        <div class="tool-selector">
-
-            <button
-                id="toggle-calc-btn"
-                class="tool-toggle"
-                onclick="toggleCalculator()"
-            >
-                🧮 Squaring / Cubing
-            </button>
-
-
-            <button
-                id="toggle-factor-btn"
-                class="tool-toggle"
-                onclick="toggleFactoriser()"
-            >
-                🔢 Prime Factoriser
-            </button>
-
-
-            <button
-                id="toggle-fractal-btn"
-                class="tool-toggle"
-                onclick="toggleFractal()"
-            >
-                🌳 Fractal Tree
-            </button>
-
-
-            <button
-                id="toggle-grapher-btn"
-                class="tool-toggle"
-                onclick="toggleGrapher()"
-            >
-                📈 Equation Grapher
-            </button>
-
+        <div id="factoriser-engine" class="tool-box hidden">
+            <h3>Factoriser</h3>
+            <input type="number" id="factor-input" placeholder="Enter a number...">
+            <button id="factor-btn">Factorise!</button>
+            <div class="result" id="factor-result">Prime factors will show here...</div>
         </div>
 
-
-
-        <div
-            id="calculator-engine"
-            class="tool-box hidden"
-        >
-
-            <div>
-
-                <div class="eyebrow">
-                    Arithmetic
-                </div>
-
-                <h2>
-                    Squaring & Cubing
-                </h2>
-
-                <p>
-                    Enter a value and investigate its powers.
-                </p>
-
+        <div id="fractal-engine" class="tool-box hidden">
+            <h3>Fractal Engine</h3>
+            <p>Adjust the sliders to watch the recursion change!</p>
+            <div style="margin-bottom: 10px;">
+                <label>Angle: <input type="range" id="frac-angle"></label>
+                <br>
+                <label>Scale: <input type="range" id="frac-scale"></label>
+                <br>
+                <label>Wind: <input type="range" id="frac-wind" min="0" max="10" value="3"></label>
             </div>
-
-            <input
-                type="number"
-                id="math-input"
-                placeholder="Enter a number..."
-            >
-
-            <button
-                id="calc-btn"
-                class="action-btn"
-            >
-                Calculate
-            </button>
-
-            <div class="result">
-                Your answer will appear here.
-            </div>
-
+            <canvas id="fractal-canvas" width="400" height="300"></canvas>
         </div>
 
-
-
-        <div
-            id="factoriser-engine"
-            class="tool-box hidden"
-        >
-
-            <div>
-
-                <div class="eyebrow">
-                    Number Theory
-                </div>
-
-                <h2>
-                    Prime Factoriser
-                </h2>
-
-                <p>
-                    Break an integer into its prime building blocks.
-                </p>
-
+        <div id="grapher-engine" class="tool-box hidden">
+            <p>Try different values for f(x) and get a graph!</p>
+            <input type="text" id="eq-input" placeholder="Try x^4-3*x^2">
+            <button id="graph-btn">Graph it!</button>
+            
+            <div style="margin: 10px 0;">
+                <label><input type="checkbox" id="label-roots"> Label x-intercepts (Roots)</label>
             </div>
 
-            <input
-                type="number"
-                id="factor-input"
-                placeholder="Enter an integer..."
-            >
-
-            <button
-                id="factor-btn"
-                class="action-btn"
-            >
-                Factorise
-            </button>
-
-            <div
-                class="result"
-                id="factor-result"
-            >
-                Prime factors will appear here.
-            </div>
-
+            <canvas id="graph-canvas" width="400" height="400" style="border:1px solid #30363d; background:#0d1117;"></canvas>
+            <p id="root-explanation">Did you know that the x-intercepts are the roots
+            of the equation f(x) = 0?</p>
         </div>
+    </div>
 
-
-
-        <div
-            id="fractal-engine"
-            class="tool-box hidden"
-        >
-
-            <div>
-
-                <div class="eyebrow">
-                    Recursion
-                </div>
-
-                <h2>
-                    Fractal Tree
-                </h2>
-
-                <p>
-                    Adjust the controls and watch a repeated rule grow
-                    into a structure.
-                </p>
-
-            </div>
-
-
-            <label>
-
-                Angle
-
-                <input
-                    type="range"
-                    id="frac-angle"
-                >
-
-            </label>
-
-
-            <label>
-
-                Scale
-
-                <input
-                    type="range"
-                    id="frac-scale"
-                >
-
-            </label>
-
-
-            <label>
-
-                Wind
-
-                <input
-                    type="range"
-                    id="frac-wind"
-                    min="0"
-                    max="10"
-                    value="3"
-                >
-
-            </label>
-
-
-            <canvas
-                id="fractal-canvas"
-                width="400"
-                height="300"
-            ></canvas>
-
-        </div>
-
-
-
-        <div
-            id="grapher-engine"
-            class="tool-box hidden"
-        >
-
-            <div>
-
-                <div class="eyebrow">
-                    Functions
-                </div>
-
-                <h2>
-                    Equation Grapher
-                </h2>
-
-                <p>
-                    Type a function and turn the equation into a picture.
-                </p>
-
-            </div>
-
-
-            <input
-                type="text"
-                id="eq-input"
-                placeholder="Try x^4 - 3*x^2"
-            >
-
-
-            <button
-                id="graph-btn"
-                class="action-btn"
-            >
-                Graph it
-            </button>
-
-
-            <label>
-
-                <input
-                    type="checkbox"
-                    id="label-roots"
-                >
-
-                Label x-intercepts
-
-            </label>
-
-
-            <canvas
-                id="graph-canvas"
-                width="400"
-                height="400"
-            ></canvas>
-
-
-            <p
-                id="root-explanation"
-                class="muted"
-            >
-
-                The x-intercepts are the roots of the equation
-                f(x) = 0.
-
-            </p>
-
-        </div>
-
-    </section>
-
-</main>
-
-
-<div class="mascot-note">
-
-    <img
-        src="IMG_3098.png"
-        alt="IrAcoNAl"
-    >
-
-    <p>
-        <strong>IrAcoNAl:</strong>
-        Tools don't solve mathematics for you. They let you poke it
-        harder.
-    </p>
-
-</div>
-
-
-<script src="tools.js"></script>
-
-
+    <script src="nav.js"></script>
+    <script src="tools.js"></script>
 </body>
-
 </html>
