@@ -1,7 +1,1 @@
-
-const KEY="now-rebuild-v1";
-const fresh=()=>({coins:314,solved:{daily:{},weekly:{},adaptive:0},stocks:{},trades:[],items:[],streak:0,discoveries:0});
-function load(){try{return Object.assign(fresh(),JSON.parse(localStorage.getItem(KEY)||"{}"))}catch{return fresh()}}
-function save(s){localStorage.setItem(KEY,JSON.stringify(s));window.dispatchEvent(new Event("now-save"))}
-function coins(s,n){s.coins=Math.max(0,Math.round(s.coins+n));save(s)}
-window.NOW={load,save,coins,KEY};
+(()=>{const K="numberonwings-v4";const fresh=()=>({coins:314,items:[],avatar:{owned:["default"],equipped:"default"},achievements:{unlocked:[],history:[]},hmm:{mode:"hmm",subject:"Prealgebra",rating:1000,attempts:0,correct:0,streak:0,skills:{},recent:[]},games:{plays:0,wins:0,losses:0}});function load(){try{return Object.assign(fresh(),JSON.parse(localStorage.getItem(K)||"{}"))}catch(e){return fresh()}}function save(s){localStorage.setItem(K,JSON.stringify(s));return s}window.NOW={load,save,fresh};})();
