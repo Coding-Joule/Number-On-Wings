@@ -19,8 +19,13 @@ It is not an educational product, a tutoring service, or a SaaS dashboard.
 The site should feel like wandering into someone's mathematical world,
 not like browsing a feature list.
 
-IrAcoNAl, a pi, is the mascot. `IMG_3098.png` is the current drawing;
-it has a white background baked in and needs a transparent version.
+IrAcoNAl, a pi, is the mascot. `IMG_3098.png` is the original drawing,
+with a white background baked in. `iraconal.png` is that drawing cropped
+with the paper keyed out, ink kept black. The ink is black, so on a dark
+surface it needs to be lightened rather than used as-is.
+
+The favicon is the mascot on a paper-coloured tile. A tile is needed: a
+transparent black drawing disappears against a dark browser tab.
 
 ## Hard constraints
 
