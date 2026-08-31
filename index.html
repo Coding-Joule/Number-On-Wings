@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NumberOnWings | Landing</title>
+    <title>NumberOnWings</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,19 +11,75 @@
 <header></header>
 <script src="nav.js"></script>
 
-    <div class="container">
-        <h1>Train with Logic & Curiosity</h1>
-        <p>
-            Welcome to the home page! This space is designed to explore facsinating mathematics, 
-            break down problem-solving systems, and analyze competitive strategies. 
-            Use the menu above to browse video modules or explore logic models.
+<main class="home">
+
+    <section class="hero">
+        <h1>&pi; refuses to<br>be a fraction.</h1>
+        <p class="lede">
+            Every fraction below is the best one that exists at its size &mdash;
+            not close to the best, the best. They keep getting nearer.
+            Not one of them arrives.
         </p>
-        
-        <p>Meet our mascot: IrAcoNAl(say: ir-ra-tion-AL) the Pi</p>
-        
-        <img src="IMG_3098.png" class="logo-img2">
-        
-    </div>
+    </section>
+
+    <section class="machine">
+
+        <div class="frac" id="frac">3/1</div>
+
+        <div class="tape">
+            <div class="tape-row">
+                <span class="tape-label">&pi;</span>
+                <span class="tape-digits" id="pi-row"></span>
+            </div>
+            <div class="tape-row">
+                <span class="tape-label">best</span>
+                <span class="tape-digits" id="approx-row"></span>
+            </div>
+        </div>
+
+        <div class="readout">
+            <div class="stat">
+                <span class="stat-value" id="matched">&mdash;</span>
+                <span class="stat-label">correct</span>
+            </div>
+            <div class="stat">
+                <span class="stat-value" id="err">&mdash;</span>
+                <span class="stat-label">off by</span>
+            </div>
+        </div>
+
+        <label class="control" for="q-slider">
+            <span class="control-label">
+                denominators up to <b id="limit">1</b>
+            </span>
+            <input type="range" id="q-slider" min="0" max="1000" value="0">
+        </label>
+
+        <p class="verdict">
+            Push it as far as it goes. It will never run out of digits to get
+            wrong, because there is no fraction at the end of this. That is
+            what irrational means, and it is why the mascot is one.
+        </p>
+
+    </section>
+
+    <section class="what">
+        <h2>So what is this?</h2>
+        <p>
+            My corner of mathematics. I build things here &mdash; puzzles,
+            programs, experiments, and whatever I am currently stuck on.
+            Some of it works. Some of it is a joke. One page actively tries
+            to stop you clicking it.
+        </p>
+        <p class="sig">
+            Made by Coding Joule. Guarded by IrAcoNAl, who is a &pi; and
+            therefore cannot be reasoned with.
+        </p>
+    </section>
+
+</main>
+
+<script src="home.js"></script>
 
 </body>
 </html>

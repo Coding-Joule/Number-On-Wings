@@ -343,3 +343,211 @@ p {
     background-color: #0d1117;
     color: white;
 }
+
+/* --- HOME PAGE --- */
+/* The homepage carries its own layout: wide margins, big type, and one
+   interactive object rather than a grid of links. */
+
+.home {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px 120px;
+    box-sizing: border-box;
+}
+
+.hero {
+    padding: 96px 0 72px;
+}
+
+.hero h1 {
+    margin: 0;
+    color: #ffffff;
+    font-size: clamp(40px, 9vw, 76px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+}
+
+.lede {
+    margin: 28px 0 0;
+    max-width: 46ch;
+    color: #8b949e;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* --- the approximation machine --- */
+
+.machine {
+    border-top: 1px solid #30363d;
+    padding-top: 48px;
+}
+
+.frac {
+    color: #ffffff;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: clamp(36px, 8vw, 60px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+/* The two digit tapes, pi above and the best fraction below, so the exact
+   place where the approximation gives up is visible. */
+.tape {
+    margin: 28px 0 0;
+    padding: 18px 20px;
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    overflow-x: auto;
+}
+
+.tape-row {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    white-space: nowrap;
+}
+
+.tape-row + .tape-row {
+    margin-top: 10px;
+}
+
+.tape-label {
+    flex: 0 0 auto;
+    width: 34px;
+    color: #6e7681;
+    font-size: 13px;
+    text-align: right;
+}
+
+.tape-digits {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 17px;
+    letter-spacing: 0.02em;
+}
+
+.tape-digits .lit { color: #58a6ff; }  /* digits that agree with pi */
+.tape-digits .dim { color: #6e7681; }  /* where it has gone wrong */
+
+.readout {
+    display: flex;
+    gap: 40px;
+    margin-top: 28px;
+}
+
+.stat-value {
+    display: block;
+    color: #ffffff;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 22px;
+}
+
+.stat-label {
+    display: block;
+    margin-top: 4px;
+    color: #6e7681;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* --- the slider --- */
+
+.control {
+    display: block;
+    margin-top: 40px;
+}
+
+.control-label {
+    display: block;
+    margin-bottom: 14px;
+    color: #8b949e;
+    font-size: 15px;
+}
+
+.control-label b {
+    color: #ffffff;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+#q-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    display: block;
+    width: 100%;
+    height: 44px;          /* full-height touch target for iPad */
+    margin: 0;
+    background: transparent;
+    touch-action: pan-y;   /* horizontal drags belong to the slider */
+    cursor: pointer;
+}
+
+#q-slider::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 2px;
+    background: #30363d;
+}
+
+#q-slider::-moz-range-track {
+    height: 4px;
+    border-radius: 2px;
+    background: #30363d;
+}
+
+#q-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    margin-top: -13px;     /* centres the thumb on the track */
+    border: none;
+    border-radius: 50%;
+    background: #58a6ff;
+    box-shadow: 0 0 0 6px rgba(88, 166, 255, 0.14);
+}
+
+#q-slider::-moz-range-thumb {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    background: #58a6ff;
+}
+
+.verdict {
+    margin: 36px 0 0;
+    max-width: 52ch;
+    color: #8b949e;
+    font-size: 16px;
+    line-height: 1.65;
+}
+
+/* --- closing note --- */
+
+.what {
+    margin-top: 96px;
+    padding-top: 48px;
+    border-top: 1px solid #30363d;
+}
+
+.what h2 {
+    margin: 0 0 20px;
+    color: #ffffff;
+    font-size: 24px;
+    letter-spacing: -0.01em;
+}
+
+.what p {
+    max-width: 52ch;
+    color: #8b949e;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+.what .sig {
+    color: #6e7681;
+    font-size: 15px;
+}
