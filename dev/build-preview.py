@@ -19,7 +19,7 @@ def body_of(html):
     return re.sub(r'\s*<script src="[^"]+"></script>', "", inner).strip()
 
 mascot = "data:image/png;base64," + base64.b64encode(
-    open(os.path.join(ROOT, "iraconal.png"), "rb").read()).decode()
+    open(os.path.join(ROOT, "assets/img/iraconal.png"), "rb").read()).decode()
 
 routes = []
 for key, filename in PAGES:
@@ -29,7 +29,8 @@ for key, filename in PAGES:
 
 scripts = "\n".join(
     "/* ---- %s ---- */\n(function () {\n%s\n}());" % (f, read(f))
-    for f in ["home.js", "tools.js", "runaway.js"])
+    for f in ["assets/js/game.js", "assets/js/problem.js",
+              "assets/js/tools.js", "assets/js/runaway.js"])
 
 # Preview chrome: the site's own tokens, so it recedes instead of competing.
 chrome_css = """
@@ -121,12 +122,12 @@ page = """<title>NumberOnWings</title>
 %s
 %s
 </script>
-""" % (read("style.css"), chrome_css, "\n\n".join(routes), mascot_js, scripts, router_js)
+""" % (read("assets/css/site.css"), chrome_css, "\n\n".join(routes), mascot_js, scripts, router_js)
 
 # The mascot ships inside the file: an Artifact cannot fetch a repo asset.
 # The src is left off the tags and filled in once at runtime, so the drawing
 # is carried in the document exactly once.
-page = page.replace('src="iraconal.png"', 'data-mascot')
+page = page.replace('src="assets/img/iraconal.png"', 'data-mascot')
 page = page.replace("MASCOT_SRC", '"%s"' % mascot)
 
 open(OUT, "w", encoding="utf-8").write(page)

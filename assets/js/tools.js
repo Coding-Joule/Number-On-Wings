@@ -5,7 +5,7 @@
  */
 
 const INK    = "#f0efec";
-const ACCENT = "#e0a340";
+const TIP    = "#8b8b94";  /* depth reads as the ink thinning, not as a hue */
 const LINE   = "#22222a";
 const FAINT  = "#7c7c85";
 const SUNK   = "#08080a";
@@ -167,10 +167,10 @@ function debounce(fn, wait) {
         const x2 = x + Math.sin(rad) * len;
         const y2 = y - Math.cos(rad) * len;
 
-        /* Fade from ink at the trunk to the accent at the tips, so the
-           depth of the recursion is visible as colour. */
+        /* Fade from solid ink at the trunk to a thinner grey at the tips,
+           so the depth of the recursion is visible without a second colour. */
         const t = depth / MAX_DEPTH;
-        ctx.strokeStyle = depth === 0 ? INK : mix(INK, ACCENT, t);
+        ctx.strokeStyle = depth === 0 ? INK : mix(INK, TIP, t);
         ctx.lineWidth = Math.max(0.6, width);
         ctx.lineCap = "round";
         ctx.beginPath();
@@ -179,7 +179,7 @@ function debounce(fn, wait) {
         ctx.stroke();
 
         if (depth >= MAX_DEPTH || len < MIN_LEN) {
-            ctx.fillStyle = ACCENT;
+            ctx.fillStyle = INK;
             ctx.beginPath();
             ctx.arc(x2, y2, Math.max(1, width * 0.8), 0, Math.PI * 2);
             ctx.fill();
@@ -599,7 +599,7 @@ function debounce(fn, wait) {
         ctx.stroke();
 
         /* curve */
-        ctx.strokeStyle = ACCENT;
+        ctx.strokeStyle = INK;
         ctx.lineWidth = 2;
         ctx.beginPath();
 

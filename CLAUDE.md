@@ -19,8 +19,10 @@ It is not an educational product, a tutoring service, or a SaaS dashboard.
 The site should feel like wandering into someone's mathematical world,
 not like browsing a feature list.
 
-IrAcoNAl, a pi, is the mascot. `IMG_3098.png` is the original drawing,
-with a white background baked in. `iraconal.png` is that drawing cropped
+IrAcoNAl, a pi, is the mascot. `assets/img/iraconal-original.png` is
+the original drawing,
+with a white background baked in. `assets/img/iraconal.png` is that
+drawing cropped
 with the paper keyed out, ink kept black. The ink is black, so on a dark
 surface it needs to be lightened rather than used as-is.
 
@@ -44,10 +46,24 @@ transparent black drawing disappears against a dark browser tab.
 
 ## Decided
 
-### The homepage is a greeting and a problem
+### The homepage is a greeting and a game
 
-The front door says `Hello.` and then hands the visitor something to
-solve. That is the whole hook.
+The front door says `Hello.` and then you are already playing. Twenty-one
+stones, take one to three, whoever takes the last one wins, IrAcoNAl
+moves second. No introduction: nobody arrives wanting to read about the
+person whose site it is.
+
+IrAcoNAl plays perfectly, and perfect play is one line -- always leave a
+multiple of four. Twenty-one is not a multiple of four, so the game is
+*winnable from the start*; the visitor simply has to find the invariant.
+Random play loses about 998 times in 1000, so they will lose, and losing
+is what sends them looking. Nothing is explained until they ask.
+
+This also gives the mascot a real job. IrAcoNAl is the opponent, not
+decoration.
+
+The daily problem stays, below the game, for anyone who would rather
+think quietly than play.
 
 This is deliberately not the AoPS move. "Train with the World's Top
 Minds" works for them because they have IMO alumni to point at; the
@@ -79,10 +95,18 @@ calculator, not an idea.
 
 ### Visual language
 
-Tokens live at the top of `style.css`; changing the look means
+Tokens live at the top of `assets/css/site.css`; changing the look means
 changing those values, not each page.
 
-- Warm near-black (`#0a0a0c`), off-white text, one amber accent.
+- **There is no accent hue.** The site is off-white ink (`#f0efec`) on
+  warm near-black (`#0a0a0c`) and nothing else. Emphasis is carried by
+  brightness and weight -- a right answer is bright, a wrong one is
+  dim -- never by colour. The bright ink is the same value as the type
+  and the same value as the mascot's paper, so the whole site is one
+  material. An earlier version used an amber accent; it was dropped.
+- The circle is the site's only graphic mark: the greeting's full stop,
+  the game's stones, the roots marked on the grapher. Same shape, same
+  ink, every time.
 - Mathematics is set in a serif, and nothing else on the site is.
   Variables are italic, operators and function names upright.
 - The greeting's full stop is a drawn circle, not a typed period: at
@@ -98,11 +122,23 @@ changing those values, not each page.
 - Lists of destinations are full-width rows, not a grid of identical
   cards.
 - 48px minimum tap targets; 16px inputs so iOS Safari does not zoom.
+- `[hidden]` is forced to `display: none` globally. Any class that sets
+  `display` outranks the browser's own `[hidden]` rule, so without it a
+  hidden button is still painted.
 
-### Pages
+### Layout on disk
 
-`index.html` (home), `tools.html`, `runaway.html`. Each page carries
-its own script; there is no build step and no framework.
+    index.html  tools.html  runaway.html   pages, served from the root
+    favicon.png  apple-touch-icon.png      must stay at the root
+    assets/css/site.css                    every token and rule
+    assets/js/                             game, problem, tools, runaway
+    assets/img/                            the mascot and the original scan
+    dev/build-preview.py                   not part of the site
+
+Each page carries only the scripts it needs; there is no build step and
+no framework. `game.js` and `problem.js` share the homepage, so each is
+wrapped in its own function -- two top-level scripts share one scope and
+their names would collide.
 
 The grapher parses expressions into a tree of small functions rather
 than calling `eval`, so the worst a visitor can type is a syntax

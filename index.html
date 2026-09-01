@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>NumberOnWings</title>
-    <meta name="description" content="A personal mathematical playground. Projects, experiments, puzzles, and a problem to solve on the way in.">
+    <meta name="description" content="Twenty-one stones. Take one, two or three. Whoever takes the last one wins.">
     <meta name="color-scheme" content="dark">
     <meta name="theme-color" content="#0a0a0c">
     <link rel="icon" href="favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
 
-<a class="skip" href="#problem">Skip to the problem</a>
+<a class="skip" href="#game-controls">Skip to the game</a>
 
 <div class="page">
 
     <header class="masthead">
         <span class="wordmark">
-            <img class="mascot" src="iraconal.png" alt="" width="26" height="26">
+            <img class="mascot" src="assets/img/iraconal.png" alt="" width="26" height="26">
             Number<span>OnWings</span>
         </span>
     </header>
@@ -28,30 +28,80 @@
 
         <section class="hero">
             <div>
-                <span class="eyebrow">A personal mathematical playground</span>
+                <span class="eyebrow">A game &middot; you go first</span>
                 <h1 class="headline">Hello<span class="dot" aria-hidden="true"></span></h1>
             </div>
 
-            <img class="mascot hero-mascot" src="iraconal.png"
+            <img class="mascot hero-mascot" src="assets/img/iraconal.png"
                  alt="IrAcoNAl, a hand-drawn pi with two eyes">
 
             <p class="lede">
-                I'm Joule. This is NumberOnWings — numbers with wings, not
-                wings with numbers. It's where I keep the mathematics I can't
-                stop thinking about: projects, experiments, puzzles, and a
-                healthy number of dead ends.
+                Twenty-one stones. Take one, two or three. Whoever takes the
+                last one wins.
             </p>
 
-            <p class="lede">
-                There's no course here and nothing to sign up for, so let's
-                start the way it ought to start.
-                <strong>Here is a problem.</strong>
-            </p>
+            <div class="game">
+                <ol class="stones" id="stones"></ol>
+                <p class="game-count" id="game-count"></p>
+
+                <div class="game-controls" id="game-controls">
+                    <button type="button" class="btn" data-take="1">take one</button>
+                    <button type="button" class="btn" data-take="2">take two</button>
+                    <button type="button" class="btn" data-take="3">take three</button>
+                </div>
+
+                <p class="game-status" id="game-status" role="status" aria-live="polite"></p>
+                <p class="game-tally" id="game-tally"></p>
+
+                <div class="game-actions">
+                    <button type="button" class="btn btn-quiet" id="game-again" hidden>play again</button>
+                    <button type="button" class="link-btn" id="game-reveal">how does it keep winning?</button>
+                </div>
+
+                <div class="solution" id="game-solution" hidden>
+                    <h3>Why it keeps winning</h3>
+
+                    <p>Count what you <em>leave</em>, not what you take.</p>
+
+                    <p>Call a position <strong>lost</strong> if the player about to
+                    move loses against perfect play. Zero stones is lost: you have
+                    nothing to take, and your opponent has just taken the last one
+                    and won.</p>
+
+                    <p>Now build upwards from there. From a multiple of four you can
+                    take one, two or three, leaving
+                    <span class="math">4<i>k</i> &minus; 1</span>,
+                    <span class="math">4<i>k</i> &minus; 2</span> or
+                    <span class="math">4<i>k</i> &minus; 3</span> &mdash; never a
+                    multiple of four. From anything that is <em>not</em> a multiple
+                    of four you can always take the remainder and leave one.</p>
+
+                    <p>So the lost positions are exactly the multiples of four. You
+                    can never move from one into another, and from anywhere else you
+                    can always move into one. That is the whole game.</p>
+
+                    <p><span class="math">21 = 4 &times; 5 + 1</span>, so take
+                    <strong>one</strong>, leave 20, and then mirror: whatever
+                    IrAcoNAl takes, you take <span class="math">4 &minus;</span> that.
+                    It runs out of stones on its own move, every single time.</p>
+
+                    <div class="takeaway">
+                        <p>If the most you could take were <span class="var">m</span>
+                        rather than three, the invariant would be mod
+                        <span class="math">(<i>m</i> + 1)</span> &mdash; the same
+                        argument with a different modulus. And this is the small end
+                        of a large theory: every impartial game of this kind carries
+                        a Sprague&ndash;Grundy value, and a position is lost exactly
+                        when that value is zero. Nim with several piles is this same
+                        idea, with XOR standing in for the remainder.</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section class="section" id="problem">
             <h2 class="section-label">
-                Today's problem
+                Or a problem, if you would rather think quietly
                 <span class="spacer" id="solved-count"></span>
             </h2>
 
@@ -82,7 +132,7 @@
                 <div class="solution" id="solution" hidden></div>
 
                 <div class="mascot-aside">
-                    <img class="mascot" src="iraconal.png" alt="" width="44" height="44">
+                    <img class="mascot" src="assets/img/iraconal.png" alt="" width="44" height="44">
                     <span id="mascot-line">IrAcoNAl is watching you think.</span>
                 </div>
             </div>
@@ -133,6 +183,7 @@
 
 </div>
 
-<script src="home.js"></script>
+<script src="assets/js/game.js"></script>
+<script src="assets/js/problem.js"></script>
 </body>
 </html>
