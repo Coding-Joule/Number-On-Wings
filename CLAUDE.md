@@ -87,8 +87,14 @@ changing those values, not each page.
   Variables are italic, operators and function names upright.
 - The greeting's full stop is a drawn circle, not a typed period: at
   display size a period is a square block in many fonts.
-- The mascot is inverted in CSS (`filter: invert(1)`) so its black
-  ink reads as white on the dark surface.
+- **IrAcoNAl is drawn in black ink and stays black ink.** It is never
+  inverted, tinted, lightened or faded to suit a background. Where it
+  sits on a dark surface it is given paper to sit on -- a `--paper`
+  tile (`#f0efec`, sampled from the favicon) with the favicon's
+  rounded corner -- because a black drawing on a dark surface
+  disappears. The paper changes size; the ink never changes at all.
+  An earlier version of this page inverted the drawing to cream, which
+  was wrong: it made the mascot into something it is not.
 - Lists of destinations are full-width rows, not a grid of identical
   cards.
 - 48px minimum tap targets; 16px inputs so iOS Safari does not zoom.

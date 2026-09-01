@@ -12,6 +12,7 @@
     --line-soft: #1a1a20;
 
     --fg:        #f0efec;  /* off-white: white on black is too harsh */
+    --paper:     #f0efec;  /* the favicon's tile, sampled: the mascot's paper */
     --fg-muted:  #8b8b94;
     --fg-faint:  #7c7c85;
 
@@ -121,16 +122,21 @@ body {
 .wordmark span { color: var(--fg-faint); font-weight: 400; }
 .wordmark:hover span { color: var(--fg-muted); }
 
-/* The mascot's ink is black on transparent, so on a dark surface it has
-   to be lightened rather than used as-is. Inverting a grayscale+alpha
-   PNG flips the ink to white and leaves the transparency alone. */
-.mascot { filter: invert(1); }
+/* IrAcoNAl is drawn in black ink. That is what it is, so it is not
+   inverted, tinted or faded to suit the background -- it is given paper
+   to sit on, exactly as the favicon does, because a black drawing on a
+   dark surface simply disappears. The ink stays black everywhere; only
+   the size of the paper changes. */
+.mascot {
+    background-color: var(--paper);
+    border-radius: 22%;      /* the favicon tile's corner */
+    object-fit: contain;
+}
 
 .wordmark .mascot {
     width: 26px;
     height: 26px;
-    object-fit: contain;
-    opacity: 0.85;
+    padding: 2px;
 }
 
 .nav {
@@ -196,13 +202,17 @@ body {
 }
 
 /* Full-size mascot, sitting on the baseline of the greeting rather than
-   floated into a corner as decoration. */
+   floated into a corner as decoration. A square plate, like the favicon,
+   so the drawing reads as a piece of paper on a dark wall. The shadow is
+   doing a job: without it the paper looks like a hole cut in the page. */
 .hero-mascot {
-    width: clamp(120px, 20vw, 210px);
+    width: clamp(132px, 21vw, 216px);
+    aspect-ratio: 1;
     height: auto;
-    opacity: 0.9;
+    padding: clamp(12px, 1.8vw, 24px);
+    border-radius: 12%;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
     justify-self: end;
-    margin-bottom: -2%;
 }
 
 .lede {
@@ -573,9 +583,8 @@ input[type="range"]::-moz-range-thumb {
 .mascot-aside .mascot {
     width: 44px;
     height: 44px;
-    object-fit: contain;
+    padding: 3px;
     flex: none;
-    opacity: 0.8;
 }
 
 
