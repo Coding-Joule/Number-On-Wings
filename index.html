@@ -4,28 +4,135 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>NumberOnWings</title>
-    <meta name="description" content="NumberOnWings is being rebuilt.">
+    <meta name="description" content="A personal mathematical playground. Projects, experiments, puzzles, and a problem to solve on the way in.">
     <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#0a0a0c">
     <link rel="icon" href="favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <main class="page">
+<a class="skip" href="#problem">Skip to the problem</a>
 
-        <span class="status">numberonwings.com</span>
+<div class="page">
 
-        <h1 class="headline">BUILDING<span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></h1>
+    <header class="masthead">
+        <span class="wordmark">
+            <img class="mascot" src="iraconal.png" alt="" width="26" height="26">
+            Number<span>OnWings</span>
+        </span>
+    </header>
 
-        <p class="note">
-            The old site is gone. This one is being written from nothing —
-            new structure, new everything. <strong>Nothing here yet.</strong>
-        </p>
+    <main>
 
-        <p class="footer">IrAcoNAl is watching the scaffolding.</p>
+        <section class="hero">
+            <div>
+                <span class="eyebrow">A personal mathematical playground</span>
+                <h1 class="headline">Hello<span class="dot" aria-hidden="true"></span></h1>
+            </div>
+
+            <img class="mascot hero-mascot" src="iraconal.png"
+                 alt="IrAcoNAl, a hand-drawn pi with two eyes">
+
+            <p class="lede">
+                I'm Joule. This is NumberOnWings — numbers with wings, not
+                wings with numbers. It's where I keep the mathematics I can't
+                stop thinking about: projects, experiments, puzzles, and a
+                healthy number of dead ends.
+            </p>
+
+            <p class="lede">
+                There's no course here and nothing to sign up for, so let's
+                start the way it ought to start.
+                <strong>Here is a problem.</strong>
+            </p>
+        </section>
+
+        <section class="section" id="problem">
+            <h2 class="section-label">
+                Today's problem
+                <span class="spacer" id="solved-count"></span>
+            </h2>
+
+            <div class="problem">
+                <div class="problem-head">
+                    <span class="field-name" id="problem-field">&nbsp;</span>
+                    <span class="spacer"></span>
+                    <button type="button" class="link-btn" id="another-btn">a different one &rarr;</button>
+                </div>
+
+                <div id="problem-body">
+                    <p class="problem-statement" id="problem-statement">&nbsp;</p>
+                </div>
+
+                <form class="answer-row" id="answer-form" autocomplete="off">
+                    <label class="skip" for="answer-input">Your answer</label>
+                    <input type="text" id="answer-input" placeholder="your answer"
+                           inputmode="text" autocapitalize="off" spellcheck="false">
+                    <button type="submit" class="btn">Check</button>
+                </form>
+
+                <p class="verdict" id="verdict" role="status" aria-live="polite"></p>
+
+                <div class="problem-actions">
+                    <button type="button" class="link-btn" id="reveal-btn">show me how it's done</button>
+                </div>
+
+                <div class="solution" id="solution" hidden></div>
+
+                <div class="mascot-aside">
+                    <img class="mascot" src="iraconal.png" alt="" width="44" height="44">
+                    <span id="mascot-line">IrAcoNAl is watching you think.</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-label">The rest of it</h2>
+
+            <div class="destinations">
+
+                <a class="destination" href="tools.html">
+                    <h3>Tools</h3>
+                    <p>
+                        A prime factoriser, a fractal tree you can bend with the
+                        wind, and a grapher that hunts down its own roots. Things
+                        I built because I wanted to watch them run.
+                    </p>
+                    <span class="arrow" aria-hidden="true">&rarr;</span>
+                </a>
+
+                <a class="destination" href="runaway.html">
+                    <h3>Don't click here</h3>
+                    <p>
+                        There is a button. It does not want to be pressed. It is
+                        also, without realising it, a proof about infinite series.
+                    </p>
+                    <span class="arrow" aria-hidden="true">&rarr;</span>
+                </a>
+
+                <a class="destination" href="https://github.com/Coding-Joule/NumberOnWings">
+                    <h3>The source</h3>
+                    <p>
+                        Every page of this site, including the parts I got wrong
+                        the first time, out in the open on GitHub.
+                    </p>
+                    <span class="arrow" aria-hidden="true">&rarr;</span>
+                </a>
+
+            </div>
+        </section>
 
     </main>
 
+    <footer class="site-footer">
+        <span>IrAcoNAl <span aria-hidden="true">&middot;</span> say it ir-ra-tion-AL</span>
+        <span class="spacer">numberonwings.com</span>
+    </footer>
+
+</div>
+
+<script src="home.js"></script>
 </body>
 </html>

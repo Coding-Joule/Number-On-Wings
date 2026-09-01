@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Don't click here — NumberOnWings</title>
+    <meta name="description" content="There is a button. It does not want to be pressed. It is also a proof about infinite series.">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#0a0a0c">
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="page">
+
+    <header class="masthead">
+        <a class="wordmark" href="index.html">
+            <img class="mascot" src="iraconal.png" alt="" width="26" height="26">
+            Number<span>OnWings</span>
+        </a>
+        <nav class="nav">
+            <a href="index.html">home</a>
+            <a href="tools.html">tools</a>
+            <a href="runaway.html" aria-current="page">don't click here</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="section">
+            <h1 class="page-title">Don't click here</h1>
+            <p class="page-intro">
+                There is a button below. It does not want to be pressed, and it
+                will do something about that. Chase it anyway — and keep half
+                an eye on the numbers in the corner while you do.
+            </p>
+
+            <div class="arena" id="arena">
+                <button type="button" class="btn" id="runaway">Click me if you dare</button>
+                <p class="tally" id="tally">dodges 0 &middot; distance travelled 0 px</p>
+            </div>
+
+            <div class="prize" id="prize" hidden>
+                <h2 class="page-title">You caught it.</h2>
+
+                <p class="page-intro">
+                    Of course you did. Look at what it was doing: every dodge
+                    carried it exactly <strong>half</strong> as far as the one
+                    before.
+                </p>
+
+                <div class="block-math" id="prize-series"></div>
+
+                <p class="page-intro">
+                    Suppose it had never given up and dodged forever — infinitely
+                    many times. Add every one of those infinitely many jumps
+                    together and the total is not infinite. It is
+                    <span class="math" id="prize-limit"></span>, and not one
+                    pixel more:
+                </p>
+
+                <div class="block-math">
+                    <span class="var">a</span> + <span class="var">a</span><i>r</i> +
+                    <span class="var">a</span><i>r</i><sup>2</sup> +
+                    <span class="var">a</span><i>r</i><sup>3</sup> + &hellip; =
+                    <span class="var">a</span> / (1 &minus; <i>r</i>),
+                    &nbsp; for |<i>r</i>| &lt; 1
+                </div>
+
+                <p class="page-intro">
+                    With <span class="math" id="prize-terms"></span> that comes
+                    to twice the first jump. The button had a finite amount of
+                    running in it from the very first move, so the chase could
+                    only ever end one way. It was never escaping. It was
+                    <em>converging</em>.
+                </p>
+
+                <p class="page-intro">
+                    This is Zeno's paradox with the mystery removed. Infinitely
+                    many steps do not need infinitely much room — they only need
+                    to shrink fast enough, and halving is fast enough.
+                </p>
+
+                <div class="mascot-aside">
+                    <img class="mascot" src="iraconal.png" alt="" width="44" height="44">
+                    <span>IrAcoNAl knew. IrAcoNAl said nothing.</span>
+                </div>
+
+                <p class="page-intro">
+                    <button type="button" class="btn btn-quiet" id="again">Let it go and try again</button>
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <a href="index.html">&larr; back to the front</a>
+        <span class="spacer">numberonwings.com</span>
+    </footer>
+
+</div>
+
+<script src="runaway.js"></script>
+</body>
+</html>

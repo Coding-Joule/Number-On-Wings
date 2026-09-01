@@ -7,30 +7,50 @@
        the default GitHub dark that every developer site uses. */
     --bg:        #0a0a0c;
     --bg-raised: #131317;
+    --bg-sunk:   #08080a;
     --line:      #22222a;
+    --line-soft: #1a1a20;
 
     --fg:        #f0efec;  /* off-white: white on black is too harsh */
     --fg-muted:  #8b8b94;
     --fg-faint:  #7c7c85;
 
-    --accent:    #e0a340;  /* one warm accent, used sparingly */
+    --accent:      #e0a340;  /* one warm accent, used sparingly */
+    --accent-sunk: rgba(224, 163, 64, 0.10);
+    --wrong:       #c9705f;  /* desaturated, so a wrong answer is not a siren */
 
     /* Type scale. The display size is fluid so it stays big on an iPad
        without overflowing a phone. */
-    --step-display: clamp(56px, 17vw, 168px);
+    --step-display: clamp(72px, 22vw, 156px);
+    --step-title:   clamp(28px, 4.5vw, 44px);
+    --step-lead:    clamp(18px, 1.7vw, 21px);
     --step-body:    clamp(16px, 1.2vw, 18px);
     --step-small:   14px;
+    --step-micro:   12px;
 
     --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
             Helvetica, Arial, sans-serif;
     --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    /* Mathematics gets a serif. It is the only place on the site that
+       does, which is what makes an expression read as an expression. */
+    --serif: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
 
-    --measure: 46ch;  /* comfortable reading width */
+    --measure: 54ch;  /* comfortable reading width */
+
+    --tap: 48px;      /* minimum touch target, iPad first */
+    --radius: 4px;    /* barely rounded: not a SaaS pill, not a hard box */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; }
+html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+}
 
 body {
     margin: 0;
@@ -41,30 +61,117 @@ body {
     font-size: var(--step-body);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 }
 
 /* Page frame. Safe-area insets keep content clear of the iPad's rounded
    corners and home indicator in landscape. */
 .page {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 100svh;
-    padding: 40px calc(28px + env(safe-area-inset-right))
-             40px calc(28px + env(safe-area-inset-left));
-    max-width: 1100px;
+    max-width: 1080px;
     margin: 0 auto;
+    padding: 0 calc(28px + env(safe-area-inset-right))
+             0 calc(28px + env(safe-area-inset-left));
 }
 
-/* --- the holding page --- */
+::selection { background: var(--accent); color: #17130a; }
 
-.status {
-    display: block;
-    margin-bottom: 28px;
-    color: var(--fg-faint);
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+}
+
+/* Reachable only by keyboard, so a keyboard user is not made to walk
+   the whole masthead before the problem. */
+.skip {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    padding: 12px 18px;
+    background: var(--accent);
+    color: #17130a;
+    font-weight: 600;
+    z-index: 10;
+}
+.skip:focus { left: 8px; top: 8px; }
+
+
+/* ── masthead ─────────────────────────────────────────────────────── */
+
+.masthead {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 32px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 0 0;
+}
+
+.wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--fg);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: var(--step-small);
+    letter-spacing: 0.02em;
+}
+
+.wordmark span { color: var(--fg-faint); font-weight: 400; }
+.wordmark:hover span { color: var(--fg-muted); }
+
+/* The mascot's ink is black on transparent, so on a dark surface it has
+   to be lightened rather than used as-is. Inverting a grayscale+alpha
+   PNG flips the ink to white and leaves the transparency alone. */
+.mascot { filter: invert(1); }
+
+.wordmark .mascot {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    opacity: 0.85;
+}
+
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+    margin-left: auto;
+}
+
+.nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 12px;
+    color: var(--fg-muted);
+    text-decoration: none;
     font-family: var(--mono);
     font-size: var(--step-small);
-    letter-spacing: 0.18em;
+}
+
+.nav a:hover { color: var(--fg); }
+.nav a[aria-current="page"] { color: var(--accent); }
+
+
+/* ── hero ─────────────────────────────────────────────────────────── */
+
+.hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 0 48px;
+    padding: clamp(56px, 11vh, 120px) 0 0;
+}
+
+.eyebrow {
+    display: block;
+    margin-bottom: 24px;
+    color: var(--fg-faint);
+    font-family: var(--mono);
+    font-size: var(--step-micro);
+    letter-spacing: 0.22em;
     text-transform: uppercase;
 }
 
@@ -72,56 +179,558 @@ body {
     margin: 0;
     font-size: var(--step-display);
     font-weight: 800;
-    line-height: 0.88;
-    letter-spacing: -0.045em;
+    line-height: 0.86;
+    letter-spacing: -0.05em;
 }
 
-/* The dots are the only moving thing on the page. They cycle but never
-   resolve, which is the honest status of the site.
-
-   Drawn as circles rather than typed periods: at display size a period
-   renders as a square block in many fonts, and its size and spacing are
-   not controllable. Sized in em, so they scale with the headline. An
-   inline-block sits on the baseline, which is exactly where a period
-   belongs. */
-.dots i {
+/* The full stop is drawn, not typed. At this size a period is a square
+   block in a lot of fonts, and its size and offset cannot be controlled.
+   An inline-block sits on the baseline, which is where a period belongs. */
+.headline .dot {
     display: inline-block;
     width: 0.115em;
     height: 0.115em;
-    margin-left: 0.075em;
+    margin-left: 0.03em;
     border-radius: 50%;
     background-color: var(--accent);
-    animation: pulse 1.6s infinite;
 }
 
-.dots i:nth-child(2) { animation-delay: 0.2s; }
-.dots i:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes pulse {
-    0%, 60%, 100% { opacity: 0.22; }
-    30%           { opacity: 1; }
+/* Full-size mascot, sitting on the baseline of the greeting rather than
+   floated into a corner as decoration. */
+.hero-mascot {
+    width: clamp(120px, 20vw, 210px);
+    height: auto;
+    opacity: 0.9;
+    justify-self: end;
+    margin-bottom: -2%;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .dots i { animation: none; opacity: 0.55; }
-}
-
-.note {
+.lede {
+    grid-column: 1 / -1;
     max-width: var(--measure);
     margin: 40px 0 0;
+    font-size: var(--step-lead);
+    color: var(--fg-muted);
+    text-wrap: pretty;
+}
+
+.lede + .lede { margin-top: 20px; }
+.lede strong { color: var(--fg); font-weight: 600; }
+
+@media (max-width: 700px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-mascot { justify-self: start; margin: 32px 0 0; }
+}
+
+
+/* ── section furniture ────────────────────────────────────────────── */
+
+.section { padding: clamp(64px, 12vh, 128px) 0 0; }
+
+.section-label {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin: 0 0 28px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+    color: var(--fg-faint);
+    font-family: var(--mono);
+    font-size: var(--step-micro);
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+}
+
+.section-label .spacer { margin-left: auto; }
+
+.page-title {
+    margin: 0;
+    font-size: var(--step-title);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+}
+
+.page-intro {
+    max-width: var(--measure);
+    margin: 20px 0 0;
+    color: var(--fg-muted);
+    text-wrap: pretty;
+}
+
+
+/* ── mathematics ──────────────────────────────────────────────────── */
+
+.math {
+    font-family: var(--serif);
+    font-size: 1.08em;
+}
+
+.math i, .block-math i, .var { font-family: var(--serif); font-style: italic; }
+
+.math sup, .math sub { font-size: 0.72em; line-height: 0; }
+
+.block-math {
+    margin: 20px 0;
+    font-family: var(--serif);
+    font-size: 1.15em;
+    color: var(--fg);
+    overflow-x: auto;
+    padding-bottom: 4px;
+}
+
+
+/* ── controls ─────────────────────────────────────────────────────── */
+
+.field {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: stretch;
+}
+
+input[type="text"],
+input[type="number"] {
+    flex: 1 1 200px;
+    min-width: 0;
+    min-height: var(--tap);
+    padding: 0 16px;
+    background: var(--bg-sunk);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--fg);
+    font-family: var(--mono);
+    font-size: 16px;   /* 16px or iOS Safari zooms the page on focus */
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+input::placeholder { color: var(--fg-faint); opacity: 1; }
+
+input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--bg);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--tap);
+    padding: 0 22px;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    background: var(--accent);
+    color: #17130a;
+    font-family: var(--sans);
+    font-size: var(--step-small);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.btn:hover { background: #eeb453; border-color: #eeb453; }
+.btn:active { transform: translateY(1px); }
+
+.btn-quiet {
+    background: transparent;
+    border-color: var(--line);
     color: var(--fg-muted);
 }
 
-.note strong {
+.btn-quiet:hover {
+    background: var(--bg-raised);
+    border-color: var(--fg-faint);
     color: var(--fg);
-    font-weight: 600;
 }
 
-.footer {
-    margin-top: 72px;
-    padding-top: 24px;
+/* A text-weight action: reads as prose, still has a real tap target. */
+.link-btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--fg-muted);
+    font-family: var(--mono);
+    font-size: var(--step-small);
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-underline-offset: 4px;
+    cursor: pointer;
+}
+
+.link-btn:hover { color: var(--accent); text-decoration-color: currentColor; }
+
+.slider-row {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) 4ch;
+    align-items: center;
+    gap: 12px 16px;
+    margin-bottom: 4px;
+    font-family: var(--mono);
+    font-size: var(--step-small);
+    color: var(--fg-muted);
+}
+
+.slider-row output { color: var(--accent); text-align: right; }
+
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: var(--tap);        /* the whole strip is grabbable on a screen */
+    background: transparent;
+    cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 2px;
+    background: var(--line);
+}
+input[type="range"]::-moz-range-track {
+    height: 2px;
+    background: var(--line);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    margin-top: -10px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--accent);
+}
+input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--accent);
+}
+
+.checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    color: var(--fg-muted);
+    font-size: var(--step-small);
+    cursor: pointer;
+}
+
+.checkbox input {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--accent);
+}
+
+
+/* ── footer ───────────────────────────────────────────────────────── */
+
+.site-footer {
+    margin-top: clamp(72px, 14vh, 140px);
+    padding: 28px 0 calc(40px + env(safe-area-inset-bottom));
     border-top: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 28px;
+    align-items: center;
     color: var(--fg-faint);
     font-family: var(--mono);
     font-size: var(--step-small);
 }
+
+.site-footer a { color: var(--fg-muted); text-decoration: none; }
+.site-footer a:hover { color: var(--accent); }
+.site-footer .spacer { margin-left: auto; }
+
+
+/* ── the problem ──────────────────────────────────────────────────── */
+
+/* Deliberately not a card in a grid of cards. It is one wide slab with a
+   single accent edge, because it is the only one of its kind on the page. */
+.problem {
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--accent);
+    border-radius: var(--radius);
+    background: var(--bg-raised);
+    padding: clamp(24px, 4vw, 40px);
+}
+
+.problem-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 20px;
+    margin-bottom: 24px;
+    font-family: var(--mono);
+    font-size: var(--step-micro);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+}
+
+.problem-head .field-name { color: var(--accent); }
+.problem-head .spacer { margin-left: auto; }
+
+.problem-statement {
+    max-width: 60ch;
+    margin: 0;
+    font-size: var(--step-lead);
+    line-height: 1.55;
+    color: var(--fg);
+    text-wrap: pretty;
+}
+
+.problem-statement + .problem-statement {
+    margin-top: 16px;
+    font-size: var(--step-body);
+    color: var(--fg-muted);
+}
+
+.answer-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-top: 28px;
+}
+
+.answer-row input[type="text"] { flex: 0 1 260px; }
+
+.verdict {
+    margin-top: 18px;
+    min-height: 1.6em;
+    font-family: var(--mono);
+    font-size: var(--step-small);
+    color: var(--fg-muted);
+}
+
+.verdict[data-state="right"] { color: var(--accent); }
+.verdict[data-state="wrong"] { color: var(--wrong); }
+
+.problem-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 24px;
+    align-items: center;
+    margin-top: 6px;
+}
+
+/* The worked solution. Real mathematics, not a simplified gloss, so it
+   gets room to breathe rather than a one-line "the answer is 24". */
+.solution {
+    margin-top: 28px;
+    padding-top: 26px;
+    border-top: 1px solid var(--line);
+    max-width: 60ch;
+}
+
+.solution[hidden] { display: none; }
+
+.solution h3 {
+    margin: 0 0 16px;
+    font-family: var(--mono);
+    font-size: var(--step-micro);
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+}
+
+.solution p { margin: 0 0 16px; color: var(--fg-muted); text-wrap: pretty; }
+.solution p:last-child { margin-bottom: 0; }
+.solution strong { color: var(--fg); font-weight: 600; }
+
+/* The general result behind the specific answer: the part that outlives
+   this particular problem. */
+.takeaway {
+    margin-top: 22px;
+    padding: 18px 22px;
+    background: var(--accent-sunk);
+    border-radius: var(--radius);
+    color: var(--fg-muted);
+}
+
+.takeaway p { margin: 0; }
+
+/* IrAcoNAl gets a line rather than a spot in the corner. */
+.mascot-aside {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 28px;
+    color: var(--fg-faint);
+    font-family: var(--mono);
+    font-size: var(--step-small);
+}
+
+.mascot-aside .mascot {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    flex: none;
+    opacity: 0.8;
+}
+
+
+/* ── where to go next ─────────────────────────────────────────────── */
+
+/* A list, not a grid of identical cards. Each entry is a full-width row
+   whose whole surface is the tap target. */
+.destinations { border-top: 1px solid var(--line); }
+
+.destination {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 4px 24px;
+    padding: 28px 4px;
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+    color: inherit;
+}
+
+.destination:hover { background: var(--bg-raised); }
+
+.destination h3 {
+    grid-column: 1;
+    margin: 0;
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.destination:hover h3 { color: var(--accent); }
+
+.destination p {
+    grid-column: 1;
+    max-width: 52ch;
+    margin: 6px 0 0;
+    color: var(--fg-muted);
+    font-size: var(--step-small);
+}
+
+.destination .arrow {
+    grid-row: 1 / span 2;
+    grid-column: 2;
+    color: var(--fg-faint);
+    font-family: var(--mono);
+    font-size: 24px;
+}
+
+.destination:hover .arrow { color: var(--accent); }
+
+
+/* ── tools ────────────────────────────────────────────────────────── */
+
+/* Each tool is its own shape. Consistency is useful; uniformity is not
+   the goal, so these are not forced into one card template. */
+.tool {
+    padding: clamp(32px, 5vw, 56px) 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.tool:last-of-type { border-bottom: 0; }
+
+.tool h2 {
+    margin: 0;
+    font-size: clamp(24px, 3.4vw, 34px);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.tool > p {
+    max-width: var(--measure);
+    margin: 12px 0 28px;
+    color: var(--fg-muted);
+}
+
+.tool-controls { max-width: 560px; }
+
+.result {
+    max-width: 720px;
+    margin-top: 24px;
+    padding: 20px 22px;
+    min-height: 68px;
+    display: flex;
+    align-items: center;
+    background: var(--bg-raised);
+    border-radius: var(--radius);
+    border-left: 2px solid var(--line);
+    font-family: var(--serif);
+    font-size: 1.1em;
+    color: var(--fg-muted);
+    overflow-x: auto;
+}
+
+.result[data-filled="yes"] { border-left-color: var(--accent); color: var(--fg); }
+
+.canvas-frame {
+    margin-top: 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-sunk);
+    overflow: hidden;
+}
+
+.canvas-frame canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    touch-action: pan-y;   /* dragging the graph must not fight the scroll */
+}
+
+.caption {
+    margin: 14px 0 0;
+    max-width: var(--measure);
+    color: var(--fg-faint);
+    font-size: var(--step-small);
+}
+
+
+/* ── the runaway button ───────────────────────────────────────────── */
+
+.arena {
+    position: relative;
+    height: min(64svh, 560px);
+    margin-top: 32px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-sunk);
+    overflow: hidden;
+    touch-action: manipulation;
+}
+
+#runaway {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+}
+
+/* Motion is the joke here, so it stays — but a reduced-motion reader gets
+   the jump without the glide. */
+#runaway { transition: left 180ms ease-out, top 180ms ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+    #runaway { transition: none; }
+}
+
+.tally {
+    position: absolute;
+    left: 16px;
+    bottom: 14px;
+    color: var(--fg-faint);
+    font-family: var(--mono);
+    font-size: var(--step-small);
+}
+
+.prize { max-width: 60ch; margin-top: 36px; }
+.prize[hidden] { display: none; }

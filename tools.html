@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Tools — NumberOnWings</title>
+    <meta name="description" content="A prime factoriser, a fractal tree you can bend, and a grapher that finds its own roots.">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#0a0a0c">
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="page">
+
+    <header class="masthead">
+        <a class="wordmark" href="index.html">
+            <img class="mascot" src="iraconal.png" alt="" width="26" height="26">
+            Number<span>OnWings</span>
+        </a>
+        <nav class="nav">
+            <a href="index.html">home</a>
+            <a href="tools.html" aria-current="page">tools</a>
+            <a href="runaway.html">don't click here</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="section">
+            <h1 class="page-title">Tools</h1>
+            <p class="page-intro">
+                Three small machines. None of them will do your homework, and
+                none of them is trying to teach you anything — they are here
+                because watching a thing run is a different kind of
+                understanding from reading about it.
+            </p>
+        </section>
+
+        <section class="tool">
+            <h2>Prime factoriser</h2>
+            <p>
+                Every whole number above 1 breaks into primes in exactly one
+                way. Give it a number and watch it come apart.
+            </p>
+
+            <div class="tool-controls">
+                <form class="field" id="factor-form" autocomplete="off">
+                    <label class="skip" for="factor-input">Number to factorise</label>
+                    <input type="text" id="factor-input" inputmode="numeric"
+                           placeholder="try 2026" spellcheck="false">
+                    <button type="submit" class="btn">Factorise</button>
+                </form>
+            </div>
+
+            <div class="result" id="factor-result">Prime factors appear here.</div>
+            <p class="caption" id="factor-note"></p>
+        </section>
+
+        <section class="tool">
+            <h2>Fractal tree</h2>
+            <p>
+                A trunk that splits into two smaller copies of itself, which
+                split again, and again. Nothing here knows what a tree looks
+                like — the shape is entirely a consequence of the two numbers
+                below.
+            </p>
+
+            <div class="tool-controls">
+                <div class="slider-row">
+                    <label for="frac-angle">branch angle</label>
+                    <input type="range" id="frac-angle" min="1" max="60" value="26" step="1">
+                    <output for="frac-angle" id="frac-angle-out">26°</output>
+                </div>
+                <div class="slider-row">
+                    <label for="frac-scale">shrink</label>
+                    <input type="range" id="frac-scale" min="50" max="80" value="72" step="1">
+                    <output for="frac-scale" id="frac-scale-out">0.72</output>
+                </div>
+                <div class="slider-row">
+                    <label for="frac-wind">wind</label>
+                    <input type="range" id="frac-wind" min="0" max="10" value="2" step="1">
+                    <output for="frac-wind" id="frac-wind-out">2</output>
+                </div>
+            </div>
+
+            <div class="canvas-frame">
+                <canvas id="fractal-canvas" width="900" height="560"
+                        aria-label="A fractal tree drawn from the settings above"></canvas>
+            </div>
+            <p class="caption" id="fractal-note"></p>
+        </section>
+
+        <section class="tool">
+            <h2>Equation grapher</h2>
+            <p>
+                Type a function of <span class="var">x</span> and it gets
+                drawn. It will also go looking for the places the curve crosses
+                the axis — the roots of
+                <span class="math"><i>f</i>(<i>x</i>) = 0</span> — and mark
+                them, because those are the points worth arguing about.
+            </p>
+
+            <div class="tool-controls">
+                <form class="field" id="graph-form" autocomplete="off">
+                    <label class="skip" for="eq-input">Function of x</label>
+                    <input type="text" id="eq-input" value="x^4 - 3x^2 + 1"
+                           placeholder="x^4 - 3x^2 + 1" spellcheck="false"
+                           autocapitalize="off">
+                    <button type="submit" class="btn">Graph it</button>
+                </form>
+
+                <label class="checkbox">
+                    <input type="checkbox" id="label-roots" checked>
+                    mark the roots
+                </label>
+            </div>
+
+            <div class="canvas-frame">
+                <canvas id="graph-canvas" width="900" height="640"
+                        aria-label="The graph of the function you entered"></canvas>
+            </div>
+            <div class="result" id="graph-result">Roots appear here.</div>
+            <p class="caption">
+                Understands <span class="math">+ &minus; * / ^</span>,
+                brackets, and sin, cos, tan, sqrt, abs, ln, log, exp, along
+                with <span class="math">&pi;</span> as <em>pi</em> and
+                <em>e</em>. Implied multiplication is fine:
+                <span class="math">3x</span> and
+                <span class="math">2sin(x)</span> both work.
+            </p>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <a href="index.html">&larr; back to the front</a>
+        <span class="spacer">numberonwings.com</span>
+    </footer>
+
+</div>
+
+<script src="tools.js"></script>
+</body>
+</html>
