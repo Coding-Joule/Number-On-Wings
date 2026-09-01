@@ -16,6 +16,12 @@ const SUNK   = "#08080a";
 function fitCanvas(canvas) {
     const ratio = Math.min(window.devicePixelRatio || 1, 2);
     const width = canvas.clientWidth;
+
+    /* A canvas inside a hidden container reports no width. Sizing to that
+       divides by zero and poisons the backing store, so bail out and let
+       the caller redraw once the element is on screen. */
+    if (!width) return null;
+
     const height = Math.round(width * (canvas.height / canvas.width));
 
     if (canvas.width !== Math.round(width * ratio)) {
@@ -201,6 +207,7 @@ function debounce(fn, wait) {
 
     function draw() {
         const fit = fitCanvas(canvas);
+        if (!fit) return;
         const ctx = fit.ctx;
 
         ctx.fillStyle = SUNK;
@@ -542,6 +549,7 @@ function debounce(fn, wait) {
 
     function render() {
         const fit = fitCanvas(canvas);
+        if (!fit) return;
         const ctx = fit.ctx;
         const w = fit.w, h = fit.h;
 
@@ -663,8 +671,10 @@ function debounce(fn, wait) {
         } catch (error) {
             current = null;
             const fit = fitCanvas(canvas);
-            fit.ctx.fillStyle = SUNK;
-            fit.ctx.fillRect(0, 0, fit.w, fit.h);
+            if (fit) {
+                fit.ctx.fillStyle = SUNK;
+                fit.ctx.fillRect(0, 0, fit.w, fit.h);
+            }
             result.textContent = "I couldn't read that: " + error.message + ".";
             result.setAttribute("data-filled", "no");
         }

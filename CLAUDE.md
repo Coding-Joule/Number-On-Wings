@@ -110,6 +110,22 @@ error. Its y-window is built from the curve's turning points, because
 scaling to the extremes lets one steep tail flatten everything worth
 looking at.
 
+## Previewing a change
+
+GitHub Pages serves the live domain, so there is no staging: the site
+cannot be looked at without publishing it. `scripts/build-preview.py`
+solves that. It reads the real pages, stylesheet, scripts and mascot
+off disk and folds them into one self-contained HTML file, with the
+three pages as routes and the drawing embedded once. That file can be
+opened anywhere, including as a Claude Artifact, without touching the
+live site.
+
+    python3 scripts/build-preview.py preview.html
+
+It is a preview tool, not a build step. The site itself is still plain
+files with no build and no framework, and the preview is generated
+*from* those files so it cannot drift from them.
+
 ## Still open
 
 Puzzles, play, finance and HMM are unbuilt and unlinked. The homepage
