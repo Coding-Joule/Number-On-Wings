@@ -3,21 +3,28 @@
    so changing the look means changing these values, not each page. */
 
 :root {
-    /* Surface: near-black, very slightly warm, so it does not read as
-       the default GitHub dark that every developer site uses. */
-    --bg:        #0a0a0c;
-    --bg-raised: #131317;
-    --line:      #22222a;
+    /* Surface: near-black pulled warm, so the orange sits on something
+       related to it rather than on neutral grey. */
+    --bg:        #0f0b08;
+    --bg-raised: #1a130e;
+    --line:      #2c211a;
+    --paper:     #f6efe3;  /* the mascot's own paper, reused as a surface */
 
-    --fg:        #f0efec;  /* off-white: white on black is too harsh */
-    --fg-muted:  #8b8b94;
-    --fg-faint:  #7c7c85;
+    --fg:        #f7efe4;
+    --fg-muted:  #b3a493;
+    --fg-faint:  #8a7c6d;
 
-    --accent:    #e0a340;  /* one warm accent, used sparingly */
+    /* Primary is orange. Yellow lifts it, red is used sparingly and never
+       for large areas -- it reads as alarm when it covers ground. */
+    --orange:    #ff7a1a;
+    --yellow:    #ffc233;
+    --red:       #e8412c;
+    --accent:    var(--orange);
 
     /* Type scale. The display size is fluid so it stays big on an iPad
        without overflowing a phone. */
     --step-display: clamp(56px, 17vw, 168px);
+    --step-title:   clamp(34px, 6vw, 60px);
     --step-body:    clamp(16px, 1.2vw, 18px);
     --step-small:   14px;
 
@@ -124,4 +131,162 @@ body {
     color: var(--fg-faint);
     font-family: var(--mono);
     font-size: var(--step-small);
+}
+
+/* --- HOME --- */
+
+.home {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 72px calc(24px + env(safe-area-inset-right))
+             120px calc(24px + env(safe-area-inset-left));
+}
+
+/* The mascot is black ink on transparent, so it needs its paper behind it
+   or it disappears into the page. The disc is that paper. */
+.mascot {
+    display: grid;
+    place-items: center;
+    width: clamp(124px, 26vw, 176px);
+    aspect-ratio: 1;
+    margin: 0 auto 40px;
+    border-radius: 50%;
+    background-color: var(--paper);
+}
+
+.mascot img {
+    width: 74%;
+    height: auto;
+    /* nudge: the glyph's visual mass sits high in its own bounding box */
+    transform: translateY(4%);
+}
+
+.title {
+    margin: 0;
+    text-align: center;
+    font-size: var(--step-title);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+}
+
+.title .colon { color: var(--orange); }
+
+.tagline {
+    max-width: 46ch;
+    margin: 22px auto 0;
+    color: var(--fg-muted);
+    text-align: center;
+    text-wrap: balance;
+}
+
+/* --- the question boxes --- */
+
+.game {
+    margin-top: 72px;
+}
+
+.game-label {
+    margin: 0 0 20px;
+    color: var(--fg-faint);
+    font-family: var(--mono);
+    font-size: var(--step-small);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+/* Stacked full-width rows rather than a grid of cards: the questions are
+   a list you work down, not a set of tiles to choose between. */
+.q {
+    position: relative;
+    overflow: hidden;          /* keeps the open-row bar inside the radius */
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background-color: var(--bg-raised);
+}
+
+/* The open row gets a warm bar down its edge. This is the one place red
+   appears: a thin gradient, never a filled area. */
+.q[open]::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom,
+                var(--yellow), var(--orange) 55%, var(--red));
+}
+
+.q + .q { margin-top: 12px; }
+
+.q summary {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-height: 64px;          /* comfortably past the 44px touch minimum */
+    padding: 16px 20px;
+    cursor: pointer;
+    font-size: clamp(17px, 1.6vw, 19px);
+    font-weight: 600;
+    line-height: 1.4;
+    list-style: none;          /* Firefox default marker */
+    -webkit-tap-highlight-color: transparent;
+}
+
+.q summary::-webkit-details-marker { display: none; }  /* Safari default marker */
+
+.q summary:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: -2px;
+    border-radius: 12px;
+}
+
+.q[open] summary { color: var(--yellow); }
+
+/* The triangle. Rotating rather than swapping glyphs keeps the motion
+   readable as "this row opened". */
+.tri {
+    flex: 0 0 auto;
+    margin-left: auto;
+    color: var(--orange);
+    font-size: 15px;
+    line-height: 1;
+    transition: transform 0.18s ease, color 0.18s ease;
+}
+
+.q[open] .tri {
+    transform: rotate(180deg);
+    color: var(--yellow);
+}
+
+.answer {
+    margin: 0;
+    padding: 0 20px 22px;
+    color: var(--fg-muted);
+    line-height: 1.7;
+    animation: rise 0.22s ease both;
+}
+
+.answer strong { color: var(--fg); font-weight: 600; }
+
+.answer .m {
+    color: var(--fg);
+    font-family: var(--mono);
+    font-size: 0.94em;
+}
+
+@keyframes rise {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: none; }
+}
+
+@media (hover: hover) {
+    .q summary:hover { color: var(--yellow); }
+    .q summary:hover .tri { color: var(--yellow); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tri { transition: none; }
+    .answer { animation: none; }
 }

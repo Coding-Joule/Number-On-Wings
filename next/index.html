@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>NumberOnWings</title>
+    <meta name="robots" content="noindex">
+    <meta name="color-scheme" content="dark">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<main class="home">
+
+    <div class="mascot">
+        <img src="/iraconal.png" alt="IrAcoNAl, a hand-painted pi with eyes">
+    </div>
+
+    <h1 class="title">NumberOnWings<span class="colon">:</span> a place to poke at mathematics</h1>
+
+    <p class="tagline">
+        Questions I keep coming back to. Tap a triangle for the real answer,
+        not a simplified one.
+    </p>
+
+    <section class="game">
+        <p class="game-label">Ask something</p>
+
+        <details class="q">
+            <summary>Is 0.999… equal to 1, or only very close?<span class="tri">&#9660;</span></summary>
+            <p class="answer">
+                <strong>Equal.</strong> Not nearly equal — the same number, written twice.
+                If they differed, <span class="m">1 &minus; 0.999…</span> would be a positive
+                real number smaller than every <span class="m">1/10&#8319;</span>, and no such
+                real number exists. The notation <span class="m">0.999…</span> is a name for the
+                limit of 0.9, 0.99, 0.999, …, and that limit is exactly 1. One number is allowed
+                two decimal names.
+            </p>
+        </details>
+
+        <details class="q">
+            <summary>How many prime numbers are there?<span class="tri">&#9660;</span></summary>
+            <p class="answer">
+                <strong>Infinitely many</strong>, and Euclid proved it without finding a single
+                new one. Take any finite list of primes, multiply them together, add 1. The
+                result leaves a remainder of 1 when divided by every prime on your list, so
+                either it is prime itself or it has a prime factor you never listed. Either way
+                the list was incomplete — and it was an arbitrary list, so no finite list works.
+            </p>
+        </details>
+
+        <details class="q">
+            <summary>Pick two whole numbers at random. What are the odds they share no factor?<span class="tri">&#9660;</span></summary>
+            <p class="answer">
+                <span class="m">6/&pi;&sup2;</span>, about <strong>61%</strong>. For each prime
+                <span class="m">p</span>, the chance both numbers are divisible by
+                <span class="m">p</span> is <span class="m">1/p&sup2;</span>, so the chance they
+                avoid sharing <span class="m">p</span> is <span class="m">1 &minus; 1/p&sup2;</span>.
+                Multiply that across every prime and you get <span class="m">1/&zeta;(2)</span>.
+                Euler showed <span class="m">&zeta;(2) = &pi;&sup2;/6</span>. That is why a
+                question about factors answers with &pi; — and why the mascot is one.
+            </p>
+        </details>
+
+        <details class="q">
+            <summary>Can a ball be cut up and reassembled into two identical balls?<span class="tri">&#9660;</span></summary>
+            <p class="answer">
+                <strong>Yes — Banach–Tarski.</strong> Five pieces are enough. The catch is what
+                "piece" means: these are not solids you could cut with anything, and they have no
+                well-defined volume at all. Constructing them needs the axiom of choice. Nothing
+                is created from nothing, because volume stops being a meaningful measurement
+                partway through the argument.
+            </p>
+        </details>
+
+        <details class="q">
+            <summary>Why can't you trisect an angle with straightedge and compass?<span class="tri">&#9660;</span></summary>
+            <p class="answer">
+                Because those two tools can only build lengths from rational numbers using
+                addition, multiplication, and <em>square</em> roots — so every constructible
+                number lives in a field extension whose degree is a power of 2. Trisecting 60°
+                means solving <span class="m">8x&sup3; &minus; 6x &minus; 1 = 0</span>, which has
+                no rational root and therefore forces degree 3. <strong>Three does not divide any
+                power of two</strong>, so the construction cannot exist.
+            </p>
+        </details>
+
+    </section>
+
+</main>
+
+</body>
+</html>
