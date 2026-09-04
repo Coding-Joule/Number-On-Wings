@@ -171,23 +171,6 @@ body {
 
 .brand em { color: var(--orange); font-style: normal; }
 
-.nav-links {
-    display: flex;
-    gap: 22px;
-}
-
-.nav-links a {
-    display: inline-block;
-    padding: 10px 2px;        /* height for a fingertip, not just the text */
-    color: var(--fg-muted);
-    font-size: var(--step-body);
-    text-decoration: none;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.nav-links a:hover,
-.nav-links a:focus-visible { color: var(--yellow); }
-
 /* --- HOME --- */
 
 .home {
@@ -245,15 +228,7 @@ body {
     .mascot { justify-self: start; order: -1; margin-bottom: 8px; }
 }
 
-/* --- GAME --- */
-
-.game-title {
-    margin: 0 0 28px;
-    color: var(--yellow);
-    font-size: clamp(30px, 5vw, 52px);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-}
+/* --- QUESTIONS --- */
 
 /* Stacked full-width rows rather than a grid of tiles: these are a list to
    work down, not options to choose between. */

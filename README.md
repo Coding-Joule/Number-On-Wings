@@ -4,7 +4,7 @@
 <tr>
 <td valign="top" align="center">
 
-<img src="IMG_3098.png" width="180"><br>
+<img src="favicon.png" width="180"><br>
 <sub>Meet IrAcoNAI the Pi, the mascot of Number On Wings.</sub>
 
 </td>
