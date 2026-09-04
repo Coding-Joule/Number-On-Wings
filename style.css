@@ -133,77 +133,142 @@ body {
     font-size: var(--step-small);
 }
 
+/* --- NAV --- */
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px calc(24px + env(safe-area-inset-right))
+             14px calc(24px + env(safe-area-inset-left));
+    border-bottom: 1px solid var(--line);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--fg);
+    font-size: clamp(18px, 2.2vw, 22px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+}
+
+/* Same paper disc as the hero, just small: the ink is black and needs it. */
+.brand-mark {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: var(--paper);
+    flex: 0 0 auto;
+}
+
+.brand-mark img { width: 74%; height: auto; transform: translateY(4%); }
+
+.brand em { color: var(--orange); font-style: normal; }
+
+.nav-links {
+    display: flex;
+    gap: 22px;
+}
+
+.nav-links a {
+    display: inline-block;
+    padding: 10px 2px;        /* height for a fingertip, not just the text */
+    color: var(--fg-muted);
+    font-size: var(--step-body);
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.nav-links a:hover,
+.nav-links a:focus-visible { color: var(--yellow); }
+
 /* --- HOME --- */
 
 .home {
-    max-width: 780px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 72px calc(24px + env(safe-area-inset-right))
+    padding: 0 calc(24px + env(safe-area-inset-right))
              120px calc(24px + env(safe-area-inset-left));
 }
 
-/* The mascot is black ink on transparent, so it needs its paper behind it
-   or it disappears into the page. The disc is that paper. */
-.mascot {
+/* Text left, mascot right. Collapses to stacked on narrow screens with the
+   mascot first, so the page still opens on the character. */
+.hero {
     display: grid;
-    place-items: center;
-    width: clamp(124px, 26vw, 176px);
-    aspect-ratio: 1;
-    margin: 0 auto 40px;
-    border-radius: 50%;
-    background-color: var(--paper);
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 40px;
+    padding: 72px 0 88px;
 }
 
-.mascot img {
-    width: 74%;
-    height: auto;
-    /* nudge: the glyph's visual mass sits high in its own bounding box */
-    transform: translateY(4%);
-}
-
-.title {
+.hero h1 {
     margin: 0;
-    text-align: center;
+    color: var(--orange);
     font-size: var(--step-title);
     font-weight: 800;
     letter-spacing: -0.035em;
-    line-height: 1.05;
+    line-height: 1.02;
 }
 
-.title .colon { color: var(--orange); }
-
-.tagline {
-    max-width: 46ch;
-    margin: 22px auto 0;
+.greeting {
+    max-width: 40ch;
+    margin: 20px 0 0;
     color: var(--fg-muted);
-    text-align: center;
-    text-wrap: balance;
+    font-size: clamp(17px, 1.5vw, 20px);
+    line-height: 1.55;
 }
 
-/* --- the question boxes --- */
-
-.game {
-    margin-top: 72px;
+.mascot {
+    display: grid;
+    place-items: center;
+    width: clamp(132px, 24vw, 216px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: var(--paper);
+    justify-self: end;
 }
 
-.game-label {
-    margin: 0 0 20px;
-    color: var(--fg-faint);
-    font-family: var(--mono);
-    font-size: var(--step-small);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
+.mascot img { width: 74%; height: auto; transform: translateY(4%); }
+
+@media (max-width: 700px) {
+    .hero {
+        grid-template-columns: 1fr;
+        justify-items: start;
+        padding: 48px 0 64px;
+    }
+    .mascot { justify-self: start; order: -1; margin-bottom: 8px; }
 }
 
-/* Stacked full-width rows rather than a grid of cards: the questions are
-   a list you work down, not a set of tiles to choose between. */
+/* --- GAME --- */
+
+.game-title {
+    margin: 0 0 28px;
+    color: var(--yellow);
+    font-size: clamp(30px, 5vw, 52px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+/* Stacked full-width rows rather than a grid of tiles: these are a list to
+   work down, not options to choose between. */
 .q {
     position: relative;
-    overflow: hidden;          /* keeps the open-row bar inside the radius */
-    border: 1px solid var(--line);
+    overflow: hidden;              /* keeps the open-row bar inside the radius */
+    border: 1px solid rgba(255, 194, 51, 0.34);
     border-radius: 12px;
     background-color: var(--bg-raised);
+    transition: border-color 0.18s ease;
 }
+
+.q + .q { margin-top: 12px; }
+
+.q[open] { border-color: var(--yellow); }
 
 /* The open row gets a warm bar down its edge. This is the one place red
    appears: a thin gradient, never a filled area. */
@@ -218,19 +283,17 @@ body {
                 var(--yellow), var(--orange) 55%, var(--red));
 }
 
-.q + .q { margin-top: 12px; }
-
 .q summary {
     display: flex;
     align-items: center;
     gap: 18px;
-    min-height: 64px;          /* comfortably past the 44px touch minimum */
+    min-height: 64px;              /* comfortably past the 44px touch minimum */
     padding: 16px 20px;
     cursor: pointer;
     font-size: clamp(17px, 1.6vw, 19px);
     font-weight: 600;
     line-height: 1.4;
-    list-style: none;          /* Firefox default marker */
+    list-style: none;              /* Firefox default marker */
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -244,8 +307,8 @@ body {
 
 .q[open] summary { color: var(--yellow); }
 
-/* The triangle. Rotating rather than swapping glyphs keeps the motion
-   readable as "this row opened". */
+/* Rotating the glyph rather than swapping two keeps the motion readable
+   as "this row opened". */
 .tri {
     flex: 0 0 auto;
     margin-left: auto;
@@ -255,10 +318,7 @@ body {
     transition: transform 0.18s ease, color 0.18s ease;
 }
 
-.q[open] .tri {
-    transform: rotate(180deg);
-    color: var(--yellow);
-}
+.q[open] .tri { transform: rotate(180deg); color: var(--yellow); }
 
 .answer {
     margin: 0;
@@ -284,9 +344,10 @@ body {
 @media (hover: hover) {
     .q summary:hover { color: var(--yellow); }
     .q summary:hover .tri { color: var(--yellow); }
+    .q:hover { border-color: rgba(255, 194, 51, 0.6); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .tri { transition: none; }
+    .tri, .q { transition: none; }
     .answer { animation: none; }
 }
