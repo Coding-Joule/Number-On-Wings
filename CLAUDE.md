@@ -42,7 +42,39 @@ transparent black drawing disappears against a dark browser tab.
 - Build it, look at it, iterate, then expand.
 - Do not assume any earlier code or design must be preserved.
 
-## Open decisions
+## Structure
 
-Nothing decided yet beyond the above. Architecture, navigation, and
-visual language are all still open.
+- `/` &mdash; holding page while the rebuild happens.
+- `/next/` &mdash; the real homepage, in progress. Promoting it is a move to
+  the root with no link edits, because every asset path is root-relative.
+- `404.html` &mdash; GitHub Pages serves this for any missing path.
+- `nav.js` &mdash; the nav is defined once here and injected into
+  `<header class="nav">`. Links get added as pages come into existence.
+- `style.css` &mdash; tokens at the top; edit those, not each page.
+
+## Palette
+
+Orange `#ff7a1a` primary, yellow `#ffc233` for lifted and active states,
+red `#e8412c` in thin accents only. Ground is a warm near-black. Every
+text role clears 4.5:1 on its own surface.
+
+## Checklist
+
+- [x] Build a `/next/` folder on main
+- [x] Fix all errors
+- [x] Create a 404 page
+- [x] Create `nav.js` and move the nav into it
+- [x] Clean up `style.css` and the other files: drop useless comments,
+      keep the ones that explain a decision
+- [x] Strip anything that reads as machine-written
+- [x] Polish
+- [x] Replace the questions with "what the heck is NumberOnWings?!" ones
+- [ ] Delete unused branches, files and folders &mdash; no unused files or
+      folders exist; branches need a decision, see below
+
+## Open
+
+- Nothing explains the name. A "why is it called NumberOnWings?" question
+  belongs in the list, but the answer is not mine to invent.
+- Branch cleanup is unresolved. `claude/homepage-design-nfu3z2` holds
+  unmerged work from another session.

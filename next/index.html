@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>NumberOnWings</title>
+    <meta name="description" content="A personal site for mathematics: puzzles, experiments, and whatever is being chased at the moment.">
     <meta name="robots" content="noindex">
     <meta name="color-scheme" content="dark">
     <link rel="icon" href="/favicon.png" type="image/png">
@@ -12,12 +13,7 @@
 </head>
 <body>
 
-<header class="nav">
-    <a class="brand" href="/next/">
-        <span class="brand-mark"><img src="/iraconal.png" alt=""></span>
-        Number<em>OnWings</em>
-    </a>
-</header>
+<header class="nav"></header>
 
 <main class="home">
 
@@ -25,8 +21,8 @@
         <div>
             <h1>NumberOnWings</h1>
             <p class="greeting">
-                Hello, fancy meeting you here! Pick a question below. The
-                answer you get is the real one, not a simplified one.
+                Hello, fancy meeting you here! You probably have questions.
+                Most of them are below.
             </p>
         </div>
         <div class="mascot">
@@ -37,33 +33,40 @@
     <section>
 
         <details class="q">
-            <summary>Is 0.999&hellip; equal to 1, or only very close?<span class="tri">&#9660;</span></summary>
-            <p class="answer"><strong>Equal.</strong> Not nearly equal &mdash; the same number, written twice. If they differed, <span class="m">1 &minus; 0.999&hellip;</span> would be a positive real number smaller than every <span class="m">1/10&#8319;</span>, and no such real number exists. The notation <span class="m">0.999&hellip;</span> names the limit of 0.9, 0.99, 0.999, &hellip;, and that limit is exactly 1. One number is allowed two decimal names.</p>
+            <summary>What the heck is NumberOnWings?!<span class="tri">&#9660;</span></summary>
+            <p class="answer">A personal site for mathematics. Puzzles, experiments, programs, and whatever is being chased at the moment. It is <strong>not</strong> a course. There are no lessons, no levels, no progress bar, and nothing here will ask you to sign up for anything.</p>
         </details>
 
         <details class="q">
-            <summary>How many prime numbers are there?<span class="tri">&#9660;</span></summary>
-            <p class="answer"><strong>Infinitely many</strong>, and Euclid proved it without finding a single new one. Take any finite list of primes, multiply them together, add 1. The result leaves remainder 1 when divided by every prime on your list, so either it is prime itself or it has a prime factor you never listed. Either way the list was incomplete &mdash; and the list was arbitrary, so no finite list can hold them all.</p>
+            <summary>Who is the &pi; with eyes?<span class="tri">&#9660;</span></summary>
+            <p class="answer">That is <strong>IrAcoNAl</strong> &mdash; say it <span class="m">ir-ra-tion-AL</span>. Painted by hand, permanently unimpressed, and mathematically incapable of being written as a fraction. The mascot, and the reason half the design is built around a circle.</p>
         </details>
 
         <details class="q">
-            <summary>Pick two whole numbers at random. What are the odds they share no factor?<span class="tri">&#9660;</span></summary>
-            <p class="answer"><span class="m">6/&pi;&sup2;</span>, about <strong>61%</strong>. For each prime <span class="m">p</span>, the chance both numbers are divisible by <span class="m">p</span> is <span class="m">1/p&sup2;</span>, so the chance they avoid sharing <span class="m">p</span> is <span class="m">1 &minus; 1/p&sup2;</span>. Multiply that across every prime and you get <span class="m">1/&zeta;(2)</span>. Euler showed <span class="m">&zeta;(2) = &pi;&sup2;/6</span>. A question about factors answers with &pi; &mdash; which is why the mascot is one.</p>
+            <summary>Is this going to teach me something?<span class="tri">&#9660;</span></summary>
+            <p class="answer">Maybe, but that is a side effect rather than the point. Nothing here is simplified for the sake of being easy to swallow. If an answer needs the axiom of choice or a field extension to be honest, it gets one.</p>
         </details>
 
         <details class="q">
-            <summary>Can a ball be cut up and reassembled into two identical balls?<span class="tri">&#9660;</span></summary>
-            <p class="answer"><strong>Yes &mdash; Banach&ndash;Tarski.</strong> Five pieces are enough. The catch is what "piece" means: these are not shapes you could cut with anything, and they have no well-defined volume at all. Building them requires the axiom of choice. Nothing is created from nothing, because volume stops being a meaningful measurement partway through the argument.</p>
+            <summary>Why does the site look like it just started?<span class="tri">&#9660;</span></summary>
+            <p class="answer">Because it did. The previous NumberOnWings was taken down to the ground and this one is being written from nothing &mdash; new structure, new everything. The old one is <strong>archived, not deleted</strong>.</p>
         </details>
 
         <details class="q">
-            <summary>Why can't you trisect an angle with straightedge and compass?<span class="tri">&#9660;</span></summary>
-            <p class="answer">Because those two tools build lengths from rational numbers using addition, multiplication, and <em>square</em> roots only &mdash; so every constructible number lives in a field extension whose degree is a power of 2. Trisecting 60&deg; means solving <span class="m">8x&sup3; &minus; 6x &minus; 1 = 0</span>, which has no rational root and so forces degree 3. <strong>Three divides no power of two</strong>, so the construction cannot exist.</p>
+            <summary>Why is everything orange?<span class="tri">&#9660;</span></summary>
+            <p class="answer">Because orange was picked on purpose. Yellow lifts it, and red appears <strong>exactly once</strong> on this page. It is already on screen if you are reading this. Go find it.</p>
+        </details>
+
+        <details class="q">
+            <summary>So what is actually here right now?<span class="tri">&#9660;</span></summary>
+            <p class="answer">This page. That is the honest answer. Things get added when they are finished rather than when they are announced, and the menu at the top fills in as pages appear.</p>
         </details>
 
     </section>
 
 </main>
+
+<script src="/nav.js"></script>
 
 </body>
 </html>
