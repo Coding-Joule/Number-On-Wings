@@ -69,12 +69,16 @@ text role clears 4.5:1 on its own surface.
 - [x] Strip anything that reads as machine-written
 - [x] Polish
 - [x] Replace the questions with "what the heck is NumberOnWings?!" ones
-- [ ] Delete unused branches, files and folders &mdash; no unused files or
-      folders exist; branches need a decision, see below
+- [x] Delete unused branches, files and folders &mdash; no unused files or
+      folders exist. `claude/numberwings-repo-reset-cl02g8` was identical
+      to main and is deleted locally, but this environment's proxy refuses
+      remote ref deletions, so it has to be removed from the GitHub UI.
 
 ## Open
 
 - Nothing explains the name. A "why is it called NumberOnWings?" question
   belongs in the list, but the answer is not mine to invent.
-- Branch cleanup is unresolved. `claude/homepage-design-nfu3z2` holds
-  unmerged work from another session.
+- `claude/homepage-design-nfu3z2` holds unmerged work from another
+  session: a different homepage, an `assets/` layout, `game.js`,
+  `problem.js`, `runaway.html`, `tools.html`. Kept deliberately.
+- The `archive/` branches are the way back to the original site. Keep.
